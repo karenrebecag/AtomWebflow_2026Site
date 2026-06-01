@@ -8,6 +8,7 @@ const modules = {
   'animations':        () => import('./modules/animations.js'),
   'scroll-animations': () => import('./modules/scroll-animations.js'),
   'faq':               () => import('./modules/faq.js'),
+  'button-041':        () => import('./modules/button-041.js'),
 };
 
 const pages = {

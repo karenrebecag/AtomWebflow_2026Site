@@ -1,0 +1,109 @@
+/* ATOM Webflow — Button 041
+   Animacion de texto por caracter via GSAP SplitText.
+   Variables locales sobreescribibles por instancia o tema.
+   Fuente: https://ui.dev/buttons/button-041 */
+
+:root {
+  --button-041-color:            var(--color-text-heading, #222020);
+  --button-041-color-background: var(--color-bg, #ffffff);
+  --button-041-color-focus:      var(--color-brand, #FF6600);
+  --button-041-padding:          0.75em 1.25em;
+  --button-041-border-radius:    var(--radius-md, 0.5rem);
+  --button-041-focus-inset:      -0.125em;
+  --button-041-click-scale:      0.955 0.925;
+  --button-041-ease-click:       cubic-bezier(0.4, 0, 0.2, 1);
+  --button-041-ease-hover:       linear(0, 0.5737 7.6%, 0.8382 11.87%, 0.9463 14.19%, 1.0292 16.54%, 1.0886 18.97%, 1.1258 21.53%, 1.137 22.97%, 1.1424 24.48%, 1.1423 26.1%, 1.1366 27.86%, 1.1165 31.01%, 1.0507 38.62%, 1.0219 42.57%, 0.9995 46.99%, 0.9872 51.63%, 0.9842 58.77%, 1.0011 81.26%, 1);
+  --button-041-ease-smooth:      cubic-bezier(0.32, 0.72, 0, 1);
+  --button-041-ease-soft-overshoot: cubic-bezier(0.59, 1, 0.88, 1.01);
+  --button-041-ease-bounce:      cubic-bezier(0.34, 2.27, 0.64, 1);
+  --button-041-ease-focus:       cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.button-041 {
+  -webkit-tap-highlight-color: transparent;
+  transition: scale 0.15s var(--button-041-ease-click);
+}
+
+.button-041::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: var(--button-041-focus-inset);
+  border-radius: var(--button-041-border-radius);
+  transition: box-shadow 0.2s var(--button-041-ease-focus);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.button-041:is(:focus-visible)::after {
+  box-shadow: 0 0 0 0.125em var(--button-041-color-focus);
+}
+
+.button-041:active {
+  scale: var(--button-041-click-scale);
+}
+
+.button-041__bg {
+  transition: scale 0.15s var(--button-041-ease-soft-overshoot),
+              transform 0.15s var(--button-041-ease-soft-overshoot);
+}
+
+.button-041__text {
+  will-change: transform;
+}
+
+.button-041__text.is--default .button-041__split-char {
+  transition: translate 0.82s var(--button-041-ease-hover),
+              scale 0.82s var(--button-041-ease-hover),
+              opacity 0.15s ease-out,
+              filter 0.15s ease-out;
+}
+
+.button-041__text.is--hover .button-041__split-char {
+  opacity: 0;
+  filter: blur(0.2em);
+  translate: -1em 0 0;
+  scale: 0.5;
+  transition: translate 0.45s var(--button-041-ease-smooth),
+              scale 0.45s var(--button-041-ease-smooth),
+              opacity 0.15s 0.05s ease-out,
+              filter 0.15s 0.05s ease-out;
+}
+
+.button-041__split-char {
+  will-change: filter;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .button-041:is(:hover, :focus-visible) .button-041__bg,
+  [data-hover]:is(:hover, :focus-visible) .button-041 .button-041__bg {
+    scale: 0.955 0.925;
+    transform: scale(1.0471204188, 1.0810810811);
+    transition: scale 0.15s var(--button-041-ease-soft-overshoot),
+                transform 0.35s 0.15s var(--button-041-ease-bounce);
+  }
+
+  .button-041:is(:hover, :focus-visible) .button-041__text.is--default .button-041__split-char,
+  [data-hover]:is(:hover, :focus-visible) .button-041 .button-041__text.is--default .button-041__split-char {
+    opacity: 0;
+    filter: blur(5px);
+    translate: 0.5em 0 0;
+    scale: 0.5;
+    transition: translate 0.45s calc((var(--char) - 1) * 0.018s) var(--button-041-ease-smooth),
+                scale 0.45s calc((var(--char) - 1) * 0.018s) var(--button-041-ease-smooth),
+                opacity 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out,
+                filter 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out;
+  }
+
+  .button-041:is(:hover, :focus-visible) .button-041__text.is--hover .button-041__split-char,
+  [data-hover]:is(:hover, :focus-visible) .button-041 .button-041__text.is--hover .button-041__split-char {
+    opacity: 1;
+    filter: blur(0);
+    translate: 0 0 0;
+    scale: 1;
+    transition: translate 0.82s calc((var(--char) - 1) * 0.018s + 0.05s) var(--button-041-ease-hover),
+                scale 0.82s calc((var(--char) - 1) * 0.018s + 0.05s) var(--button-041-ease-hover),
+                opacity 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out,
+                filter 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out;
+  }
+}
