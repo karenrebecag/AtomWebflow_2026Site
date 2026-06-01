@@ -46,17 +46,41 @@ cd ~/Desktop/SoftwareDevProjects/ATOMwebflowSite && claude
 
 ## Carga en Webflow
 
-**Head (Site Settings > Custom Code > Head):**
+Ambos tags van en **Site Settings > Custom Code** (global, no por pagina).
+
+**Head Code:**
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/css/site.css">
 ```
 
-**Footer (Site Settings > Custom Code > Footer):**
+**Footer Code:**
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/js/site.js"></script>
+<script type="module" data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/js/site.js"></script>
 ```
 
-Reemplazar `{VERSION}` por el tag del release (ej. `v1.0.0`). Nunca usar `@latest`.
+### Versionado en jsDelivr
+
+| Referencia | Cuando usar | Ejemplo |
+|---|---|---|
+| `@v1.2.0` (tag) | Produccion estable | Solo si jsDelivr ya lo indexo (verificar con curl) |
+| `@{commit-hash}` | Iteracion rapida / fix urgente | `@db8a4dd` — resuelve inmediato, sin cache de tags |
+| `@latest` | NUNCA | jsDelivr cachea agresivamente, rompe deploys |
+
+**Problema conocido:** jsDelivr cachea 404 en tags nuevos por minutos/horas. Para iterar rapido, usar commit hash. Para verificar:
+```bash
+curl -s -o /dev/null -w "%{http_code}" "https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{REF}/src/js/site.js"
+```
+
+### Atributos requeridos en los script tags
+
+| Atributo | Motivo |
+|---|---|
+| `type="module"` | site.js usa `import()` dinamico para cargar modulos |
+| `data-cfasync="false"` | Cloudflare Rocket Loader reescribe scripts; este atributo lo excluye |
+
+### Scripts API vs Custom Code manual
+
+La **Webflow Custom Code Scripts API** (`data_scripts_tool`) permite registrar y aplicar scripts programaticamente, pero los scripts registrados via API **no se renderizan en el HTML publicado** en este site. Usar siempre Site Settings > Custom Code manual para los tags de produccion.
 
 ## Convenciones de desarrollo
 
@@ -67,7 +91,13 @@ estado                      .is-open, .is-scrolled, .is-active
 utilidad (global)           .u-container, .u-brand, .u-truncate
 ```
 
-### JS — activacion por data attributes en Webflow Designer
+### JS — dos patrones de activacion
+
+**Patron 1: `data-module` en un wrapper** (modulos genericos)
+
+site.js busca `[data-module="nombre"]` y carga el modulo correspondiente.
+El atributo va en un wrapper que contenga los elementos a inicializar.
+
 | Atributo | Donde agregarlo | Efecto |
 |---|---|---|
 | `data-module="nav"` | `.nav_wrapper` | Activa scroll state + hamburguesa |
@@ -81,31 +111,108 @@ utilidad (global)           .u-container, .u-brand, .u-truncate
 | `data-animate="parallax"` | elemento decorativo | Parallax suave al scroll |
 | `data-counter="1200"` | stat number | Counter animado |
 
+**Patron 2: auto-detect por `data-*` propio** (componentes Webflow reutilizables)
+
+Webflow NO publica `data-*` attributes en el root `<div>` de componentes reutilizables.
+Por eso, los componentes que necesitan JS se activan por su propio data attribute, no por `data-module`.
+
+site.js tiene un bloque `autoDetect` que busca selectores directamente en el DOM:
+
+```js
+const autoDetect = {
+  '[data-button-041]': () => import('./modules/button-041.js'),
+};
+```
+
+Cuando se crea un componente nuevo con JS, agregarlo a `autoDetect` en site.js.
+
+## GSAP en Webflow — guia de integracion
+
+### Webflow incluye GSAP 3.15.0 nativamente
+
+Webflow carga automaticamente desde su propio CDN:
+```html
+<script src="https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js"></script>
+```
+
+`window.gsap` y `window.ScrollTrigger` estan disponibles globalmente.
+Webflow puede agregar mas plugins segun la config del site.
+
+### GSAP ESM no existe en npm
+
+Los archivos `gsap.esm.min.js`, `ScrollTrigger.esm.min.js`, `SplitText.esm.min.js` **NO existen** en el paquete npm de GSAP en jsDelivr. Nunca importar con `import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.esm.min.js'` — da 404.
+
+### Cloudflare Rocket Loader y timing
+
+El site usa Cloudflare con Rocket Loader activo. Rocket Loader:
+- Reescribe `type="text/javascript"` a un tipo custom para diferir ejecucion
+- Esto incluye los scripts de GSAP de Webflow
+- Nuestro `<script type="module" data-cfasync="false">` se ejecuta ANTES que GSAP exista en `window`
+
+**Solucion:** cada modulo que necesite GSAP debe esperar con polling:
+```js
+function waitForGSAP(timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    if (window.gsap) return resolve(window.gsap);
+    const start = Date.now();
+    const check = setInterval(() => {
+      if (window.gsap) { clearInterval(check); resolve(window.gsap); }
+      else if (Date.now() - start > timeout) { clearInterval(check); reject(new Error('gsap not found')); }
+    }, 50);
+  });
+}
+```
+
+### Plugins NO incluidos por Webflow
+
+SplitText, Draggable, DrawSVG, etc. NO los carga Webflow. Se cargan via UMD dynamic import:
+```js
+async function loadSplitText(gsap) {
+  if (window.SplitText) return window.SplitText;
+  await import('https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/SplitText.min.js');
+  gsap.registerPlugin(window.SplitText);
+  return window.SplitText;
+}
+```
+
+### Receta completa: componente Webflow con GSAP
+
+1. **CSS** en `src/css/components/{nombre}.css` — variables locales + estados hover/focus via CSS
+2. **JS** en `src/js/modules/{nombre}.js` — espera `window.gsap`, carga plugins extra via UMD
+3. **site.css** — agregar `@import './components/{nombre}.css'`
+4. **site.js** — agregar selector a `autoDetect`
+5. **Webflow Designer** — crear componente via `whtml_builder`, los `data-*` van en elementos internos (no en el root)
+6. **Publicar** — el root del componente es un `<div>` limpio, el auto-detect de site.js busca los data attributes internos
+
 ### Estructura src/
 ```
 src/
 ├── css/
 │   ├── base/
-│   │   ├── tokens.css       ← vars globales ATOM DS (colores, tipo, espaciado)
-│   │   ├── reset.css        ← reset minimo, sin colisionar con Webflow
-│   │   └── utilities.css    ← helpers Client-First (u-*)
+│   │   ├── tokens.css        ← vars globales ATOM DS
+│   │   ├── reset.css         ← reset minimo
+│   │   └── utilities.css     ← helpers Client-First (u-*)
 │   ├── sections/
 │   │   ├── nav.css
 │   │   ├── hero.css
 │   │   ├── cards.css
 │   │   └── footer.css
+│   ├── components/
+│   │   └── button-041.css    ← GSAP SplitText button
 │   ├── pages/
 │   │   └── home.css
-│   └── site.css             ← entry point: @import tree
+│   └── site.css              ← entry point: @import tree
 └── js/
     ├── modules/
-    │   ├── nav.js            ← scroll state + menu mobile
-    │   ├── animations.js     ← GSAP on-load
+    │   ├── nav.js             ← scroll state + menu mobile
+    │   ├── animations.js      ← GSAP on-load (usa window.gsap de Webflow)
     │   ├── scroll-animations.js ← GSAP ScrollTrigger
-    │   └── faq.js            ← accordion accesible
+    │   ├── button-041.js      ← GSAP SplitText (auto-detect)
+    │   └── faq.js             ← accordion accesible
     ├── pages/
-    │   └── home.js           ← counter animado
-    └── site.js               ← entry point: loader condicional
+    │   └── home.js            ← counter animado
+    └── site.js                ← entry point: data-module + autoDetect
 ```
 
 ## Skills disponibles (34)
@@ -172,11 +279,18 @@ ATOMwebflowSite/
 
 ## Changelog
 
+### v1.2.1 — 2026-06-01 (current)
+- Auto-detect pattern para componentes Webflow con GSAP
+- GSAP usa window.gsap nativo de Webflow (3.15.0) + polling para Rocket Loader
+- SplitText carga via UMD dynamic import (no existe ESM en npm)
+- Documentacion completa de GSAP + Webflow + Rocket Loader en CLAUDE.md
+- Button 041 componente reutilizable en Webflow (grupo ATOM)
+
 ### v1.0.0 — 2026-06-01
-- Release publicado en GitHub, jsDelivr activo
-- src/css/ y src/js/ completos con tokens ATOM DS reales
+- Scaffold inicial: tokens, reset, utilities, sections, pages
+- Loader condicional site.js con data-module y autoDetect
 - ORCHESTRATOR.md + atom-code-component-workflow skill
-- 34 skills registradas y verificadas en skills-lock.json
+- 34 skills registradas y verificadas
 
 ### 0.0.1 — 2026-06-01
-- Setup inicial, MCP, 33 skills instaladas
+- Setup inicial, MCP, skills instaladas
