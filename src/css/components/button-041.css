@@ -4,11 +4,9 @@
    Fuente: https://ui.dev/buttons/button-041 */
 
 :root {
-  /* Default = UIKit Primary: zinc-900 bg, zinc-50 fg, brand focus */
-  --button-041-color:            var(--primary-foreground, #FAFAFA);
-  --button-041-color-background: var(--primary, #18181B);
-  --button-041-color-focus:      var(--brand, #FF6600);
-  --button-041-border-color:     transparent;
+  --button-041-color:            var(--color-text-heading, #222020);
+  --button-041-color-background: var(--color-bg, #ffffff);
+  --button-041-color-focus:      var(--color-brand, #FF6600);
   --button-041-padding:          0.75em 1.25em;
   --button-041-border-radius:    var(--radius-md, 0.5rem);
   --button-041-focus-inset:      -0.125em;
@@ -21,27 +19,9 @@
   --button-041-ease-focus:       cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Base — UIKit .button properties adapted para grid-overlay architecture */
 .button-041 {
-  position: relative;
-  display: inline-grid;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: var(--button-041-color);
-  font-family: var(--font-family-sans, 'DM Sans'), sans-serif;
-  font-weight: var(--font-weight-medium, 500);
-  font-size: var(--button-font-size-all, 13px);
-  line-height: 1;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    scale var(--duration-500, 500ms) cubic-bezier(0.32, 0.72, 0, 1);
+  transition: scale 0.15s var(--button-041-ease-click);
 }
 
 .button-041::after {
@@ -64,31 +44,11 @@
 }
 
 .button-041__bg {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  grid-area: 1 / 1;
-  background-color: var(--button-041-color-background);
-  border: 1px solid var(--button-041-border-color, transparent);
-  border-radius: var(--button-041-border-radius);
-  transition:
-    scale 0.15s var(--button-041-ease-soft-overshoot),
-    transform 0.15s var(--button-041-ease-soft-overshoot);
-}
-
-.button-041__inner {
-  width: 100%;
-  height: 100%;
-  padding: var(--button-041-padding);
-  grid-area: 1 / 1;
-  z-index: 1;
-  display: grid;
+  transition: scale 0.15s var(--button-041-ease-soft-overshoot),
+              transform 0.15s var(--button-041-ease-soft-overshoot);
 }
 
 .button-041__text {
-  grid-area: 1 / 1;
-  width: 100%;
-  height: 100%;
   will-change: transform;
 }
 
@@ -146,48 +106,4 @@
                 opacity 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out,
                 filter 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out;
   }
-}
-
-/* ---- Variantes — coherentes con ATOM UIKit button ---- */
-
-/* Primary (default) — ya definido en :root */
-
-/* Secondary — UIKit: background bg, foreground fg, border */
-.button-041--secondary {
-  --button-041-color:            var(--foreground, #09090B);
-  --button-041-color-background: var(--background, #FFFFFF);
-  --button-041-border-color:     var(--border, #E4E4E7);
-  --button-041-color-focus:      var(--brand, #FF6600);
-}
-
-/* Tertiary — UIKit: transparent bg, foreground fg */
-.button-041--tertiary {
-  --button-041-color:            var(--foreground, #09090B);
-  --button-041-color-background: transparent;
-  --button-041-border-color:     transparent;
-  --button-041-color-focus:      var(--brand, #FF6600);
-}
-
-/* Destructive Primary — UIKit: destructive bg, destructive-foreground fg */
-.button-041--destructive-primary {
-  --button-041-color:            var(--destructive-foreground, #FFFFFF);
-  --button-041-color-background: var(--destructive, #FB2C37);
-  --button-041-border-color:     transparent;
-  --button-041-color-focus:      var(--destructive, #FB2C37);
-}
-
-/* Destructive Secondary — UIKit: background bg, destructive fg+border */
-.button-041--destructive-secondary {
-  --button-041-color:            var(--destructive, #FB2C37);
-  --button-041-color-background: var(--background, #FFFFFF);
-  --button-041-border-color:     var(--destructive, #FB2C37);
-  --button-041-color-focus:      var(--destructive, #FB2C37);
-}
-
-/* Destructive Tertiary — UIKit: transparent bg, destructive fg */
-.button-041--destructive-tertiary {
-  --button-041-color:            var(--destructive, #FB2C37);
-  --button-041-color-background: transparent;
-  --button-041-border-color:     transparent;
-  --button-041-color-focus:      var(--destructive, #FB2C37);
 }
