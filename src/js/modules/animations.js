@@ -1,15 +1,20 @@
 // animations.js — GSAP base animations
-// Fuente: GSAP Installation docs (gsap.com/docs/v3/Installation)
-// GSAP es framework-agnostic; se carga como ES module desde CDN oficial.
+// GSAP no publica ESM en npm — carga UMD via dynamic import.
 // Webflow: agregar data-module="animations" al wrapper de la pagina.
 
-import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.esm.min.js';
+const GSAP_CDN = 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist';
 
-export function init(container = document) {
-  // Respetar prefers-reduced-motion — GSAP best practice oficial
+async function loadGSAP() {
+  if (window.gsap) return window.gsap;
+  await import(`${GSAP_CDN}/gsap.min.js`);
+  return window.gsap;
+}
+
+export async function init(container = document) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Fade-up: data-animate="fade-up" en Custom Attributes del elemento en Webflow
+  const gsap = await loadGSAP();
+
   const fadeUpEls = container.querySelectorAll('[data-animate="fade-up"]');
   if (fadeUpEls.length) {
     gsap.from(fadeUpEls, {
@@ -21,7 +26,6 @@ export function init(container = document) {
     });
   }
 
-  // Fade-in: data-animate="fade-in"
   const fadeInEls = container.querySelectorAll('[data-animate="fade-in"]');
   if (fadeInEls.length) {
     gsap.from(fadeInEls, {

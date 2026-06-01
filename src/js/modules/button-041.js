@@ -1,14 +1,22 @@
 // button-041.js — Animated button con SplitText por caracter
 // Fuente: https://ui.dev/buttons/button-041
-// Webflow: agregar data-module="button-041" al wrapper de la seccion
-// que contenga botones con [data-button-041].
+// GSAP lo provee Webflow nativamente (3.15.0) — solo cargamos SplitText.
+// Rocket Loader defiere GSAP, asi que esperamos a que exista en window.
 
-import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.esm.min.js';
+function waitForGSAP(timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    if (window.gsap) return resolve(window.gsap);
+    const start = Date.now();
+    const check = setInterval(() => {
+      if (window.gsap) { clearInterval(check); resolve(window.gsap); }
+      else if (Date.now() - start > timeout) { clearInterval(check); reject(new Error('[atom] gsap not found — Webflow GSAP may be disabled')); }
+    }, 50);
+  });
+}
 
-// SplitText no tiene build ESM publico — carga UMD y registra del global
-async function loadSplitText() {
+async function loadSplitText(gsap) {
   if (window.SplitText) return window.SplitText;
-  await import('https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js');
+  await import('https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/SplitText.min.js');
   gsap.registerPlugin(window.SplitText);
   return window.SplitText;
 }
@@ -17,26 +25,26 @@ export async function init(container = document) {
   const buttons = container.querySelectorAll('[data-button-041]');
   if (!buttons.length) return;
 
-  const SplitText = await loadSplitText();
+  const gsap = await waitForGSAP();
+  const SplitText = await loadSplitText(gsap);
 
-  // Esperar fuentes para split correcto
-  document.fonts.ready.then(() => {
-    buttons.forEach(el => {
-      const textEls = el.querySelectorAll('[data-button-041-text]');
-      if (!textEls.length) return;
+  await document.fonts.ready;
 
-      textEls.forEach(textEl => {
-        const isAriaHidden = textEl.getAttribute('aria-hidden') === 'true';
-        const split = new SplitText(textEl, {
-          type: 'chars',
-          tag: 'span',
-          charsClass: 'button-041__split-char',
-          propIndex: true,
-          aria: isAriaHidden ? 'none' : 'auto',
-        });
+  buttons.forEach(el => {
+    const textEls = el.querySelectorAll('[data-button-041-text]');
+    if (!textEls.length) return;
 
-        gsap.set(split.chars, { display: 'inline-block' });
+    textEls.forEach(textEl => {
+      const isAriaHidden = textEl.getAttribute('aria-hidden') === 'true';
+      const split = new SplitText(textEl, {
+        type: 'chars',
+        tag: 'span',
+        charsClass: 'button-041__split-char',
+        propIndex: true,
+        aria: isAriaHidden ? 'none' : 'auto',
       });
+
+      gsap.set(split.chars, { display: 'inline-block' });
     });
   });
 }
