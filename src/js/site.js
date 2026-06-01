@@ -1,5 +1,4 @@
-// site.js — Entry point
-// Fuente: custom-code-management skill (webflow/webflow-skills)
+// site.js — Entry point v1.2.0
 // Carga modulos solo si el elemento con data-module existe en la pagina.
 // Webflow Footer: <script type="module" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/js/site.js">
 
