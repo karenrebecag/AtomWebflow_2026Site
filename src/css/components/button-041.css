@@ -4,11 +4,13 @@
    Fuente: https://ui.dev/buttons/button-041 */
 
 :root {
-  --button-041-color:            var(--color-text-heading, #222020);
-  --button-041-color-background: var(--color-bg, #ffffff);
-  --button-041-color-focus:      var(--color-brand, #FF6600);
-  --button-041-padding:          0.75em 1.25em;
-  --button-041-border-radius:    var(--radius-md, 0.5rem);
+  /* UIKit Primary — valores directos, sin var-in-var */
+  --button-041-color:            #FAFAFA;
+  --button-041-color-background: #18181B;
+  --button-041-color-focus:      #FF6600;
+  --button-041-border-color:     transparent;
+  --button-041-padding:          0 16px;
+  --button-041-border-radius:    0.625em;
   --button-041-focus-inset:      -0.125em;
   --button-041-click-scale:      0.955 0.925;
   --button-041-ease-click:       cubic-bezier(0.4, 0, 0.2, 1);
@@ -22,6 +24,12 @@
 .button-041 {
   -webkit-tap-highlight-color: transparent;
   transition: scale 0.15s var(--button-041-ease-click);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  height: 40px;
 }
 
 .button-041::after {
@@ -107,3 +115,56 @@
                 filter 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out;
   }
 }
+
+/* ---- Variantes — valores directos ATOM UIKit ---- */
+
+/* Secondary */
+[data-wf--global-button--variant="secondary"] .button-041,
+.button-041--secondary {
+  --button-041-color:            #09090B;
+  --button-041-color-background: #FFFFFF;
+  --button-041-border-color:     #E4E4E7;
+}
+
+/* Tertiary */
+[data-wf--global-button--variant="tertiary"] .button-041,
+.button-041--tertiary {
+  --button-041-color:            #09090B;
+  --button-041-color-background: transparent;
+  --button-041-border-color:     transparent;
+}
+
+/* Destructive Primary */
+[data-wf--global-button--variant="destructive-primary"] .button-041,
+.button-041--destructive-primary {
+  --button-041-color:            #FFFFFF;
+  --button-041-color-background: #FB2C37;
+  --button-041-border-color:     transparent;
+  --button-041-color-focus:      #FB2C37;
+}
+
+/* Destructive Secondary */
+[data-wf--global-button--variant="destructive-secondary"] .button-041,
+.button-041--destructive-secondary {
+  --button-041-color:            #FB2C37;
+  --button-041-color-background: #FFFFFF;
+  --button-041-border-color:     #FB2C37;
+  --button-041-color-focus:      #FB2C37;
+}
+
+/* Destructive Tertiary */
+[data-wf--global-button--variant="destructive-tertiary"] .button-041,
+.button-041--destructive-tertiary {
+  --button-041-color:            #FB2C37;
+  --button-041-color-background: transparent;
+  --button-041-border-color:     transparent;
+  --button-041-color-focus:      #FB2C37;
+}
+
+/* ---- Sizes — UIKit button heights ---- */
+
+.button-041--xs { --button-041-padding: 0 8px;  height: 28px; }
+.button-041--s  { --button-041-padding: 0 12px; height: 32px; }
+.button-041--m  { --button-041-padding: 0 16px; height: 40px; }
+.button-041--l  { --button-041-padding: 0 24px; height: 48px; }
+.button-041--xl { --button-041-padding: 0 32px; height: 52px; }
