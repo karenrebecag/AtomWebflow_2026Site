@@ -23,26 +23,18 @@
   --color-border:        #E4E4E7;
   --color-border-dark:   #3F3F46;
 
-  /* Tipografia — Inter unica fuente autorizada */
+  /* Tipografia — legacy (paginas existentes) */
   --font-base:     'Inter', sans-serif;
   --font-mono:     'JetBrains Mono', monospace;
-
-  --text-xs:   clamp(0.75rem,  0.7rem  + 0.2vw,  0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
-  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
-  --text-3xl:  clamp(2.5rem,   1.5rem  + 3vw,    4.5rem);
 
   --font-weight-regular: 400;
   --font-weight-medium:  500;
   --font-weight-semi:    600;
   --font-weight-bold:    700;
 
-  --line-height-tight:  1.2;
+  --line-height-tight:  1.15;
   --line-height-snug:   1.4;
-  --line-height-normal: 1.6;
+  --line-height-normal: 1.5;
 
   /* Espaciado */
   --space-1:  0.25rem;

@@ -1,0 +1,161 @@
+/* ATOM Webflow — Typography (new website)
+   Scoped bajo .nw para no colisionar con paginas existentes.
+   Webflow Designer: agregar clase "nw" al body o wrapper de paginas nuevas.
+
+   Headline: Space Grotesk (700)
+   Body:     DM Sans (400, 500, 700)
+*/
+
+/* ---- Tokens tipograficos scoped ---- */
+
+.nw {
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body:     'DM Sans', sans-serif;
+
+  /* Escala de headings — Space Grotesk */
+  --heading-size:   3rem;
+  --sub1-size:      2rem;
+  --sub2-size:      1.5rem;
+  --sub3-size:      1.25rem;
+  --sub4-size:      1.05rem;
+  --sub5-size:      0.9rem;
+  --heading-weight: 700;
+  --heading-lh:     1.15;
+
+  /* Escala de parrafos — DM Sans */
+  --p1-size:        1rem;
+  --p2-size:        0.95rem;
+  --p3-size:        0.85rem;
+  --p4-size:        0.75rem;
+  --body-weight:    400;
+  --body-lh:        1.5;
+
+  font-family: var(--font-body);
+  color: var(--color-text-body, #27272A);
+}
+
+/* ---- Headings — Space Grotesk ---- */
+
+.nw h1, .nw .nw-h1 {
+  font-family: var(--font-headline);
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: -0.02em;
+  color: var(--color-text-heading, #222020);
+}
+
+.nw h2, .nw .nw-h2 {
+  font-family: var(--font-headline);
+  font-size: var(--sub1-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  letter-spacing: -0.02em;
+  color: var(--color-text-heading, #222020);
+}
+
+.nw h3, .nw .nw-h3 {
+  font-family: var(--font-headline);
+  font-size: var(--sub2-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  color: var(--color-text-heading, #222020);
+}
+
+.nw h4, .nw .nw-h4 {
+  font-family: var(--font-headline);
+  font-size: var(--sub3-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  color: var(--color-text-heading, #222020);
+}
+
+.nw h5, .nw .nw-h5 {
+  font-family: var(--font-headline);
+  font-size: var(--sub4-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  color: var(--color-text-heading, #222020);
+}
+
+.nw h6, .nw .nw-h6 {
+  font-family: var(--font-headline);
+  font-size: var(--sub5-size);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+  color: var(--color-text-heading, #222020);
+}
+
+/* ---- Body / Paragraphs — DM Sans ---- */
+
+.nw p, .nw .nw-p1 {
+  font-family: var(--font-body);
+  font-size: var(--p1-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--color-text-muted, #71717A);
+}
+
+.nw .nw-p2 {
+  font-family: var(--font-body);
+  font-size: var(--p2-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--color-text-muted, #71717A);
+}
+
+.nw .nw-p3 {
+  font-family: var(--font-body);
+  font-size: var(--p3-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--color-text-muted, #71717A);
+}
+
+.nw .nw-p4 {
+  font-family: var(--font-body);
+  font-size: var(--p4-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--color-text-muted, #71717A);
+}
+
+/* ---- Utility classes — se pueden usar en cualquier elemento ---- */
+
+.nw .nw-headline {
+  font-family: var(--font-headline);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-lh);
+}
+
+.nw .nw-body {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+}
+
+/* ---- Labels / captions — DM Sans medium ---- */
+
+.nw .nw-label {
+  font-family: var(--font-body);
+  font-size: var(--p4-size);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nw .nw-caption {
+  font-family: var(--font-body);
+  font-size: var(--p3-size);
+  font-weight: var(--body-weight);
+  line-height: var(--body-lh);
+  color: var(--color-text-muted, #71717A);
+}
+
+/* ---- Button text — hereda font-body dentro de .nw ---- */
+
+.nw .button-041 {
+  font-family: var(--font-body);
+  font-weight: 500;
+}
