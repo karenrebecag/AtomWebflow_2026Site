@@ -4,10 +4,10 @@
    Fuente: https://ui.dev/buttons/button-041 */
 
 :root {
-  /* Default = Primary (dark bg, light text) — coherente con ATOM UIKit */
-  --button-041-color:            #FAFAFA;
-  --button-041-color-background: #18181B;
-  --button-041-color-focus:      #FF6600;
+  /* Default — valores originales del spec */
+  --button-041-color:            #340824;
+  --button-041-color-background: #fff;
+  --button-041-color-focus:      #000;
   --button-041-border-color:     transparent;
   --button-041-padding:          0.75em 1.25em;
   --button-041-border-radius:    var(--radius-md, 0.5rem);
