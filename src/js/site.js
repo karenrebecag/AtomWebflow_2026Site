@@ -24,6 +24,20 @@ document.querySelectorAll('[data-module]').forEach(el => {
   }
 });
 
+// Auto-detect: componentes que se activan por su propio data attribute
+// (Webflow no publica data-module en el root de componentes reutilizables)
+const autoDetect = {
+  '[data-button-041]': () => import('./modules/button-041.js'),
+};
+
+Object.entries(autoDetect).forEach(([selector, loader]) => {
+  if (document.querySelector(selector)) {
+    loader()
+      .then(m => m.init && m.init(document))
+      .catch(err => console.error(`[atom] auto "${selector}" failed:`, err));
+  }
+});
+
 // Inicializa logica de pagina por data-page en el body
 const pageKey = document.body.dataset.page;
 if (pageKey && pages[pageKey]) {
