@@ -1,0 +1,29 @@
+/* ATOM Webflow — Mega Nav
+   CSS minimo — los estilos base estan en Webflow.
+   Solo variables de config y helpers para el Designer. */
+
+[data-menu-wrap] {
+  --nav-height: 4em;
+}
+
+.mega-nav__panel-col:last-of-type {
+  border: none;
+}
+
+/* Designer-only: fuerza visibilidad para editar contenido de paneles */
+.wf-design-mode [data-nav-content][data-panel-state="active"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  position: relative;
+}
+
+.wf-design-mode [data-menu-open]:has([data-nav-content][data-panel-state="active"]) [data-dropdown-bg] {
+  opacity: 1;
+  inset: 0;
+}
+
+.wf-design-mode [data-mobile-nav="active"] {
+  opacity: 1;
+  visibility: visible;
+}

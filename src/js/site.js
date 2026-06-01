@@ -28,6 +28,7 @@ document.querySelectorAll('[data-module]').forEach(el => {
 // (Webflow no publica data-module en el root de componentes reutilizables)
 const autoDetect = {
   '[data-button-041]': () => import('./modules/button-041.js'),
+  '[data-menu-wrap]':  () => import('./modules/mega-nav.js'),
 };
 
 Object.entries(autoDetect).forEach(([selector, loader]) => {
