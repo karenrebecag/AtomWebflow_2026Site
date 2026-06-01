@@ -3,14 +3,21 @@
 // Webflow: agregar data-module="button-041" al wrapper de la seccion
 // que contenga botones con [data-button-041].
 
-import { gsap }      from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.esm.min.js';
-import { SplitText } from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.esm.min.js';
+import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.esm.min.js';
 
-gsap.registerPlugin(SplitText);
+// SplitText no tiene build ESM publico — carga UMD y registra del global
+async function loadSplitText() {
+  if (window.SplitText) return window.SplitText;
+  await import('https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js');
+  gsap.registerPlugin(window.SplitText);
+  return window.SplitText;
+}
 
-export function init(container = document) {
+export async function init(container = document) {
   const buttons = container.querySelectorAll('[data-button-041]');
   if (!buttons.length) return;
+
+  const SplitText = await loadSplitText();
 
   // Esperar fuentes para split correcto
   document.fonts.ready.then(() => {
