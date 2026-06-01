@@ -12,5 +12,6 @@
 @import './sections/cards.css';
 @import './sections/footer.css';
 
+@import './components/layouts.css';
 @import './components/button-041.css';
 @import './components/mega-nav.css';
