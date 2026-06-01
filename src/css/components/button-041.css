@@ -4,10 +4,10 @@
    Fuente: https://ui.dev/buttons/button-041 */
 
 :root {
-  /* Default — valores originales del spec */
-  --button-041-color:            #340824;
-  --button-041-color-background: #fff;
-  --button-041-color-focus:      #000;
+  /* Default = UIKit Primary: zinc-900 bg, zinc-50 fg, brand focus */
+  --button-041-color:            var(--primary-foreground, #FAFAFA);
+  --button-041-color-background: var(--primary, #18181B);
+  --button-041-color-focus:      var(--brand, #FF6600);
   --button-041-border-color:     transparent;
   --button-041-padding:          0.75em 1.25em;
   --button-041-border-radius:    var(--radius-md, 0.5rem);
@@ -118,42 +118,42 @@
 
 /* Primary (default) — ya definido en :root */
 
-/* Secondary — white bg, dark text, border */
+/* Secondary — UIKit: background bg, foreground fg, border */
 .button-041--secondary {
-  --button-041-color:            #09090B;
-  --button-041-color-background: #FFFFFF;
-  --button-041-border-color:     #E4E4E7;
-  --button-041-color-focus:      #FF6600;
+  --button-041-color:            var(--foreground, #09090B);
+  --button-041-color-background: var(--background, #FFFFFF);
+  --button-041-border-color:     var(--border, #E4E4E7);
+  --button-041-color-focus:      var(--brand, #FF6600);
 }
 
-/* Tertiary — transparent bg, dark text */
+/* Tertiary — UIKit: transparent bg, foreground fg */
 .button-041--tertiary {
-  --button-041-color:            #09090B;
+  --button-041-color:            var(--foreground, #09090B);
   --button-041-color-background: transparent;
   --button-041-border-color:     transparent;
-  --button-041-color-focus:      #FF6600;
+  --button-041-color-focus:      var(--brand, #FF6600);
 }
 
-/* Destructive Primary — red bg, white text */
+/* Destructive Primary — UIKit: destructive bg, destructive-foreground fg */
 .button-041--destructive-primary {
-  --button-041-color:            #FFFFFF;
-  --button-041-color-background: #FB2C37;
+  --button-041-color:            var(--destructive-foreground, #FFFFFF);
+  --button-041-color-background: var(--destructive, #FB2C37);
   --button-041-border-color:     transparent;
-  --button-041-color-focus:      #FB2C37;
+  --button-041-color-focus:      var(--destructive, #FB2C37);
 }
 
-/* Destructive Secondary — white bg, red text, red border */
+/* Destructive Secondary — UIKit: background bg, destructive fg+border */
 .button-041--destructive-secondary {
-  --button-041-color:            #FB2C37;
-  --button-041-color-background: #FFFFFF;
-  --button-041-border-color:     #FB2C37;
-  --button-041-color-focus:      #FB2C37;
+  --button-041-color:            var(--destructive, #FB2C37);
+  --button-041-color-background: var(--background, #FFFFFF);
+  --button-041-border-color:     var(--destructive, #FB2C37);
+  --button-041-color-focus:      var(--destructive, #FB2C37);
 }
 
-/* Destructive Tertiary — transparent bg, red text */
+/* Destructive Tertiary — UIKit: transparent bg, destructive fg */
 .button-041--destructive-tertiary {
-  --button-041-color:            #FB2C37;
+  --button-041-color:            var(--destructive, #FB2C37);
   --button-041-color-background: transparent;
   --button-041-border-color:     transparent;
-  --button-041-color-focus:      #FB2C37;
+  --button-041-color-focus:      var(--destructive, #FB2C37);
 }
