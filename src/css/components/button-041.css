@@ -4,9 +4,11 @@
    Fuente: https://ui.dev/buttons/button-041 */
 
 :root {
-  --button-041-color:            var(--color-text-heading, #222020);
-  --button-041-color-background: var(--color-bg, #ffffff);
-  --button-041-color-focus:      var(--color-brand, #FF6600);
+  /* Default = Primary (dark bg, light text) — coherente con ATOM UIKit */
+  --button-041-color:            #FAFAFA;
+  --button-041-color-background: #18181B;
+  --button-041-color-focus:      #FF6600;
+  --button-041-border-color:     transparent;
   --button-041-padding:          0.75em 1.25em;
   --button-041-border-radius:    var(--radius-md, 0.5rem);
   --button-041-focus-inset:      -0.125em;
@@ -22,6 +24,9 @@
 .button-041 {
   -webkit-tap-highlight-color: transparent;
   transition: scale 0.15s var(--button-041-ease-click);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .button-041::after {
@@ -46,6 +51,7 @@
 .button-041__bg {
   transition: scale 0.15s var(--button-041-ease-soft-overshoot),
               transform 0.15s var(--button-041-ease-soft-overshoot);
+  border: 1px solid var(--button-041-border-color, transparent);
 }
 
 .button-041__text {
@@ -106,4 +112,48 @@
                 opacity 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out,
                 filter 0.15s calc((var(--char) - 1) * 0.018s + 0.05s) ease-out;
   }
+}
+
+/* ---- Variantes — coherentes con ATOM UIKit button ---- */
+
+/* Primary (default) — ya definido en :root */
+
+/* Secondary — white bg, dark text, border */
+.button-041--secondary {
+  --button-041-color:            #09090B;
+  --button-041-color-background: #FFFFFF;
+  --button-041-border-color:     #E4E4E7;
+  --button-041-color-focus:      #FF6600;
+}
+
+/* Tertiary — transparent bg, dark text */
+.button-041--tertiary {
+  --button-041-color:            #09090B;
+  --button-041-color-background: transparent;
+  --button-041-border-color:     transparent;
+  --button-041-color-focus:      #FF6600;
+}
+
+/* Destructive Primary — red bg, white text */
+.button-041--destructive-primary {
+  --button-041-color:            #FFFFFF;
+  --button-041-color-background: #FB2C37;
+  --button-041-border-color:     transparent;
+  --button-041-color-focus:      #FB2C37;
+}
+
+/* Destructive Secondary — white bg, red text, red border */
+.button-041--destructive-secondary {
+  --button-041-color:            #FB2C37;
+  --button-041-color-background: #FFFFFF;
+  --button-041-border-color:     #FB2C37;
+  --button-041-color-focus:      #FB2C37;
+}
+
+/* Destructive Tertiary — transparent bg, red text */
+.button-041--destructive-tertiary {
+  --button-041-color:            #FB2C37;
+  --button-041-color-background: transparent;
+  --button-041-border-color:     transparent;
+  --button-041-color-focus:      #FB2C37;
 }
