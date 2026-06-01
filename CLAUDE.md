@@ -108,18 +108,34 @@ src/
     └── site.js               ← entry point: loader condicional
 ```
 
-## Skills disponibles (33)
+## Skills disponibles (34)
 
-Instaladas en `.agents/skills/` — se activan automáticamente por contexto de tarea.
+El agente lee `.agents/skills/ORCHESTRATOR.md` primero — decide que skills cargar segun el tipo de tarea.
 
 | Categoria | Skills |
 |---|---|
+| Custom ATOM | **atom-code-component-workflow** |
 | CMS | bulk-cms-update, cms-collection-setup, cms-best-practices |
 | Salud del sitio | site-audit, asset-audit, link-checker, accessibility-audit, site-activity |
-| Publicación y código | safe-publish, custom-code-management, flowkit-naming, review-comments, designer-tools |
+| Publicacion y codigo | safe-publish, custom-code-management, flowkit-naming, review-comments, designer-tools |
 | Code Components | code-component, component-audit, component-scaffold, convert-component, deploy-guide, local-dev-setup, pre-deploy-check, troubleshoot-deploy |
 | CLI Webflow | devlink, designer-extension, troubleshooter, cloud |
 | GSAP | gsap-core, gsap-timeline, gsap-scrolltrigger, gsap-plugins, gsap-utils, gsap-react, gsap-performance, gsap-frameworks |
+
+### Agregar skills custom futuras
+
+```bash
+# 1. Crear el directorio y SKILL.md
+mkdir .agents/skills/nombre-skill && touch .agents/skills/nombre-skill/SKILL.md
+
+# 2. Agregar entrada en skills-lock.json con hash placeholder
+# 3. Dejar que el CLI calcule el hash real
+npx skills experimental_install
+
+# 4. Commitear el lockfile actualizado
+```
+
+Regla: el key en `skills-lock.json` debe ser identico al nombre del directorio (dash, no colon).
 
 ## Reglas de operación
 
@@ -146,7 +162,8 @@ ATOMwebflowSite/
 ├── .env                     # credenciales locales (no commitear)
 ├── .gitignore
 ├── .mcp.json                # config Webflow MCP
-├── .agents/skills/          # 33 skills (Webflow + GSAP)
+├── .agents/skills/          # 34 skills (Webflow + GSAP + custom ATOM)
+│   ├── ORCHESTRATOR.md      # punto de entrada del agente
 ├── CLAUDE.md                # este archivo
 └── CHANGELOG.md
 ```
@@ -155,16 +172,11 @@ ATOMwebflowSite/
 
 ## Changelog
 
-### 2026-06-01 — Scaffold src/ completo
-- Creada estructura src/css/ y src/js/ con entry points
-- tokens.css con valores reales ATOM DS (#FF6600, #222020, Inter)
-- Modulos GSAP: animations.js, scroll-animations.js activados por data-module
-- Loader condicional en site.js — zero JS cargado si no hay data-module en DOM
-- CLAUDE.md actualizado con tabla de data-attributes y estructura src/
+### v1.0.0 — 2026-06-01
+- Release publicado en GitHub, jsDelivr activo
+- src/css/ y src/js/ completos con tokens ATOM DS reales
+- ORCHESTRATOR.md + atom-code-component-workflow skill
+- 34 skills registradas y verificadas en skills-lock.json
 
-### 2026-06-01 — Setup inicial
-- Creado directorio del proyecto en SoftwareDevProjects
-- Instaladas 33 skills (25 Webflow + 8 GSAP)
-- Configurado Webflow MCP en `.mcp.json` con token via env var
-- Site ID confirmado: `6890d2a7153362eed21e1c49` (new.atomchat.io)
-- Definida arquitectura: Webflow no-code + CSS/JS externo versionado via jsDelivr
+### 0.0.1 — 2026-06-01
+- Setup inicial, MCP, 33 skills instaladas
