@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "atom:code-component-workflow": {
+      "source": "karenrebecag/AtomWebflow_2026Site",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/atom-code-component-workflow/SKILL.md",
+      "computedHash": "ca3d52748e412d71c60568d3086c8bfc90c266e1a7a9ea43e5615eab913e9df5"
+    },
     "gsap-core": {
       "source": "greensock/gsap-skills",
       "sourceType": "github",
