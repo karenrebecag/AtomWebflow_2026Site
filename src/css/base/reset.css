@@ -1,0 +1,35 @@
+/* ATOM Webflow — Reset minimo
+   No resetea margin/padding global — Webflow lo maneja.
+   Solo corrige lo que el codigo externo necesita controlar. */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Accesibilidad: desactiva animaciones si el usuario lo prefiere.
+   GSAP tambien verifica matchMedia internamente (ver animations.js) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,64 @@
+/* ATOM Webflow — Nav
+   Naming: componente_elemento (Client-First) */
+
+.nav_wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+  transition: background-color var(--transition-base);
+}
+
+.nav_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.nav_logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-semi);
+  font-size: var(--text-base);
+}
+
+.nav_links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_link {
+  color: var(--color-text-inverse);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+
+.nav_link:hover,
+.nav_link.is-active {
+  opacity: 1;
+}
+
+.nav_cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media screen and (max-width: 991px) {
+  .nav_links { display: none; }
+}

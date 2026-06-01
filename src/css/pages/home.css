@@ -1,0 +1,23 @@
+/* ATOM Webflow — Home page overrides
+   Solo estilos especificos de la pagina home que no aplican globalmente. */
+
+.home_features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.home_social-proof {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 991px) {
+  .home_features-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 767px) {
+  .home_features-grid { grid-template-columns: 1fr; }
+}

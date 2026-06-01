@@ -1,0 +1,74 @@
+/* ATOM Webflow — Utilities
+   Client-First compatible: prefijo "u-" para utilidades globales.
+   No usar para layout de componentes — solo helpers transversales. */
+
+/* Visibilidad */
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.u-hidden { display: none !important; }
+
+/* Truncado de texto */
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.u-line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Estados de animacion — GSAP asigna estos via JS */
+.u-animate-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.u-animate-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Focus visible — accesibilidad */
+.u-focus-ring:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Acento de marca — solo texto e iconos, nunca en fondos grandes */
+.u-brand { color: var(--color-brand); }
+
+/* Contenedor responsivo */
+.u-container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+@media screen and (max-width: 767px) {
+  .u-container {
+    padding-inline: var(--space-4);
+  }
+}

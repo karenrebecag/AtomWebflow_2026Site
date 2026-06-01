@@ -1,0 +1,93 @@
+/* ATOM Webflow — Design Tokens
+   Sincronizan con ATOM DS. Negro puro #000000 prohibido en texto.
+   Fuente: ATOM Design System / Client-First Variables */
+
+:root {
+  /* Brand */
+  --color-brand:         #FF6600;
+  --color-brand-hover:   #e65c00;
+
+  /* Texto — #000000 prohibido, usar estos */
+  --color-text-heading:  #222020;
+  --color-text-body:     #27272A;
+  --color-text-muted:    #71717A;
+  --color-text-inverse:  #FFFFFF;
+
+  /* Fondos */
+  --color-bg:            #FFFFFF;
+  --color-bg-dark:       #18181B;
+  --color-surface:       #F4F4F5;
+  --color-surface-dark:  #27272A;
+
+  /* Bordes */
+  --color-border:        #E4E4E7;
+  --color-border-dark:   #3F3F46;
+
+  /* Tipografia — Inter unica fuente autorizada */
+  --font-base:     'Inter', sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.2vw,  0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-3xl:  clamp(2.5rem,   1.5rem  + 3vw,    4.5rem);
+
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+  --font-weight-semi:    600;
+  --font-weight-bold:    700;
+
+  --line-height-tight:  1.2;
+  --line-height-snug:   1.4;
+  --line-height-normal: 1.6;
+
+  /* Espaciado */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1440px;
+
+  /* Radios */
+  --radius-sm:   0.25rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Transiciones */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+  --transition-fast:   120ms var(--ease-out);
+  --transition-base:   180ms var(--ease-out);
+  --transition-slow:   300ms var(--ease-out);
+
+  /* Z-index */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-nav:     300;
+  --z-toast:   400;
+}
