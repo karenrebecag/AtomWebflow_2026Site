@@ -47,29 +47,46 @@ cd ~/Desktop/SoftwareDevProjects/ATOMwebflowSite && claude
 ## Carga en Webflow
 
 Ambos tags van en **Site Settings > Custom Code** (global, no por pagina).
+Usan `@main` — apuntan siempre al ultimo commit de la rama principal.
 
 **Head Code:**
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/css/site.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css">
 ```
 
 **Footer Code:**
 ```html
-<script type="module" data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/js/site.js"></script>
+<script type="module" data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/js/site.js"></script>
 ```
 
-### Versionado en jsDelivr
+### Deploy workflow
 
-| Referencia | Cuando usar | Ejemplo |
-|---|---|---|
-| `@v1.2.0` (tag) | Produccion estable | Solo si jsDelivr ya lo indexo (verificar con curl) |
-| `@{commit-hash}` | Iteracion rapida / fix urgente | `@db8a4dd` — resuelve inmediato, sin cache de tags |
-| `@latest` | NUNCA | jsDelivr cachea agresivamente, rompe deploys |
+Despues de cada `git push origin main`, purgar el cache de jsDelivr y publicar en Webflow:
 
-**Problema conocido:** jsDelivr cachea 404 en tags nuevos por minutos/horas. Para iterar rapido, usar commit hash. Para verificar:
 ```bash
-curl -s -o /dev/null -w "%{http_code}" "https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{REF}/src/js/site.js"
+# 1. Push
+git push origin main
+
+# 2. Purgar cache jsDelivr (obligatorio — sin esto sirve la version cacheada)
+curl -s https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css
+curl -s https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/js/site.js
+
+# 3. Verificar que jsDelivr sirve el commit correcto
+curl -s "https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css" | head -5
+
+# 4. Publicar en Webflow (manual o via safe-publish skill)
 ```
+
+No cambiar las URLs de Custom Code entre deploys — `@main` es permanente.
+
+### Versionado en jsDelivr (referencia)
+
+| Referencia | Cuando usar |
+|---|---|
+| `@main` + purge | **Produccion** — URLs fijas, purgar cache despues de cada push |
+| `@{commit-hash}` | Debug / rollback urgente — resuelve inmediato, sin cache |
+| `@v1.2.0` (tag) | Release pinneado — solo si jsDelivr ya lo indexo |
+| `@latest` | **NUNCA** — jsDelivr cachea agresivamente, rompe deploys |
 
 ### Atributos requeridos en los script tags
 
@@ -80,7 +97,7 @@ curl -s -o /dev/null -w "%{http_code}" "https://cdn.jsdelivr.net/gh/karenrebecag
 
 ### Scripts API vs Custom Code manual
 
-La **Webflow Custom Code Scripts API** (`data_scripts_tool`) permite registrar y aplicar scripts programaticamente, pero los scripts registrados via API **no se renderizan en el HTML publicado** en este site. Usar siempre Site Settings > Custom Code manual para los tags de produccion.
+La **Webflow Custom Code Scripts API** (`data_scripts_tool`) permite registrar y aplicar scripts programaticamente, pero los scripts registrados via API generan conflicto con el Custom Code manual (doble carga de CSS/JS con versiones distintas). **No usar Scripts API para CSS/JS del repo** — usar siempre Site Settings > Custom Code manual.
 
 ## Convenciones de desarrollo
 
