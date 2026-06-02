@@ -3,15 +3,15 @@
    Desktop: 8 visibles (4x2), Tablet: 6 visibles (3x2).
    Canonical ref: https://ui.dev/sections/logo-wall-cycle */
 
-/* Jerarquia: el heading del logo wall es seccion, no hero */
+/* Jerarquia: seccion secundaria, no hero */
 .logo-wall_header .banner_heading {
-  font-size: 1.75rem;
+  font-size: var(--text-h3);
   letter-spacing: -0.01em;
 }
 
 @media screen and (max-width: 767px) {
   .logo-wall_header .banner_heading {
-    font-size: 1.375rem;
+    font-size: var(--text-h4);
   }
 }
 

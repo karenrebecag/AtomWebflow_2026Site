@@ -23,8 +23,9 @@
   --color-border:        #E4E4E7;
   --color-border-dark:   #3F3F46;
 
-  /* Tipografia — legacy (paginas existentes) */
+  /* Tipografia */
   --font-base:     'Inter', sans-serif;
+  --font-display:  'Space Grotesk', sans-serif;
   --font-mono:     'JetBrains Mono', monospace;
 
   --font-weight-regular: 400;
@@ -33,8 +34,21 @@
   --font-weight-bold:    700;
 
   --line-height-tight:  1.15;
-  --line-height-snug:   1.4;
+  --line-height-snug:   1.3;
   --line-height-normal: 1.5;
+
+  /* Type scale — desktop (major-third ~1.25)
+     Mobile overrides en foundation o breakpoints */
+  --text-display: 3.5rem;   /* 56px — hero, above-the-fold */
+  --text-h1:      3rem;      /* 48px — page title */
+  --text-h2:      2.25rem;   /* 36px — section primary */
+  --text-h3:      1.75rem;   /* 28px — section secondary / card title */
+  --text-h4:      1.375rem;  /* 22px — subsection */
+  --text-h5:      1.125rem;  /* 18px — label / eyebrow */
+  --text-h6:      1rem;      /* 16px — caption */
+  --text-body:    1rem;      /* 16px */
+  --text-sm:      0.875rem;  /* 14px */
+  --text-xs:      0.75rem;   /* 12px */
 
   /* Espaciado */
   --space-1:  0.25rem;
