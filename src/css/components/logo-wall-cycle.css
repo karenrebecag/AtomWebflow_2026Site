@@ -15,6 +15,19 @@
   }
 }
 
+/* Tamano de logos */
+.logo-wall__logo-img {
+  width: 56px;
+  height: auto;
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 767px) {
+  .logo-wall__logo-img {
+    width: 44px;
+  }
+}
+
 [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+9) {
   display: none;
 }
