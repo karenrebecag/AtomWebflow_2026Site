@@ -6,7 +6,11 @@
   box-sizing: border-box;
 }
 
-img, video, svg {
+/* Solo aplica a imgs dentro de secciones controladas por este repo.
+   No toca el navbar ni otros elementos nativos de Webflow. */
+[data-logo-wall-cycle-init] img,
+[data-module] img,
+.logo-wall_target img {
   max-width: 100%;
   height: auto;
   display: block;
