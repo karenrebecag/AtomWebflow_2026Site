@@ -251,6 +251,7 @@ Regla: el key en `skills-lock.json` debe ser identico al nombre del directorio (
 - CSS/JS global se versiona en este repo, no se edita inline en Webflow
 - `.env` nunca se commitea — está en `.gitignore`
 - Máximo 1 dominio custom modificado por sesion de trabajo
+- **Página scope:** nunca editar elementos en Webflow si la página no fue especificada explícitamente por el usuario. Siempre confirmar en qué página operar antes de cualquier acción con MCP Designer tools. Si el usuario dice "la página X", operar SOLO en esa página — nunca asumir Home u otra página por defecto.
 
 ## Estructura del repositorio
 

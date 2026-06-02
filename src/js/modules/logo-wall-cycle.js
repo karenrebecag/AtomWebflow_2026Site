@@ -27,6 +27,16 @@ export async function init(container = document) {
   const duration = 0.9;
 
   roots.forEach(root => {
+    // Hydrate: crea <img> desde data-logo-src en cada target (Webflow no soporta Image dentro de DivBlock via API)
+    root.querySelectorAll('[data-logo-wall-target][data-logo-src]').forEach(t => {
+      if (t.querySelector('img')) return;
+      const img = document.createElement('img');
+      img.src = t.getAttribute('data-logo-src');
+      img.alt = t.getAttribute('data-logo-alt') || '';
+      img.loading = 'lazy';
+      t.appendChild(img);
+    });
+
     const list = root.querySelector('[data-logo-wall-list]');
     if (!list) return;
     const items = Array.from(list.querySelectorAll('[data-logo-wall-item]'));
