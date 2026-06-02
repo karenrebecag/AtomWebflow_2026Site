@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATOM Button 041 — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <link rel="stylesheet" href="src/css/components/button-041.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #27272A;
+      background: #FAFAFA;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.5rem; font-weight: 700; color: #09090B; margin-bottom: 0.25rem; }
+    .subtitle { font-size: 0.875rem; color: #71717A; margin-bottom: 3rem; }
+    .section { margin-bottom: 3rem; }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Button 041 — Documentation</h1>
+  <p class="subtitle">Hover funcional con GSAP SplitText.</p>
+
+  <div class="section">
+    <div class="row">
+      <a data-button-041="" href="#" class="button-041">
+        <span class="button-041__bg"></span>
+        <span class="button-041__inner">
+          <span data-button-041-text="" class="button-041__text is--default">Documentation</span>
+          <span data-button-041-text="" aria-hidden="true" class="button-041__text is--hover">Documentation</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    gsap.registerPlugin(SplitText);
+
+    function initButton041() {
+      const buttons = document.querySelectorAll('[data-button-041]');
+      if (buttons.length === 0) return;
+
+      buttons.forEach((element) => {
+        const textElements = element.querySelectorAll('[data-button-041-text]');
+        if (textElements.length === 0) return;
+
+        textElements.forEach((textEl) => {
+          const isAriaHidden = textEl.getAttribute('aria-hidden') === 'true';
+          const splitText = new SplitText(textEl, {
+            type: 'chars',
+            tag: 'span',
+            charsClass: 'button-041__split-char',
+            propIndex: true,
+            aria: isAriaHidden ? 'none' : 'auto',
+          });
+
+          gsap.set(splitText.chars, { display: 'inline-block' });
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.fonts.ready.then(function () {
+        initButton041();
+      });
+    });
+  </script>
+
+</body>
+</html>

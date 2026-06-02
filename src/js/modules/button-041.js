@@ -1,5 +1,5 @@
 // button-041.js — Animated button con SplitText por caracter
-// Fuente: https://ui.dev/buttons/button-041
+// Canonical ref: https://ui.dev/buttons/button-041
 // GSAP lo provee Webflow nativamente (3.15.0) — solo cargamos SplitText.
 // Rocket Loader defiere GSAP, asi que esperamos a que exista en window.
 
@@ -16,7 +16,7 @@ function waitForGSAP(timeout = 5000) {
 
 async function loadSplitText(gsap) {
   if (window.SplitText) return window.SplitText;
-  await import('https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/SplitText.min.js');
+  await import('https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js');
   gsap.registerPlugin(window.SplitText);
   return window.SplitText;
 }
@@ -26,7 +26,7 @@ export async function init(container = document) {
   if (!buttons.length) return;
 
   const gsap = await waitForGSAP();
-  const SplitText = await loadSplitText(gsap);
+  await loadSplitText(gsap);
 
   await document.fonts.ready;
 
