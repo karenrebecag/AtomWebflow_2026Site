@@ -13,15 +13,7 @@ export function init() {
       if (!item) return;
 
       const isActive = item.getAttribute('data-accordion-status') === 'active';
-      const newStatus = isActive ? 'not-active' : 'active';
-      item.setAttribute('data-accordion-status', newStatus);
-
-      // DEBUG: verify DOM change + CSS effect
-      const bottom = item.querySelector('.accordion-css__item-bottom');
-      if (bottom) {
-        const rows = getComputedStyle(bottom).gridTemplateRows;
-        console.log('[atom:accordion] status:', newStatus, '| grid-template-rows:', rows, '| bottom.offsetHeight:', bottom.offsetHeight);
-      }
+      item.setAttribute('data-accordion-status', isActive ? 'not-active' : 'active');
 
       if (closeSiblings && !isActive) {
         accordion.querySelectorAll('[data-accordion-status="active"]').forEach((sibling) => {
