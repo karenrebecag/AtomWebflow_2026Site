@@ -1,53 +1,57 @@
 /* ATOM Webflow — CSS Marquee
-   Infinite scroll marquee with direction variants.
+   Follows osmo.supply CSS Marquee spec exactly.
    Activation: data-css-marquee on wrapper, data-css-marquee-list on track. */
 
+/* Keyframes */
 @keyframes marquee-left {
   to { transform: translateX(-100%); }
 }
 
 @keyframes marquee-right {
-  to { transform: translateX(100%); }
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0%); }
 }
 
-[data-css-marquee] {
+/* Wrapper */
+.marquee-css {
   width: 100%;
-  display: flex !important;
-  flex-direction: row !important;
+  display: flex;
   position: relative;
   overflow: hidden;
 }
 
-[data-css-marquee-list] {
+/* Track — duplicated by JS for seamless loop */
+.marquee-css__list {
   flex: none;
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: stretch;
+  align-items: center;
+  display: flex;
   position: relative;
+}
+
+/* Animation base — paused until JS calculates duration */
+[data-css-marquee-list] {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
 }
 
+/* Direction: left (default) */
 [data-css-marquee="left"] [data-css-marquee-list],
 [data-css-marquee] [data-css-marquee-list] {
   animation-name: marquee-left;
   animation-duration: 30s;
 }
 
+/* Direction: right */
 [data-css-marquee="right"] [data-css-marquee-list] {
   animation-name: marquee-right;
   animation-duration: 30s;
 }
 
+/* Items */
 .marquee-css__item {
-  flex: 0 0 auto !important;
-  display: flex !important;
-  padding: 0.75rem;
-  width: 360px;
-}
-
-.marquee-css__item .review-card {
-  width: 100%;
-  height: 100%;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0.75em;
+  display: flex;
 }
