@@ -15,7 +15,12 @@
   }
 }
 
-/* Tamano de logos */
+/* Tamano de logos — contenedor limita el espacio, imagen se escala dentro */
+.logo-wall__logo {
+  max-width: 120px;
+  max-height: 48px;
+}
+
 .logo-wall__logo-img {
   width: 56px;
   height: auto;
