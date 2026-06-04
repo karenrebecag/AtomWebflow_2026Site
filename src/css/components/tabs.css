@@ -53,12 +53,13 @@
   transition: outline 0.2s ease, color 0.2s ease;
 }
 
-[data-tab-status="active"] {
+[data-tab][data-tab-status="active"] {
   outline: 1px solid white;
-  color: black;
+  outline-offset: -1px;
+  color: #000000;
 }
 
-[data-tab-status="not-active"] {
+[data-tab][data-tab-status="not-active"] {
   outline: none;
   color: #A4A4A4;
 }
