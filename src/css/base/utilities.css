@@ -58,6 +58,7 @@
 
 /* Acento de marca — solo texto e iconos, nunca en fondos grandes */
 .u-brand { color: var(--color-brand); }
+.u-whatsapp { color: var(--color-whatsapp); }
 
 /* Gradient de marca — resaltar palabras clave en titulos y headings
    Aplicar en <span> dentro del texto. No usar en parrafos largos. */
