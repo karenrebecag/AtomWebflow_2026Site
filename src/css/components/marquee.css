@@ -1,5 +1,6 @@
 /* ATOM Webflow — CSS Marquee
-   Follows osmo.supply spec. Attribute selectors beat Webflow class specificity. */
+   Matches osmo.supply XscpData spec exactly.
+   Critical: flex-shrink:0 on list, flex:0 on items. */
 
 @keyframes marquee-left {
   to { transform: translateX(-100%); }
@@ -10,20 +11,22 @@
   to { transform: translateX(0%); }
 }
 
-/* Wrapper — attribute selector beats Webflow .marquee-css */
+/* Wrapper */
 [data-css-marquee] {
-  width: 100%;
-  display: flex;
   position: relative;
+  display: flex;
   overflow: hidden;
+  width: 100%;
 }
 
-/* Track — attribute selector beats Webflow .marquee-css__list */
+/* Track — flex-shrink:0 prevents collapse */
 [data-css-marquee-list] {
-  flex: none;
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
@@ -41,10 +44,11 @@
   animation-duration: 30s;
 }
 
-/* Items */
+/* Items — flex:0 prevents grow/shrink */
 .marquee-css__item {
-  flex: 0 0 auto;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
-  padding: 0.75em;
+  gap: 1em;
+  padding: 1em 1em 1em 0;
 }
