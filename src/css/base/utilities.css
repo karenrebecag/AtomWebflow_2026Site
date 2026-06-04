@@ -59,6 +59,15 @@
 /* Acento de marca — solo texto e iconos, nunca en fondos grandes */
 .u-brand { color: var(--color-brand); }
 
+/* Gradient de marca — resaltar palabras clave en titulos y headings
+   Aplicar en <span> dentro del texto. No usar en parrafos largos. */
+.u-text-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Contenedor responsivo */
 .u-container {
   width: 100%;

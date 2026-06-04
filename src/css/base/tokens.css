@@ -6,6 +6,11 @@
   /* Brand */
   --color-brand:         #FF6600;
   --color-brand-hover:   #e65c00;
+  --color-violet:        #8023FF;
+
+  /* Gradiente de marca — Violet (IA) a Orange (resultados)
+     Uso: resaltar palabras clave, fondos de seccion, enfasis visual */
+  --gradient-brand:      linear-gradient(90deg, #8023FF, #FF6600);
 
   /* Texto — #000000 prohibido, usar estos */
   --color-text-heading:  #222020;
