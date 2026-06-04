@@ -41,7 +41,6 @@
 
 /* --- Tab buttons --- */
 [data-tab] {
-  background: linear-gradient(180deg, white 0%, #C9C9C9 100%);
   border-radius: var(--tabs-radius-tab);
   padding: var(--tabs-padding-tab);
   border: none;
@@ -50,18 +49,20 @@
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
-  transition: outline 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, outline 0.2s ease;
 }
 
 [data-tab][data-tab-status="active"] {
+  background: linear-gradient(180deg, white 0%, #C9C9C9 100%);
   outline: 1px solid white;
   outline-offset: -1px;
   color: #000000;
 }
 
 [data-tab][data-tab-status="not-active"] {
+  background: transparent;
   outline: none;
-  color: #A4A4A4;
+  color: #71717B;
 }
 
 /* --- Content panels --- */
