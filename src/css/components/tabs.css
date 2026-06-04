@@ -1,0 +1,104 @@
+/* ATOM Webflow — Tabs Component
+   Tabbed content with glass-morphism containers.
+   Activation: data-tabs-init on wrapper, data-tab on buttons, data-tab-panel on panels. */
+
+/* --- Container --- */
+[data-tabs-init] {
+  --tabs-radius-container: 15px;
+  --tabs-radius-panel: 20px;
+  --tabs-radius-tab: 10px;
+  --tabs-padding-container: 18px;
+  --tabs-padding-panel: 52px 48px;
+  --tabs-padding-tab: 12px 18px;
+  --tabs-glass-bg: radial-gradient(
+      ellipse 82.75% 62.64% at 28.14% -10.42%,
+      rgba(255, 255, 255, 0.20) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #09090B;
+  --tabs-glass-shadow:
+    0px -3px 0px #080808 inset,
+    0px 1px 0px rgba(255, 255, 255, 0.30) inset,
+    0px 2.77px 2.21px rgba(0, 0, 0, 0.12),
+    0px 6.65px 5.32px rgba(0, 0, 0, 0.13),
+    0px 12.52px 10.02px rgba(0, 0, 0, 0.14),
+    0px 22.34px 17.87px rgba(0, 0, 0, 0.14),
+    0px 41.78px 33.42px rgba(0, 0, 0, 0.15),
+    0px 100px 80px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Tab bar container --- */
+.tabs_bar {
+  background: var(--tabs-glass-bg);
+  box-shadow: var(--tabs-glass-shadow);
+  border-radius: var(--tabs-radius-container);
+  outline: 1px solid rgba(255, 255, 255, 0.20);
+  padding: var(--tabs-padding-container);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* --- Tab buttons --- */
+[data-tab] {
+  background: linear-gradient(180deg, white 0%, #C9C9C9 100%);
+  border-radius: var(--tabs-radius-tab);
+  padding: var(--tabs-padding-tab);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: outline 0.2s ease, color 0.2s ease;
+}
+
+[data-tab-status="active"] {
+  outline: 1px solid white;
+  color: black;
+}
+
+[data-tab-status="not-active"] {
+  outline: none;
+  color: #A4A4A4;
+}
+
+/* --- Content panels --- */
+[data-tab-panel] {
+  background: var(--tabs-glass-bg);
+  box-shadow: var(--tabs-glass-shadow);
+  border-radius: var(--tabs-radius-panel);
+  outline: 1px solid #8023FF;
+  padding: var(--tabs-padding-panel);
+}
+
+/* --- Panel inner row --- */
+.tabs_panel-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* --- Panel text --- */
+.tabs_panel-text {
+  color: #FAFAFA;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* --- Panel image placeholder --- */
+.tabs_panel-image {
+  aspect-ratio: 16 / 10;
+  background: #FAFAFA;
+  border-radius: 8.5px;
+  overflow: hidden;
+}
+
+/* --- Responsive: single column on tablet --- */
+@media (max-width: 991px) {
+  .tabs_panel-row {
+    grid-template-columns: 1fr;
+  }
+}
