@@ -30,6 +30,7 @@ const autoDetect = {
   '[data-button-041]':           () => import('./modules/button-041.js'),
   '[data-logo-wall-cycle-init]': () => import('./modules/logo-wall-cycle.js'),
   '[data-menu-wrap]':            () => import('./modules/mega-nav.js'),
+  '[data-accordion-css-init]':   () => import('./modules/accordion.js'),
 };
 
 Object.entries(autoDetect).forEach(([selector, loader]) => {
