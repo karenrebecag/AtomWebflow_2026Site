@@ -39,8 +39,27 @@
   gap: 8px;
 }
 
+/* --- Tab selector needs relative for indicator positioning --- */
+.tabs_selector {
+  position: relative;
+}
+
+/* --- Sliding indicator --- */
+.tabs_indicator {
+  position: absolute;
+  background: linear-gradient(180deg, white 0%, #C9C9C9 100%);
+  border-radius: var(--tabs-radius-tab);
+  outline: 1px solid white;
+  outline-offset: -1px;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* --- Tab buttons --- */
 [data-tab] {
+  position: relative;
+  z-index: 2;
   border-radius: var(--tabs-radius-tab);
   padding: var(--tabs-padding-tab);
   border: none;
@@ -49,19 +68,15 @@
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
-  transition: background 0.2s ease, color 0.2s ease, outline 0.2s ease;
+  background: transparent;
+  transition: color 0.3s ease;
 }
 
 [data-tab][data-tab-status="active"] {
-  background: linear-gradient(180deg, white 0%, #C9C9C9 100%);
-  outline: 1px solid white;
-  outline-offset: -1px;
   color: #000000;
 }
 
 [data-tab][data-tab-status="not-active"] {
-  background: transparent;
-  outline: none;
   color: #71717B;
 }
 
