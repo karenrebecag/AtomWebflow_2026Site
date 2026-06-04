@@ -1,20 +1,6 @@
 /* ATOM Webflow — Button 041
-   Override completo para garantizar spacing correcto sobre Webflow. */
-
-.button-041 {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 1.5rem;
-  background-color: #09090B;
-  border-radius: 0.5rem;
-  color: #FAFAFA;
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 2.5rem;
-  text-decoration: none;
-}
+   Base styles controlled entirely by Webflow component.
+   Repo only adds hover/active micro-interactions. */
 
 @media (hover: hover) and (pointer: fine) {
   .button-041:hover {
