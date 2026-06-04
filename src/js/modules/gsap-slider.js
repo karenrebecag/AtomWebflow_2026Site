@@ -1,21 +1,27 @@
 // gsap-slider.js — GSAP Draggable slider with snap and controls
-// Activation: [data-gsap-slider-init]. Uses window.gsap from Webflow + Draggable/InertiaPlugin via UMD.
+// Activation: [data-gsap-slider-init]. Uses window.gsap + Draggable from Webflow.
+// InertiaPlugin loaded via script tag (UMD fails with ES module import()).
 
-function waitForGSAP(timeout = 5000) {
+function waitFor(name, timeout = 5000) {
   return new Promise((resolve, reject) => {
-    if (window.gsap) return resolve(window.gsap);
+    if (window[name]) return resolve(window[name]);
     const start = Date.now();
     const check = setInterval(() => {
-      if (window.gsap) { clearInterval(check); resolve(window.gsap); }
-      else if (Date.now() - start > timeout) { clearInterval(check); reject(new Error('gsap not found')); }
+      if (window[name]) { clearInterval(check); resolve(window[name]); }
+      else if (Date.now() - start > timeout) { clearInterval(check); reject(new Error(name + ' not found')); }
     }, 50);
   });
 }
 
-async function loadPlugin(name, url) {
-  if (window[name]) return window[name];
-  await import(url);
-  return window[name];
+function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${url}"]`)) return resolve();
+    const s = document.createElement('script');
+    s.src = url;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
 }
 
 function initBasicGSAPSlider() {
@@ -124,7 +130,8 @@ function initBasicGSAPSlider() {
 
     controls.forEach(btn => {
       const dir = btn.getAttribute('data-gsap-slider-control');
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         if (btn.disabled) return;
         const target = activeIndex + (dir === 'next' ? 1 : -1);
         gsap.to(track, {
@@ -135,23 +142,27 @@ function initBasicGSAPSlider() {
       });
     });
 
-    root._sliderDraggable = Draggable.create(track, {
+    const draggableConfig = {
       type: 'x',
-      inertia: true,
       bounds: { minX, maxX },
-      throwResistance: 2000,
-      dragResistance: 0.05,
-      maxDuration: 0.6,
-      minDuration: 0.2,
       edgeResistance: 0.75,
       snap: { x: snapPoints, duration: 0.4 },
       onPress()         { track.setAttribute('data-gsap-slider-list-status', 'grabbing'); collectionRect = collection.getBoundingClientRect(); },
       onDrag()          { setX(this.x); updateStatus(this.x); },
-      onThrowUpdate()   { setX(this.x); updateStatus(this.x); },
-      onThrowComplete() { setX(this.endX); updateStatus(this.endX); track.setAttribute('data-gsap-slider-list-status', 'grab'); },
       onRelease()       { setX(this.x); updateStatus(this.x); track.setAttribute('data-gsap-slider-list-status', 'grab'); }
-    })[0];
+    };
 
+    if (window.InertiaPlugin) {
+      draggableConfig.inertia = true;
+      draggableConfig.throwResistance = 2000;
+      draggableConfig.dragResistance = 0.05;
+      draggableConfig.maxDuration = 0.6;
+      draggableConfig.minDuration = 0.2;
+      draggableConfig.onThrowUpdate = function () { setX(this.x); updateStatus(this.x); };
+      draggableConfig.onThrowComplete = function () { setX(this.endX); updateStatus(this.endX); track.setAttribute('data-gsap-slider-list-status', 'grab'); };
+    }
+
+    root._sliderDraggable = Draggable.create(track, draggableConfig)[0];
     setX(0);
     updateStatus(0);
   });
@@ -166,11 +177,19 @@ function debounceOnWidthChange(fn, ms) {
 }
 
 export async function init() {
-  const gsap = await waitForGSAP();
-  await loadPlugin('Draggable', 'https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Draggable.min.js');
-  await loadPlugin('InertiaPlugin', 'https://cdn.jsdelivr.net/npm/gsap@3.15/dist/InertiaPlugin.min.js');
-  gsap.registerPlugin(Draggable, InertiaPlugin);
-  console.log('[atom:gsap-slider] plugins loaded, initializing');
+  const gsap = await waitFor('gsap');
+  await waitFor('Draggable');
+
+  // InertiaPlugin: try to load, non-blocking — slider works without it
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.15/dist/InertiaPlugin.min.js');
+    await waitFor('InertiaPlugin', 2000);
+    gsap.registerPlugin(InertiaPlugin);
+  } catch (_) {
+    console.warn('[atom:gsap-slider] InertiaPlugin not available, using snap without inertia');
+  }
+
+  gsap.registerPlugin(Draggable);
   initBasicGSAPSlider();
   window.addEventListener('resize', debounceOnWidthChange(initBasicGSAPSlider, 200));
 }
