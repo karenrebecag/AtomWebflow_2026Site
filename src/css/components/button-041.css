@@ -1,6 +1,17 @@
 /* ATOM Webflow — Button 041
    Estructura y estilos base viven en Webflow (inline-flex, variants).
-   Este archivo solo agrega interacciones hover/active que Webflow no maneja. */
+   Este archivo ajusta spacing y agrega interacciones hover/active. */
+
+.button-041 {
+  gap: 0.25rem;
+  padding: 0.25rem 1.5rem;
+  border-radius: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2.5rem;
+  text-decoration: none;
+}
 
 @media (hover: hover) and (pointer: fine) {
   .button-041:hover {
