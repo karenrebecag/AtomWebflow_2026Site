@@ -42,6 +42,10 @@
 /* --- Tab selector needs relative for indicator positioning --- */
 .tabs_selector {
   position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
 }
 
 /* --- Sliding indicator --- */
