@@ -1,0 +1,47 @@
+/* ATOM Webflow — CSS Marquee
+   Infinite scroll marquee with direction variants.
+   Activation: data-css-marquee on wrapper, data-css-marquee-list on track. */
+
+@keyframes marquee-left {
+  to { transform: translateX(-100%); }
+}
+
+@keyframes marquee-right {
+  to { transform: translateX(100%); }
+}
+
+.marquee-css {
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-css__list {
+  flex: none;
+  align-items: stretch;
+  display: flex;
+  position: relative;
+}
+
+[data-css-marquee-list] {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+
+[data-css-marquee="left"] [data-css-marquee-list],
+[data-css-marquee] [data-css-marquee-list] {
+  animation-name: marquee-left;
+  animation-duration: 30s;
+}
+
+[data-css-marquee="right"] [data-css-marquee-list] {
+  animation-name: marquee-right;
+  animation-duration: 30s;
+}
+
+.marquee-css__item {
+  flex: 0 0 auto;
+  padding: 0.75rem;
+}

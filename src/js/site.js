@@ -33,6 +33,7 @@ const autoDetect = {
   '[data-accordion-css-init]':   () => import('./modules/accordion.js'),
   '[data-tabs-init]':             () => import('./modules/tabs.js'),
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
+  '[data-css-marquee]':          () => import('./modules/marquee.js'),
 };
 
 Object.entries(autoDetect).forEach(([selector, loader]) => {
