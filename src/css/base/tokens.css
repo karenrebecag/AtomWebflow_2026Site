@@ -37,8 +37,8 @@
   --color-border-dark:   #3F3F46;
 
   /* Tipografia — Inter es la unica font autorizada (guia de marca ATOM) */
-  --font-base:     'Inter', sans-serif;
-  --font-display:  'Inter', sans-serif;
+  --font-base:     "Inter", sans-serif;
+  --font-display:  "Inter", sans-serif;
   --font-mono:     'JetBrains Mono', monospace;
 
   --font-weight-regular: 400;

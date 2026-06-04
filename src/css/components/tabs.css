@@ -64,7 +64,7 @@
   padding: var(--tabs-padding-tab);
   border: none;
   cursor: pointer;
-  font-family: inherit;
+  font-family: "Inter", sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
