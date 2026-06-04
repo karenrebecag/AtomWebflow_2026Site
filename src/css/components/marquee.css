@@ -1,8 +1,6 @@
 /* ATOM Webflow — CSS Marquee
-   Follows osmo.supply CSS Marquee spec exactly.
-   Activation: data-css-marquee on wrapper, data-css-marquee-list on track. */
+   Follows osmo.supply spec. Attribute selectors beat Webflow class specificity. */
 
-/* Keyframes */
 @keyframes marquee-left {
   to { transform: translateX(-100%); }
 }
@@ -12,37 +10,32 @@
   to { transform: translateX(0%); }
 }
 
-/* Wrapper */
-.marquee-css {
+/* Wrapper — attribute selector beats Webflow .marquee-css */
+[data-css-marquee] {
   width: 100%;
   display: flex;
   position: relative;
   overflow: hidden;
 }
 
-/* Track — duplicated by JS for seamless loop */
-.marquee-css__list {
-  flex: none;
-  align-items: center;
-  display: flex;
-  position: relative;
-}
-
-/* Animation base — paused until JS calculates duration */
+/* Track — attribute selector beats Webflow .marquee-css__list */
 [data-css-marquee-list] {
+  flex: none;
+  display: flex;
+  align-items: center;
+  position: relative;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
 }
 
-/* Direction: left (default) */
+/* Direction */
 [data-css-marquee="left"] [data-css-marquee-list],
 [data-css-marquee] [data-css-marquee-list] {
   animation-name: marquee-left;
   animation-duration: 30s;
 }
 
-/* Direction: right */
 [data-css-marquee="right"] [data-css-marquee-list] {
   animation-name: marquee-right;
   animation-duration: 30s;
@@ -51,7 +44,7 @@
 /* Items */
 .marquee-css__item {
   flex: 0 0 auto;
+  display: flex;
   align-items: center;
   padding: 0.75em;
-  display: flex;
 }
