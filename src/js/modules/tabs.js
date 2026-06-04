@@ -7,46 +7,30 @@ export function init() {
     const tabs = container.querySelectorAll('[data-tab]');
     const panels = container.querySelectorAll('[data-tab-panel]');
 
-    console.log('[atom:tabs] selector:', !!selector, '| tabs:', tabs.length, '| panels:', panels.length);
-
     if (!selector || !tabs.length) return;
 
-    // Create indicator element
     let indicator = selector.querySelector('.tabs_indicator');
     if (!indicator) {
       indicator = document.createElement('div');
       indicator.className = 'tabs_indicator';
       selector.appendChild(indicator);
-      console.log('[atom:tabs] indicator created');
     }
-
-    console.log('[atom:tabs] selector position:', getComputedStyle(selector).position);
 
     function updateIndicator(activeTab) {
       const selectorRect = selector.getBoundingClientRect();
       const tabRect = activeTab.getBoundingClientRect();
-
-      const left = tabRect.left - selectorRect.left;
-      const top = tabRect.top - selectorRect.top;
-      const width = tabRect.width;
-      const height = tabRect.height;
-
-      console.log('[atom:tabs] indicator move → left:', left, 'top:', top, 'w:', width, 'h:', height);
-
-      indicator.style.left = left + 'px';
-      indicator.style.top = top + 'px';
-      indicator.style.width = width + 'px';
-      indicator.style.height = height + 'px';
+      indicator.style.left = (tabRect.left - selectorRect.left) + 'px';
+      indicator.style.top = (tabRect.top - selectorRect.top) + 'px';
+      indicator.style.width = tabRect.width + 'px';
+      indicator.style.height = tabRect.height + 'px';
     }
 
     function activate(name) {
-      console.log('[atom:tabs] activate:', name);
       tabs.forEach((tab) => {
         const isActive = tab.getAttribute('data-tab') === name;
         tab.setAttribute('data-tab-status', isActive ? 'active' : 'not-active');
         if (isActive) updateIndicator(tab);
       });
-
       panels.forEach((panel) => {
         panel.style.display =
           panel.getAttribute('data-tab-panel') === name ? 'grid' : 'none';

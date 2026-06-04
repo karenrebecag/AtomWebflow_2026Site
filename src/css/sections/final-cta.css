@@ -1,0 +1,34 @@
+/* ATOM Webflow — Final CTA section responsive
+   Base styles live in Webflow. This file adds responsive overrides. */
+
+@media screen and (max-width: 991px) {
+  .final-cta_row {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .final-cta_content {
+    text-align: center;
+    align-items: center;
+  }
+
+  .final-cta_button {
+    align-self: center;
+  }
+
+  .final-cta_logos-row {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .final-cta_logos-row {
+    gap: 1rem;
+  }
+
+  .final-cta_logo-placeholder {
+    width: 64px;
+    height: 57px;
+  }
+}

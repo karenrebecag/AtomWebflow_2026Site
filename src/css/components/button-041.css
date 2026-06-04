@@ -1,11 +1,14 @@
 /* ATOM Webflow — Button 041
-   Estructura y estilos base viven en Webflow (inline-flex, variants).
-   Este archivo ajusta spacing y agrega interacciones hover/active. */
+   Override completo para garantizar spacing correcto sobre Webflow. */
 
 .button-041 {
+  display: inline-flex;
+  align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 1.5rem;
+  background-color: #09090B;
   border-radius: 0.5rem;
+  color: #FAFAFA;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 500;
