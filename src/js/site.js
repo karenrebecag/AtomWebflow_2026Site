@@ -31,6 +31,7 @@ const autoDetect = {
   '[data-logo-wall-cycle-init]': () => import('./modules/logo-wall-cycle.js'),
   '[data-menu-wrap]':            () => import('./modules/mega-nav.js'),
   '[data-accordion-css-init]':   () => import('./modules/accordion.js'),
+  '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
 };
 
 Object.entries(autoDetect).forEach(([selector, loader]) => {

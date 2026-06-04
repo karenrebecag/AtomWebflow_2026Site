@@ -8,6 +8,11 @@
   --color-brand-hover:   #e65c00;
   --color-violet:        #8023FF;
 
+  /* Superficies de marca — fondos suaves por linea de producto */
+  --color-surface-green:   #F1FDF4;
+  --color-surface-violet:  #F5F3FF;
+  --color-surface-orange:  #FFF7ED;
+
   /* Gradiente de marca — Violet (IA) a Orange (resultados)
      Uso: resaltar palabras clave, fondos de seccion, enfasis visual */
   --gradient-brand:      linear-gradient(90deg, #8023FF, #FF6600);

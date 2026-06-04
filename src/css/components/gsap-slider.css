@@ -1,0 +1,41 @@
+/* ATOM Webflow — GSAP Slider
+   Draggable slider with snap, prev/next controls, responsive SPV.
+   Activation: data-gsap-slider-init on wrapper. */
+
+[data-gsap-slider-init] {
+  --slider-status: on;
+  --slider-spv: 3;
+  --slider-gap: 1.5em;
+}
+
+@media screen and (max-width: 991px) {
+  [data-gsap-slider-init] {
+    --slider-spv: 2.25;
+    --slider-gap: 1.5em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  [data-gsap-slider-init] {
+    --slider-spv: 1.15;
+    --slider-gap: 1em;
+  }
+}
+
+[data-gsap-slider-item]:last-child {
+  margin-right: 0;
+}
+
+/* Controls visibility */
+[data-gsap-slider-status="not-active"] [data-gsap-slider-controls] {
+  display: none;
+}
+
+[data-gsap-slider-control-status="not-active"] {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.gsap-slider__control {
+  transition: opacity 0.3s ease;
+}
