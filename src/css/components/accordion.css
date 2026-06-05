@@ -17,3 +17,9 @@
 [data-accordion-status="active"] .accordion-css__item-icon {
   transform: rotate(0.001deg);
 }
+
+/* Designer-only: abre los items en el canvas para editar el contenido.
+   .wf-design-mode lo agrega Webflow solo en el Designer; el sitio publicado no se afecta. */
+.wf-design-mode .accordion-css__item-bottom {
+  grid-template-rows: 1fr;
+}
