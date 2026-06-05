@@ -9,6 +9,31 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.10.0] — 2026-06-05
+
+### Fixed — escala tipografica responsive (tablet/mobile)
+- Multiplicadores de heading como variables `--scale-h1..h6`, reducidos por breakpoint
+  (desktop ×3.815 → tablet ×2.6 → mobile ×2.0 en h1) para que no queden gigantes
+- `--size-container-max` por breakpoint = su `ideal` (834/550/390): elimina la inflacion
+  de la base dentro de cada band (antes mobile-landscape llegaba a ~22px base → h1 ~85px)
+- Resultado: escala coherente y continua entre viewports (h1 ~51px desktop → ~32px mobile)
+
+### Changed — navbar full-width
+- **mega-nav.css** — `.mega-nav` a `top/left/right: 0` y `.mega-nav__bar` sin `border-radius`
+  ni `max-width`: barra full-width pegada al top (quita el look "flotante" de pill centrado)
+- Hide-on-scroll ajustado a `translateY(-100%)` (sin el offset -2em del pill)
+
+### Added — sistema de espaciado y primitivas de layout
+- **tokens.css** — tokens semanticos sobre la escala `--space-*` (acoplamiento parcial, no atado a `--size-font`):
+  - `--section-space` (clamp 48→96px), `--stack-gap-tight/-/-loose`, `--measure` (60ch)
+- **utilities.css** — primitivas de layout:
+  - `u-section` (ritmo vertical de seccion)
+  - `u-container-narrow` (~880px para bloques de texto)
+  - `u-stack` / `u-stack-tight` / `u-stack-loose` (flujo vertical con gap consistente)
+  - `u-measure` (ancho de lectura ~60ch)
+
+---
+
 ## [v1.9.0] — 2026-06-05
 
 ### Added — src/css/base/utilities.css

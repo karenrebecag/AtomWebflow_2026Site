@@ -205,3 +205,44 @@
 .u-text-left   { text-align: left; }
 .u-text-center { text-align: center; }
 .u-text-right  { text-align: right; }
+
+/* ---- Primitivas de layout — ritmo, ancho y legibilidad con pocas reglas ----
+   Estructura tipica:
+     section.u-section  (ritmo vertical)
+       .u-container     (ancho max + centrado)
+         .u-stack       (gap parejo entre eyebrow/titulo/body/CTA)
+           ... .u-measure en el body para ancho de lectura */
+
+/* Strip container — ritmo vertical de seccion (escala con vw via clamp) */
+.u-section {
+  padding-block: var(--section-space);
+}
+
+/* Container angosto — para bloques de texto centrados (~880px) */
+.u-container-narrow {
+  width: 100%;
+  max-width: 55rem;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+/* Text container — flujo vertical con gap consistente */
+.u-stack,
+.u-stack-tight,
+.u-stack-loose {
+  display: flex;
+  flex-direction: column;
+}
+
+.u-stack       { gap: var(--stack-gap); }
+.u-stack-tight { gap: var(--stack-gap-tight); }
+.u-stack-loose { gap: var(--stack-gap-loose); }
+
+/* Measure — limita el ancho del body a una medida de lectura comoda (~60ch) */
+.u-measure {
+  max-width: var(--measure);
+}
+
+@media screen and (max-width: 767px) {
+  .u-container-narrow { padding-inline: var(--space-4); }
+}

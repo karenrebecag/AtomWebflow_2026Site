@@ -6,9 +6,22 @@
   --nav-height: 4em;
 }
 
-/* Hide-on-scroll — estado controlado por nav-scroll.js
-   El nav es un pill flotante (position:fixed; top:1.25em). El offset extra (-2em)
-   compensa ese top para ocultarlo completo sin dejar sliver visible.
+/* Full-width pegado al top — quita el look "flotante" (pill centrado con gap).
+   .mega-nav iba con top/left/right:1.25em; el bar interno con border-radius y
+   max-width 80em centrado. Aqui lo llevamos a barra full-width flush al top. */
+.mega-nav {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.mega-nav__bar {
+  max-width: none;
+  border-radius: 0;
+}
+
+/* Hide-on-scroll — estado controlado por nav-scroll.js.
+   Con top:0, translateY(-100%) lo oculta completo sin offset extra.
 
    Easing/duracion siguen el patron panel-reveal de transitions.dev:
    mismo ease en ambas direcciones (easeOutQuint), close mas rapido que open.
@@ -24,7 +37,7 @@
 }
 
 .mega-nav.is-nav-hidden {
-  transform: translateY(calc(-100% - 2em));
+  transform: translateY(-100%);
   transition: transform var(--nav-hide-dur) var(--nav-ease); /* hide */
 }
 

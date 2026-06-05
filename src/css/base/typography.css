@@ -14,12 +14,13 @@
 
 /* ---- Headings ---- */
 
-/* Escala major-third (ratio 1.25): cada nivel = --size-font * multiplicador.
-   calc (no em) evita que el tamano se compounde por anidacion. */
+/* Escala major-third: cada nivel = --size-font * multiplicador (--scale-hN).
+   Los multiplicadores se reducen por breakpoint (tokens.css) para que los
+   headings no queden gigantes en tablet/mobile. calc (no em) evita compounding. */
 
 .nw h1, .nw .nw-h1 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 3.815);
+  font-size: calc(var(--size-font) * var(--scale-h1));
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-display);
   letter-spacing: -0.04em;
@@ -29,7 +30,7 @@
 
 .nw h2, .nw .nw-h2 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 3.052);
+  font-size: calc(var(--size-font) * var(--scale-h2));
   font-weight: var(--font-weight-bold);
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -39,7 +40,7 @@
 
 .nw h3, .nw .nw-h3 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 2.441);
+  font-size: calc(var(--size-font) * var(--scale-h3));
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -49,7 +50,7 @@
 
 .nw h4, .nw .nw-h4 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 1.953);
+  font-size: calc(var(--size-font) * var(--scale-h4));
   font-weight: var(--font-weight-semi);
   line-height: 1.25;
   letter-spacing: -0.01em;
@@ -58,7 +59,7 @@
 
 .nw h5, .nw .nw-h5 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 1.563);
+  font-size: calc(var(--size-font) * var(--scale-h5));
   font-weight: var(--font-weight-semi);
   line-height: var(--line-height-snug);
   color: var(--color-text-heading, #222020);
@@ -66,7 +67,7 @@
 
 .nw h6, .nw .nw-h6 {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 1.25);
+  font-size: calc(var(--size-font) * var(--scale-h6));
   font-weight: var(--font-weight-semi);
   line-height: var(--line-height-snug);
   color: var(--color-text-heading, #222020);
