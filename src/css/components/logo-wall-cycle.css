@@ -1,9 +1,10 @@
 /* ATOM Webflow — Logo Wall Cycle
-   Rotacion de logos con GSAP timeline.
-   Desktop: 8 visibles (4x2), Tablet: 6 visibles (3x2).
+   Rotacion de logos con GSAP timeline (logo-wall-cycle.js).
+   El cycle hace slide vertical (yPercent) del target, por eso el slot necesita
+   altura fija + overflow hidden para clipear el swap.
    Canonical ref: https://ui.dev/sections/logo-wall-cycle */
 
-/* Jerarquia: seccion de soporte, debajo de section headings */
+/* Header — jerarquia de soporte, debajo de los headings de seccion */
 .logo-wall_header .banner_heading {
   font-size: var(--text-h4);
   letter-spacing: -0.01em;
@@ -15,30 +16,62 @@
   }
 }
 
-/* Tamano de logos — contenedor limita el espacio, imagen se escala dentro */
+/* ---- Layout: grid parejo (override del flex-wrap nativo que dejaba filas desparejas) ---- */
+.logo-wall__list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-10) var(--space-8);
+  align-items: center;
+  justify-items: center;
+}
+
+.logo-wall__item {
+  width: 100%;
+  padding: 0;
+}
+
+/* Slot: altura fija uniforme + clip para el slide del cycle.
+   Reemplaza el aspect-ratio (66% x 40%) que renderizaba logos diminutos. */
 .logo-wall__logo {
-  max-width: 120px;
-  max-height: 48px;
+  width: 100%;
+  max-width: 140px;
+  height: 40px;
+  max-height: none;
+  overflow: hidden;
 }
 
-.logo-wall__logo-img {
-  width: 56px;
-  height: auto;
-  opacity: 0.5;
-}
-
-@media screen and (max-width: 767px) {
-  .logo-wall__logo-img {
-    width: 44px;
-  }
-}
-
-[data-logo-wall-list] [data-logo-wall-item]:nth-child(n+9) {
+.logo-wall__logo-before {
   display: none;
 }
 
+.logo-wall__logo-target {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Imagen: contain + grayscale = curaduria consciente, tamano consistente.
+   Quita el width:56px fijo que rompia el scaling. */
+.logo-wall__logo-target img,
+.logo-wall__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+
+/* ---- Cantidad visible = filas completas (evita huecos) ---- */
+[data-logo-wall-list] [data-logo-wall-item]:nth-child(n+6) { display: none; } /* 5 x 1 */
+
 @media screen and (max-width: 991px) {
-  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+7) {
-    display: none;
-  }
+  .logo-wall__list { grid-template-columns: repeat(3, 1fr); }
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+7) { display: none; } /* 3 x 2 */
+}
+
+@media screen and (max-width: 479px) {
+  .logo-wall__list { grid-template-columns: repeat(2, 1fr); }
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+5) { display: none; } /* 2 x 2 */
+  .logo-wall__logo { height: 32px; }
 }

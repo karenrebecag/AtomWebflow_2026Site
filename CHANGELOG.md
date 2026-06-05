@@ -9,6 +9,16 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.11.0] — 2026-06-05
+
+### Fixed — src/css/components/logo-wall-cycle.css
+- Logo wall reescrito: grid parejo (5/3/2 cols) en vez del flex-wrap que dejaba filas desparejas (5+3)
+- Slot con altura fija + overflow hidden (clipea el slide del cycle); reemplaza el aspect-ratio 66%x40% que hacia logos diminutos
+- Imagen con `object-fit: contain` + `grayscale` + altura uniforme; elimina el `width: 56px` fijo que rompia el scaling
+- Cantidad visible alineada a filas completas por breakpoint
+
+---
+
 ## [v1.10.0] — 2026-06-05
 
 ### Fixed — escala tipografica responsive (tablet/mobile)
