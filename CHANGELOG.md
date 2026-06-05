@@ -11,10 +11,11 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ## [v1.6.1] — 2026-06-05
 
-### Fixed — src/css/components/layouts.css
-- `.banner_container` (inner content de las secciones) movido al repo con `max-width: var(--container-xl)`
-  + centrado + padding. Antes vivia solo en la clase de Webflow; editarla en el Designer
-  rompia el max-width en todas las secciones a la vez. Ahora es resiliente a ediciones de Webflow
+### Note — max-width de secciones
+- El max-width compartido de las secciones (`banner_container`) se rompio al editar la clase
+  en el Designer. Solucion: usar la utility existente `.u-container` (`max-width: var(--container-xl)`
+  + centrado + padding responsive) aplicada manualmente a cada inner content.
+  No se overridea la clase nativa de Webflow desde el repo (control explicito en el Designer).
 
 ---
 

@@ -10,17 +10,6 @@
   padding-inline: 2.5rem;
 }
 
-/* ---- Banner container — inner content de las secciones (home1jun) ----
-   Definido en el repo (no en la clase de Webflow) para que el max-width no se
-   pierda al editar la clase compartida en el Designer. Aplica a todas las strips;
-   reviews_marquees queda full-width porque no es banner_container. */
-.banner_container {
-  width: 100%;
-  max-width: var(--container-xl);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
 @media screen and (max-width: 991px) {
   .layout_container {
     padding-inline: 2rem;
