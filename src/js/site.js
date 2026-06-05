@@ -30,6 +30,7 @@ const autoDetect = {
   '[data-button-041]':           () => import('./modules/button-041.js'),
   '[data-logo-wall-cycle-init]': () => import('./modules/logo-wall-cycle.js'),
   '[data-menu-wrap]':            () => import('./modules/mega-nav.js'),
+  '.mega-nav':                   () => import('./modules/nav-scroll.js'),
   '[data-accordion-css-init]':   () => import('./modules/accordion.js'),
   '[data-tabs-init]':             () => import('./modules/tabs.js'),
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),

@@ -9,6 +9,22 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.4.0] — 2026-06-05
+
+### Added — src/js/
+- `modules/nav-scroll.js` — hide-on-scroll del nav: oculta en scroll-down, muestra en scroll-up y en top
+  - Umbral anti-jitter (6px), `TOP_OFFSET` 80px para mostrar siempre cerca del top
+  - Respeta `data-menu-open` de mega-nav: no oculta con panel/menu mobile abierto
+  - `requestAnimationFrame` para throttle del scroll
+  - Activacion via `autoDetect` en `.mega-nav` — sin atributos extra en Designer
+
+### Changed — src/css/components/mega-nav.css
+- `.mega-nav`: `transition: transform` + `will-change` para el hide-on-scroll
+- `.mega-nav.is-nav-hidden`: `translateY(calc(-100% - 2em))` (compensa `top: 1.25em` del pill flotante)
+- `prefers-reduced-motion`: desactiva la transicion
+
+---
+
 ## [v1.3.0] — 2026-06-05
 
 ### Added — src/js/

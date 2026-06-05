@@ -6,6 +6,22 @@
   --nav-height: 4em;
 }
 
+/* Hide-on-scroll — estado controlado por nav-scroll.js
+   El nav es un pill flotante (position:fixed; top:1.25em). El offset extra (-2em)
+   compensa ese top para ocultarlo completo sin dejar sliver visible. */
+.mega-nav {
+  transition: transform var(--transition-base);
+  will-change: transform;
+}
+
+.mega-nav.is-nav-hidden {
+  transform: translateY(calc(-100% - 2em));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-nav { transition: none; }
+}
+
 .mega-nav__panel-col:last-of-type {
   border: none;
 }
