@@ -15,27 +15,31 @@
 
 .nw h1, .nw .nw-h1 {
   font-family: var(--font-base);
-  font-size: var(--text-display);
+  font-size: var(--step-h1);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.02em;
+  line-height: var(--line-height-display);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
 
 .nw h2, .nw .nw-h2 {
   font-family: var(--font-base);
-  font-size: var(--text-h2);
+  font-size: var(--step-h2);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
 
 .nw h3, .nw .nw-h3 {
   font-family: var(--font-base);
-  font-size: var(--text-h3);
+  font-size: var(--step-h3);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
 
@@ -69,7 +73,7 @@
   font-family: var(--font-base);
   font-size: var(--text-body);
   font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-normal);
+  line-height: 1.7;
   color: var(--color-text-muted, #71717A);
 }
 
@@ -107,20 +111,6 @@
   font-weight: var(--font-weight-medium);
 }
 
-/* ---- Responsive ---- */
-
-@media screen and (max-width: 991px) {
-  .nw h1, .nw .nw-h1 { font-size: var(--text-h1); }
-  .nw h2, .nw .nw-h2 { font-size: var(--text-h3); }
-  .nw h3, .nw .nw-h3 { font-size: var(--text-h4); }
-}
-
-@media screen and (max-width: 767px) {
-  .nw h1, .nw .nw-h1 { font-size: var(--text-h2); }
-  .nw h2, .nw .nw-h2 { font-size: var(--text-h4); }
-  .nw h3, .nw .nw-h3 { font-size: var(--text-h5); }
-  .nw h4, .nw .nw-h4 { font-size: var(--text-h5); }
-}
 
 /* ---- Override: forzar Inter sobre fonts de Webflow (Poppins, DM Sans, Space Grotesk) ---- */
 
@@ -134,4 +124,21 @@
 .mega-nav__panel-link-text,
 .pill {
   font-family: var(--font-base) !important;
+}
+
+/* ---- Stats — tamaño y peso para numeros protagonistas ---- */
+
+.stats-strip_number-violet,
+.stats-strip_number-orange {
+  font-size: clamp(2.25rem, 1.8rem + 2.4vw, 4rem) !important;
+  font-weight: 800 !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.035em !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Responsive — solo propiedades que clamp no resuelve ---- */
+
+@media screen and (max-width: 767px) {
+  .nw h4, .nw .nw-h4 { font-size: var(--text-h5); }
 }

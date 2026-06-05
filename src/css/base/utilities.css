@@ -82,3 +82,30 @@
     padding-inline: var(--space-4);
   }
 }
+
+/* Fondos — overlay blanco sobre el background del elemento.
+   Tecnica: ::before con z-index:-1 dentro de isolation:isolate.
+   El overlay queda entre el bg del elemento y su contenido — no afecta texto ni imagenes.
+   Usar en Webflow agregando la clase al elemento section o wrapper con fondo de color. */
+
+.u-bg-dim,
+.u-bg-dim-2,
+.u-bg-dim-3 {
+  isolation: isolate;
+  position: relative;
+}
+
+.u-bg-dim::before,
+.u-bg-dim-2::before,
+.u-bg-dim-3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / var(--_dim, 0.25));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.u-bg-dim   { --_dim: 0.25; } /* sutil  — fondos ligeramente cargados */
+.u-bg-dim-2 { --_dim: 0.42; } /* medio  — fondos con color visible (rosa, salmon) */
+.u-bg-dim-3 { --_dim: 0.60; } /* fuerte — fondos muy saturados */

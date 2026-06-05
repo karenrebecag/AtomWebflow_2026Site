@@ -1,6 +1,37 @@
 /* ATOM Webflow — Home page overrides
    Solo estilos especificos de la pagina home que no aplican globalmente. */
 
+/* ---- Fondos: overlay blanco sutil para reducir agresividad de secciones de color ----
+   Tecnica: pseudo-element encima del bg, debajo del contenido via z-index.
+   Valores: 0.42 features-slider (rosa fuerte), 0.35 reviews (salmon), 0.3 integrations (lavanda) */
+
+.section_features-slider,
+.section_reviews,
+.section_integrations {
+  position: relative;
+}
+
+.section_features-slider::before,
+.section_reviews::before,
+.section_integrations::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section_features-slider::before { background: rgb(255 255 255 / 0.42); }
+.section_reviews::before         { background: rgb(255 255 255 / 0.35); }
+.section_integrations::before    { background: rgb(255 255 255 / 0.30); }
+
+.section_features-slider > *,
+.section_reviews > *,
+.section_integrations > * {
+  position: relative;
+  z-index: 2;
+}
+
 .home_features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

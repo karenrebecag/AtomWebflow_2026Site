@@ -46,9 +46,10 @@
   --font-weight-semi:    600;
   --font-weight-bold:    700;
 
-  --line-height-tight:  1.15;
-  --line-height-snug:   1.3;
-  --line-height-normal: 1.5;
+  --line-height-display: 1;
+  --line-height-tight:   1.15;
+  --line-height-snug:    1.3;
+  --line-height-normal:  1.7;
 
   /* Type scale — desktop (major-third ~1.25)
      Mobile overrides en foundation o breakpoints */
@@ -62,6 +63,12 @@
   --text-body:    1rem;      /* 16px */
   --text-sm:      0.875rem;  /* 14px */
   --text-xs:      0.75rem;   /* 12px */
+
+  /* Fluid type scale — clamp(min, intercept + slope*vw, max)
+     Calculado para viewport 390px → 1440px */
+  --step-h1: clamp(2.5rem, 1.943rem + 2.286vw, 4rem);
+  --step-h2: clamp(1.75rem, 1.286rem + 1.905vw, 3rem);
+  --step-h3: clamp(1.25rem, 0.971rem + 1.143vw, 2rem);
 
   /* Espaciado */
   --space-1:  0.25rem;

@@ -9,6 +9,38 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.3.0] — 2026-06-05
+
+### Added — src/js/
+- `modules/content-reveal.js` — scroll reveal con GSAP + ScrollTrigger via `[data-reveal-group]`
+  - Soporte para grupos anidados (`data-reveal-group-nested`), stagger, distancia y start configurables
+  - `waitForGSAP` para compatibilidad con Cloudflare Rocket Loader
+  - Activacion via `autoDetect` en `site.js` — carga solo si `[data-reveal-group]` existe en el DOM
+
+### Changed — src/css/base/tokens.css
+- Fluid type scale: `--step-h1/h2/h3` con `clamp()` calculado para 390px→1440px
+- `--line-height-normal` 1.5 → 1.7
+- `--line-height-display: 1` agregado
+
+### Changed — src/css/base/typography.css
+- `h1`: fluid size, `letter-spacing: -0.04em`, `line-height: 1`, `text-wrap: balance`
+- `h2`: fluid size, `letter-spacing: -0.03em`, `line-height: 1.05`, `text-wrap: balance`
+- `h3`: fluid size, `letter-spacing: -0.02em`, `text-wrap: balance`
+- Body: `line-height: 1.7`
+- Stats (`.stats-strip_number-violet/orange`): `clamp(2.25→4rem)`, `font-weight: 800`, tracking `-0.035em`
+- Eliminados media queries de font-size en h1/h2/h3 (clamp los reemplaza)
+
+### Added — src/css/base/utilities.css
+- `u-bg-dim` — overlay blanco 25% sobre el fondo del elemento (fondos ligeramente tintados)
+- `u-bg-dim-2` — overlay blanco 42% (fondos con color visible: rosa, salmon)
+- `u-bg-dim-3` — overlay blanco 60% (fondos muy saturados)
+- Tecnica: `::before` con `z-index: -1` dentro de `isolation: isolate` — no afecta contenido
+
+### Changed — src/css/pages/home.css
+- Agregados overrides de layout para grids y social proof
+
+---
+
 ## [v1.0.0] — 2026-06-01
 
 ### Added — Skills & Agente
