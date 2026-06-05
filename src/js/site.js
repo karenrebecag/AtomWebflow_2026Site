@@ -34,6 +34,7 @@ const autoDetect = {
   '[data-tabs-init]':             () => import('./modules/tabs.js'),
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
   '[data-css-marquee]':          () => import('./modules/marquee.js'),
+  '[data-reveal-group]':         () => import('./modules/content-reveal.js'),
 };
 
 Object.entries(autoDetect).forEach(([selector, loader]) => {
