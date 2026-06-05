@@ -9,6 +9,15 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.6.1] — 2026-06-05
+
+### Fixed — src/css/components/layouts.css
+- `.banner_container` (inner content de las secciones) movido al repo con `max-width: var(--container-xl)`
+  + centrado + padding. Antes vivia solo en la clase de Webflow; editarla en el Designer
+  rompia el max-width en todas las secciones a la vez. Ahora es resiliente a ediciones de Webflow
+
+---
+
 ## [v1.6.0] — 2026-06-05
 
 ### Added — src/css/base/tokens.css
