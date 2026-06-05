@@ -9,13 +9,17 @@
 .nw {
   font-family: var(--font-base);
   color: var(--color-text-body, #27272A);
+  font-size: var(--size-font); /* base de la escala — la jerarquia major-third deriva de aqui */
 }
 
 /* ---- Headings ---- */
 
+/* Escala major-third (ratio 1.25): cada nivel = --size-font * multiplicador.
+   calc (no em) evita que el tamano se compounde por anidacion. */
+
 .nw h1, .nw .nw-h1 {
   font-family: var(--font-base);
-  font-size: var(--step-h1);
+  font-size: calc(var(--size-font) * 3.815);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-display);
   letter-spacing: -0.04em;
@@ -25,7 +29,7 @@
 
 .nw h2, .nw .nw-h2 {
   font-family: var(--font-base);
-  font-size: var(--step-h2);
+  font-size: calc(var(--size-font) * 3.052);
   font-weight: var(--font-weight-bold);
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -35,9 +39,9 @@
 
 .nw h3, .nw .nw-h3 {
   font-family: var(--font-base);
-  font-size: var(--step-h3);
+  font-size: calc(var(--size-font) * 2.441);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-snug);
+  line-height: 1.2;
   letter-spacing: -0.02em;
   text-wrap: balance;
   color: var(--color-text-heading, #222020);
@@ -45,15 +49,16 @@
 
 .nw h4, .nw .nw-h4 {
   font-family: var(--font-base);
-  font-size: var(--text-h4);
+  font-size: calc(var(--size-font) * 1.953);
   font-weight: var(--font-weight-semi);
-  line-height: var(--line-height-snug);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   color: var(--color-text-heading, #222020);
 }
 
 .nw h5, .nw .nw-h5 {
   font-family: var(--font-base);
-  font-size: var(--text-h5);
+  font-size: calc(var(--size-font) * 1.563);
   font-weight: var(--font-weight-semi);
   line-height: var(--line-height-snug);
   color: var(--color-text-heading, #222020);
@@ -61,7 +66,7 @@
 
 .nw h6, .nw .nw-h6 {
   font-family: var(--font-base);
-  font-size: var(--text-h6);
+  font-size: calc(var(--size-font) * 1.25);
   font-weight: var(--font-weight-semi);
   line-height: var(--line-height-snug);
   color: var(--color-text-heading, #222020);
@@ -71,25 +76,25 @@
 
 .nw p, .nw .nw-p1 {
   font-family: var(--font-base);
-  font-size: var(--text-body);
+  font-size: var(--size-font);
   font-weight: var(--font-weight-regular);
   line-height: 1.7;
   color: var(--color-text-muted, #71717A);
 }
 
 .nw .nw-p2 {
-  font-size: var(--text-sm);
+  font-size: calc(var(--size-font) * 0.875);
 }
 
 .nw .nw-p3 {
-  font-size: var(--text-xs);
+  font-size: calc(var(--size-font) * 0.75);
 }
 
 /* ---- Labels / Captions ---- */
 
 .nw .nw-label {
   font-family: var(--font-base);
-  font-size: var(--text-xs);
+  font-size: calc(var(--size-font) * 0.75);
   font-weight: var(--font-weight-medium);
   line-height: 1.2;
   letter-spacing: 0.04em;
@@ -98,7 +103,7 @@
 
 .nw .nw-caption {
   font-family: var(--font-base);
-  font-size: var(--text-sm);
+  font-size: calc(var(--size-font) * 0.875);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
   color: var(--color-text-muted, #71717A);
@@ -137,8 +142,3 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- Responsive — solo propiedades que clamp no resuelve ---- */
-
-@media screen and (max-width: 767px) {
-  .nw h4, .nw .nw-h4 { font-size: var(--text-h5); }
-}

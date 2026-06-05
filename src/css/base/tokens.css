@@ -64,11 +64,15 @@
   --text-sm:      0.875rem;  /* 14px */
   --text-xs:      0.75rem;   /* 12px */
 
-  /* Fluid type scale — clamp(min, intercept + slope*vw, max)
-     Calculado para viewport 390px → 1440px */
-  --step-h1: clamp(2.5rem, 1.943rem + 2.286vw, 4rem);
-  --step-h2: clamp(1.75rem, 1.286rem + 1.905vw, 3rem);
-  --step-h3: clamp(1.25rem, 0.971rem + 1.143vw, 2rem);
+  /* Scaling system — el viewport define un --size-font proporcional al diseno.
+     Scoped: se aplica en .nw (typography.css), NO en body, para no mover el sitio legacy.
+     Desktop defaults aqui; overrides por breakpoint debajo del :root. */
+  --size-unit: 16;              /* body font-size del diseno (sin px) */
+  --size-container-ideal: 1440; /* ancho del diseno de referencia (sin px) */
+  --size-container-min: 992px;
+  --size-container-max: 1920px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
 
   /* Espaciado */
   --space-1:  0.25rem;
@@ -143,4 +147,31 @@
   --z-modal:   200;
   --z-nav:     300;
   --z-toast:   400;
+}
+
+/* Scaling system — overrides de container por breakpoint.
+   Recalculan --size-container/--size-font para que la escala siga el diseno
+   en tablet, mobile landscape y mobile portrait. */
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --size-container-ideal: 550;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  :root {
+    --size-container-ideal: 390;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+  }
 }

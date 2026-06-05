@@ -9,6 +9,25 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.7.0] — 2026-06-05
+
+### Changed — escala tipografica (jerarquia)
+- Nueva escala major-third (ratio 1.25) — pasos claramente distintos (61/49/39/31/25/20px @1440)
+  vs la escala anterior plana (h4-h6 casi iguales: 22/18/16)
+- Scaling por viewport: `--size-font` derivado de `--size-container` (clamp por breakpoint),
+  scoped a `.nw` (no toca el body ni paginas legacy)
+- Tamanos via `calc(var(--size-font) * ratio)` (no em) para evitar compounding por anidacion
+
+### tokens.css
+- Removidos `--step-h1/h2/h3` (clamp). Agregados `--size-unit/-container-ideal/-container-min/-max/-container/-font`
+- Overrides de `--size-container-*` por breakpoint (991/767/479)
+
+### typography.css
+- `.nw` ahora define `font-size: var(--size-font)` como base de la escala
+- h1-h6, p1-p3, label, caption recalculados con multiplicadores major-third
+
+---
+
 ## [v1.6.1] — 2026-06-05
 
 ### Note — max-width de secciones

@@ -1,5 +1,4 @@
 /* ATOM Webflow — CSS Marquee
-   Matches osmo.supply XscpData spec exactly.
    Critical: flex-shrink:0 on list, flex:0 on items. */
 
 @keyframes marquee-left {
