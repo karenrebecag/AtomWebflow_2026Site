@@ -9,6 +9,17 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.8.0] — 2026-06-05
+
+### Added — src/css/base/utilities.css
+- Theming por seccion via atributo `data-theme="dark"` / `data-theme="light"`
+  - Redefine los tokens `--color-text-heading/-body/-muted` en el subarbol
+  - Toda la tipografia `.nw` se adapta automaticamente (usa los tokens via var())
+  - Foregrounds claros en dark: heading #FFF, body rgba(255,255,255,.92), muted rgba(255,255,255,.65)
+  - Acentos (naranja de marca, gradiente, verde WhatsApp) se conservan
+
+---
+
 ## [v1.7.0] — 2026-06-05
 
 ### Changed — escala tipografica (jerarquia)

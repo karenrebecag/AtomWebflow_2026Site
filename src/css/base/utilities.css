@@ -180,3 +180,22 @@
   .u-elev-hover { transition: none; }
   .u-elev-hover:hover { transform: none; }
 }
+
+/* Theming por seccion — invierte los foregrounds de texto segun el fondo.
+   Redefine los tokens de color de texto en el subarbol; como toda la tipografia .nw
+   los consume via var(), el texto se adapta sin tocar cada elemento.
+   Uso en Webflow: agregar el atributo data-theme="dark" a la <section> de fondo oscuro
+   (o data-theme="light" para re-forzar claro en un subarbol anidado).
+   El naranja de marca, el gradiente y el verde WhatsApp se conservan como acentos. */
+
+[data-theme="dark"] {
+  --color-text-heading: var(--color-text-inverse);
+  --color-text-body:    rgba(255, 255, 255, 0.92);
+  --color-text-muted:   rgba(255, 255, 255, 0.65);
+}
+
+[data-theme="light"] {
+  --color-text-heading: #222020;
+  --color-text-body:    #27272A;
+  --color-text-muted:   #71717A;
+}
