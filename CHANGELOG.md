@@ -9,6 +9,17 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.5.0] — 2026-06-05
+
+### Added — src/css/base/utilities.css
+- `u-glass` / `[data-glass]` — superficie "liquid glass" en una sola clase o atributo
+  - Colapsa el multi-capa de Webflow en un elemento: `backdrop-filter` + fill translucido + stack de box-shadow inset (highlights, edges, inner-glow)
+  - Tunable via `--glass-blur` y `--glass-tint`
+  - Variantes: `u-glass-dark` / `[data-glass="dark"]` (ahumado), `[data-glass="soft|strong"]` (blur)
+  - Fallback `@supports` para navegadores sin backdrop-filter (fill mas opaco)
+
+---
+
 ## [v1.4.1] — 2026-06-05
 
 ### Changed — src/css/components/mega-nav.css

@@ -109,3 +109,48 @@
 .u-bg-dim   { --_dim: 0.25; } /* sutil  — fondos ligeramente cargados */
 .u-bg-dim-2 { --_dim: 0.42; } /* medio  — fondos con color visible (rosa, salmon) */
 .u-bg-dim-3 { --_dim: 0.60; } /* fuerte — fondos muy saturados */
+
+/* Glass surface — apariencia "liquid glass" en una sola clase o atributo.
+   Aplica directo al contenedor; no requiere la estructura de capas de Webflow.
+   El multi-capa original usa mix-blend-mode por capa; aqui se aproxima con un
+   stack de box-shadow inset (highlights + edges + inner-glow) en un solo elemento.
+   Tunable via --glass-blur y --glass-tint.
+
+   Uso en Webflow:
+     - Clase:    agregar  u-glass        (o combo  u-glass + u-glass-dark)
+     - Atributo: agregar  data-glass=""   (o  data-glass="dark|soft|strong")
+   Requiere que el contenedor tenga algo detras (seccion/imagen) para que el blur lea. */
+
+.u-glass,
+[data-glass] {
+  --glass-blur: 0.75em;
+  --glass-tint: rgba(212, 212, 212, 0.15);
+
+  position: relative;
+  isolation: isolate;
+  background-color: var(--glass-tint);
+  -webkit-backdrop-filter: saturate(120%) blur(var(--glass-blur));
+  backdrop-filter: saturate(120%) blur(var(--glass-blur));
+  box-shadow:
+    inset 0.28125em 0.28125em 0.09375em -0.328125em rgba(255, 255, 255, 0.8),   /* highlight-strong */
+    inset -0.28125em -0.28125em 0.09375em -0.328125em rgba(255, 255, 255, 0.5), /* highlight-soft */
+    inset 0.1875em 0.28125em 0.09375em -0.1875em rgba(179, 179, 179, 0.5),      /* edge-light */
+    inset -0.1875em -0.28125em 0.09375em -0.1875em rgba(179, 179, 179, 0.3),    /* edge-dark */
+    inset 0 0 1.75em 0 rgba(242, 242, 242, 0.3);                               /* inner-glow */
+}
+
+/* Variante oscura — glass ahumado para fondos claros o sobre imagenes */
+.u-glass.u-glass-dark,
+[data-glass="dark"] { --glass-tint: rgba(24, 24, 27, 0.35); }
+
+/* Intensidad de blur */
+[data-glass="soft"]   { --glass-blur: 0.4em; }
+[data-glass="strong"] { --glass-blur: 1.25em; }
+
+/* Fallback: navegadores sin backdrop-filter reciben un fill mas opaco */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .u-glass,
+  [data-glass] { --glass-tint: rgba(235, 235, 235, 0.7); }
+  .u-glass.u-glass-dark,
+  [data-glass="dark"] { --glass-tint: rgba(24, 24, 27, 0.7); }
+}
