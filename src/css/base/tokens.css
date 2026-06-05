@@ -102,6 +102,33 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
+  /* Elevaciones — sombras apiladas con tinte calido de marca (#201d1d).
+     Multi-capa de baja opacidad = penumbra suave (look premium, no plano).
+     Tinte como triplete RGB para componer opacidades con rgb(.../ a). */
+  --elevation-tint: 32 29 29;
+
+  --elevation-1:
+    0 1px 2px rgb(var(--elevation-tint) / 0.05),
+    0 2px 4px rgb(var(--elevation-tint) / 0.04);
+  --elevation-2:
+    0 1px 2px rgb(var(--elevation-tint) / 0.04),
+    0 2px 4px rgb(var(--elevation-tint) / 0.04),
+    0 8px 16px rgb(var(--elevation-tint) / 0.06);
+  --elevation-3:
+    0 1px 2px rgb(var(--elevation-tint) / 0.04),
+    0 2px 4px rgb(var(--elevation-tint) / 0.04),
+    0 4px 8px rgb(var(--elevation-tint) / 0.05),
+    0 12px 24px rgb(var(--elevation-tint) / 0.08);
+  --elevation-4:
+    0 2px 4px rgb(var(--elevation-tint) / 0.04),
+    0 8px 16px rgb(var(--elevation-tint) / 0.06),
+    0 16px 32px rgb(var(--elevation-tint) / 0.08),
+    0 32px 64px rgb(var(--elevation-tint) / 0.10);
+  --elevation-hover:
+    0 2px 4px rgb(var(--elevation-tint) / 0.05),
+    0 6px 12px rgb(var(--elevation-tint) / 0.07),
+    0 16px 28px rgb(var(--elevation-tint) / 0.10);
+
   /* Transiciones */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);

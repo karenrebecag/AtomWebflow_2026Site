@@ -154,3 +154,29 @@
   .u-glass.u-glass-dark,
   [data-glass="dark"] { --glass-tint: rgba(24, 24, 27, 0.7); }
 }
+
+/* Elevaciones — profundidad consistente via sombras de tokens.css.
+   Uso en Webflow:
+     - Clase:    u-elev-1 .. u-elev-4   (+ u-elev-hover para lift al hover)
+     - Atributo: data-elev="1".."4"
+   Sobrescribe la box-shadow plana nativa de Webflow (nuestra hoja carga despues). */
+
+.u-elev-1, [data-elev="1"] { box-shadow: var(--elevation-1); }
+.u-elev-2, [data-elev="2"] { box-shadow: var(--elevation-2); }
+.u-elev-3, [data-elev="3"] { box-shadow: var(--elevation-3); }
+.u-elev-4, [data-elev="4"] { box-shadow: var(--elevation-4); }
+
+/* Lift al hover — combinar con un nivel base (ej: u-elev-2 u-elev-hover) */
+.u-elev-hover {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.u-elev-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-elev-hover { transition: none; }
+  .u-elev-hover:hover { transform: none; }
+}

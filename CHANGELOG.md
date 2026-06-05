@@ -9,6 +9,19 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.6.0] — 2026-06-05
+
+### Added — src/css/base/tokens.css
+- Sistema de elevaciones con tinte calido de marca (`#201d1d` = `--elevation-tint: 32 29 29`)
+- Tokens `--elevation-1..4` (sombras apiladas multi-capa, baja opacidad) + `--elevation-hover`
+
+### Added — src/css/base/utilities.css
+- `u-elev-1..4` / `[data-elev="1..4"]` — aplica profundidad por clase o atributo
+- `u-elev-hover` — lift al hover (translateY -2px + sombra reforzada), respeta `prefers-reduced-motion`
+- Sobrescribe la box-shadow plana nativa de Webflow
+
+---
+
 ## [v1.5.0] — 2026-06-05
 
 ### Added — src/css/base/utilities.css
