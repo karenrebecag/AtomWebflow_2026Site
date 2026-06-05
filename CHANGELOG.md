@@ -9,6 +9,15 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.8.1] — 2026-06-05
+
+### Changed — src/css/base/tokens.css
+- `--size-container-max` 1920px → 1440px: la escala tipografica se congela en el tamano
+  del diseno (1440) y deja de crecer en monitores grandes. Antes el h1 llegaba a ~81px
+  en pantallas anchas (se sentia excesivo); ahora tope ~61px
+
+---
+
 ## [v1.8.0] — 2026-06-05
 
 ### Added — src/css/base/utilities.css
