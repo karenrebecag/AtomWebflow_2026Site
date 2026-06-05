@@ -218,6 +218,13 @@
   padding-block: var(--section-space);
 }
 
+/* >tablet: padding extra para mas aire entre secciones en desktop */
+@media screen and (min-width: 992px) {
+  .u-section {
+    padding-block: clamp(6rem, 7vw, 8rem);
+  }
+}
+
 /* Container angosto — para bloques de texto centrados (~880px) */
 .u-container-narrow {
   width: 100%;
@@ -242,6 +249,22 @@
 .u-measure {
   max-width: var(--measure);
 }
+
+/* Justificacion/alineacion de elementos en contenedores flex o grid.
+   justify-* = eje principal, items-* = eje cruzado. Aplicar al CONTENEDOR.
+   mx/ml/mr-auto = empujar o centrar un elemento dentro de su padre. */
+.u-justify-start   { justify-content: flex-start; }
+.u-justify-center  { justify-content: center; }
+.u-justify-end     { justify-content: flex-end; }
+.u-justify-between { justify-content: space-between; }
+
+.u-items-start  { align-items: flex-start; }
+.u-items-center { align-items: center; }
+.u-items-end    { align-items: flex-end; }
+
+.u-mx-auto { margin-inline: auto; }
+.u-ml-auto { margin-left: auto; }
+.u-mr-auto { margin-right: auto; }
 
 @media screen and (max-width: 767px) {
   .u-container-narrow { padding-inline: var(--space-4); }

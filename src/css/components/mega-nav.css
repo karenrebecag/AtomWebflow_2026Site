@@ -45,6 +45,14 @@
   .mega-nav { transition: none; }
 }
 
+/* <tablet: nav casi sin padding vertical (barra mas compacta) */
+@media screen and (max-width: 991px) {
+  .mega-nav__container {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+  }
+}
+
 .mega-nav__panel-col:last-of-type {
   border: none;
 }

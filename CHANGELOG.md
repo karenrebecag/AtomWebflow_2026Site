@@ -9,6 +9,21 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.12.0] — 2026-06-05
+
+### Changed — responsive <tablet / >tablet
+- **mega-nav.css** — `<tablet` (≤991): nav casi sin padding vertical (`.mega-nav__container` 0.25em)
+- **home.css** — `<tablet`: el hero (`section_banner`) gana `padding-top` para despejar el nav fixed
+- **utilities.css** — `>tablet` (≥992): `u-section` con padding extra (clamp 6→8rem) para mas aire en desktop
+
+### Added — src/css/base/utilities.css
+- Utilities de justificacion/alineacion de elementos (para contenedores flex/grid):
+  - `u-justify-start/center/end/between` (eje principal)
+  - `u-items-start/center/end` (eje cruzado)
+  - `u-mx-auto` / `u-ml-auto` / `u-mr-auto` (centrar o empujar un elemento)
+
+---
+
 ## [v1.11.1] — 2026-06-05
 
 ### Fixed — src/css/components/logo-wall-cycle.css

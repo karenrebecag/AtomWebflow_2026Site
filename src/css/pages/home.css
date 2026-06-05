@@ -45,6 +45,11 @@
   flex-wrap: wrap;
 }
 
+/* <tablet: el hero necesita padding-top para despejar el nav fixed full-width */
+@media screen and (max-width: 991px) {
+  .section_banner { padding-top: var(--space-16); }
+}
+
 @media screen and (max-width: 991px) {
   .home_features-grid { grid-template-columns: repeat(2, 1fr); }
 }
