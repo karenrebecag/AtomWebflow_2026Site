@@ -9,6 +9,14 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.8.2] — 2026-06-05
+
+### Changed — src/css/base/tokens.css
+- `--size-container-max` 1440px → 1200px: la escala se congela mas pronto.
+  Tope en monitores grandes: base ~13.3px, h1 ~51px, h2 ~41px
+
+---
+
 ## [v1.8.1] — 2026-06-05
 
 ### Changed — src/css/base/tokens.css
