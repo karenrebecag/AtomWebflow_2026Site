@@ -8,14 +8,24 @@
 
 /* Hide-on-scroll — estado controlado por nav-scroll.js
    El nav es un pill flotante (position:fixed; top:1.25em). El offset extra (-2em)
-   compensa ese top para ocultarlo completo sin dejar sliver visible. */
+   compensa ese top para ocultarlo completo sin dejar sliver visible.
+
+   Easing/duracion siguen el patron panel-reveal de transitions.dev:
+   mismo ease en ambas direcciones (easeOutQuint), close mas rapido que open.
+   NO usar will-change ni filter aqui: crearian un containing block permanente
+   que rompe el posicionamiento fixed de .mega-nav__dropdown-wrapper. El transform
+   solo aplica en .is-nav-hidden (transitorio, sin dropdown abierto) = seguro. */
 .mega-nav {
-  transition: transform var(--transition-base);
-  will-change: transform;
+  --nav-show-dur: 0.4s;
+  --nav-hide-dur: 0.35s;
+  --nav-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  transition: transform var(--nav-show-dur) var(--nav-ease); /* show */
 }
 
 .mega-nav.is-nav-hidden {
   transform: translateY(calc(-100% - 2em));
+  transition: transform var(--nav-hide-dur) var(--nav-ease); /* hide */
 }
 
 @media (prefers-reduced-motion: reduce) {

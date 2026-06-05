@@ -9,6 +9,20 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.4.1] — 2026-06-05
+
+### Changed — src/css/components/mega-nav.css
+- Easing del hide-on-scroll alineado al patron panel-reveal de transitions.dev:
+  mismo `cubic-bezier(0.22, 1, 0.36, 1)` en ambas direcciones, open 0.4s / close 0.35s
+  (antes: ease-in asimetrico, se sentia abrupto). Tunable via `--nav-show-dur`/`--nav-hide-dur`/`--nav-ease`
+
+### Fixed — src/css/components/mega-nav.css
+- Removido `will-change: transform` del `.mega-nav`: creaba un containing block permanente
+  que rompia el `position: fixed` de `.mega-nav__dropdown-wrapper` (mega-menus colapsados).
+  El `transform` ahora solo existe en `.is-nav-hidden` (transitorio, sin dropdown abierto)
+
+---
+
 ## [v1.4.0] — 2026-06-05
 
 ### Added — src/js/
