@@ -9,6 +9,17 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.11.1] — 2026-06-05
+
+### Fixed — src/css/components/logo-wall-cycle.css
+- Celda vacia en tablet: la regla base `nth-child(n+6)` ocultaba el item 6 en todos los
+  viewports y tablet nunca lo re-mostraba (quedaban 5 en grid de 3 → hueco). Tablet ahora
+  re-muestra el item 6 explicitamente (6 = 3x2 lleno)
+- Spacing reducido: gaps mas chicos (desktop 24px, tablet 16px, mobile 12px), menos padding
+  de seccion y margen del header en mobile
+
+---
+
 ## [v1.11.0] — 2026-06-05
 
 ### Fixed — src/css/components/logo-wall-cycle.css
