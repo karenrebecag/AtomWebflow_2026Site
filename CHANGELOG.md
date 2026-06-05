@@ -9,6 +9,14 @@ CDN: `https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/sr
 
 ---
 
+## [v1.9.0] — 2026-06-05
+
+### Added — src/css/base/utilities.css
+- Utilities de alineacion: `u-text-left`, `u-text-center`, `u-text-right`
+  - Aplicar como combo (ej: `nw-h3 u-text-left`); no tocan las clases base
+
+---
+
 ## [v1.8.2] — 2026-06-05
 
 ### Changed — src/css/base/tokens.css

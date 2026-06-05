@@ -199,3 +199,9 @@
   --color-text-body:    #27272A;
   --color-text-muted:   #71717A;
 }
+
+/* Alineacion de texto — aplicar como combo (ej: nw-h3 + u-text-left).
+   No tocan las clases base; el text-align directo gana sobre lo heredado del padre. */
+.u-text-left   { text-align: left; }
+.u-text-center { text-align: center; }
+.u-text-right  { text-align: right; }
