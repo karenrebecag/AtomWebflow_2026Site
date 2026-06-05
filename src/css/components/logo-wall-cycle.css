@@ -34,8 +34,8 @@
    Reemplaza el aspect-ratio (66% x 40%) que renderizaba logos diminutos. */
 .logo-wall__logo {
   width: 100%;
-  max-width: 140px;
-  height: 40px;
+  max-width: 104px;
+  height: 28px;
   max-height: none;
   overflow: hidden;
 }
@@ -77,6 +77,7 @@
   /* tablet: 6 (3 x 2) — re-mostrar item 6 y ocultar 7+ */
   [data-logo-wall-list] [data-logo-wall-item]:nth-child(6) { display: block; }
   [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+7) { display: none; }
+  .logo-wall__logo { height: 22px; max-width: 88px; }
 }
 
 @media screen and (max-width: 767px) {
@@ -91,5 +92,5 @@
   }
   /* mobile: 4 (2 x 2) — ocultar 5+ (gana sobre el re-show de tablet por orden) */
   [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+5) { display: none; }
-  .logo-wall__logo { height: 30px; }
+  .logo-wall__logo { height: 20px; max-width: 80px; }
 }
