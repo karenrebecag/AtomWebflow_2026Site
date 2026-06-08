@@ -39,6 +39,23 @@ WEBFLOW_API_TOKEN=<ver .env>
 WEBFLOW_SITE_ID=6890d2a7153362eed21e1c49
 ```
 
+### Conexion al Webflow Designer (herramientas de Designer)
+
+Las herramientas Data API (cms, pages, sites, scripts) funcionan sin el Designer abierto.
+Las herramientas Designer (de_component_tool, element_tool, style_tool, whtml_builder, etc.) requieren que el Designer este activo en el navegador con la app MCP conectada.
+
+**Proceso obligatorio al inicio de cada sesion que use herramientas Designer:**
+
+1. Intentar cualquier llamada con una herramienta Designer (por ejemplo `get_all_components`).
+2. Si el Designer no esta conectado, la respuesta de error incluye una URL con este formato:
+   ```
+   https://atomchat-staging.design.webflow.com?app=<token>
+   ```
+3. Compartir esa URL con el usuario como markdown link para que la abra en el navegador.
+4. Una vez que el usuario abra el link y el Designer este en primer plano, reintentar la llamada.
+
+No intentar generar ni adivinar la URL manualmente — siempre se obtiene del mensaje de error de la primera llamada fallida. La URL cambia por sesion.
+
 Para cargar el MCP, abrir Claude Code desde este directorio:
 ```bash
 cd ~/Desktop/SoftwareDevProjects/ATOMwebflowSite && claude
