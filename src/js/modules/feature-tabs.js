@@ -1,4 +1,4 @@
-// tabs-osmo.js — Osmo-style tabbed content with GSAP animations + autoplay progress bar
+// feature-tabs.js — Tabbed content with GSAP animations + autoplay progress bar
 // Activates via [data-tabs="wrapper"] on an inner element (not the component root).
 // Requires window.gsap (Webflow 3.15.0). Uses waitForGSAP due to Cloudflare Rocket Loader.
 

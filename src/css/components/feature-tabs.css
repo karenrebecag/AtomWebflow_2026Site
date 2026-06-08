@@ -1,4 +1,4 @@
-/* ATOM Webflow — Tabs Osmo (feature accordion + visual panel)
+/* ATOM Webflow — Feature Tabs (feature accordion + visual panel)
    Activation: [data-tabs="wrapper"] on inner child element (not component root).
    Attributes: data-tabs-autoplay="true", data-tabs-autoplay-duration="5000" (ms). */
 
