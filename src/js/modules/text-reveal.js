@@ -1,11 +1,13 @@
 // text-reveal.js — Bold scroll reveal for headings (GSAP + ScrollTrigger + SplitText)
 // Activation: [data-split="heading"]. Optional [data-split-reveal="lines|words|chars"] (default "words").
 //
+// Effect: masked slide-up — each line/word sits below an overflow-clip edge and
+// rises into place (expo.out). No blur, no scale.
+//
 // Inheritance note: the page also runs content-reveal.js ([data-reveal-group]) which
-// fades+slides each section block on enter. Headings live inside those blocks, so a
-// subtle text effect gets masked by the block fade. This effect is deliberately bold
-// (blur + scale + travel) and fires slightly later (top 72%) than the block reveal
-// (top 80%), so it reads on an already-visible block instead of competing with it.
+// fades+slides each section block on enter. Headings live inside those blocks, so the
+// reveal fires slightly later (top 75%) than the block reveal (top 80%), so it reads on
+// an already-visible block instead of competing with it.
 //
 // Webflow ships gsap/ScrollTrigger/SplitText (3.15.0) but Cloudflare Rocket Loader
 // defers them, so we poll for the globals before using them.
@@ -33,9 +35,9 @@ async function ensureSplitText(gsap) {
 
 // Per split-type timing
 const config = {
-  words: { stagger: 0.06, duration: 0.9 },
-  lines: { stagger: 0.12, duration: 1.0 },
-  chars: { stagger: 0.02, duration: 0.7 },
+  lines: { stagger: 0.12, duration: 0.9 },
+  words: { stagger: 0.05, duration: 0.7 },
+  chars: { stagger: 0.015, duration: 0.5 },
 };
 
 export async function init(container = document) {
@@ -71,21 +73,18 @@ export async function init(container = document) {
       return;
     }
 
-    const type = heading.dataset.splitReveal || 'words';
+    const type = heading.dataset.splitReveal || 'lines';
 
+    // Masked slide-up: each piece sits below an overflow-clip edge and rises into place
     const reveal = (targets, cfg) =>
       gsap.from(targets, {
-        autoAlpha: 0,
-        yPercent: 60,
-        scale: 0.8,
-        filter: 'blur(12px)',
-        transformOrigin: '50% 100%',
+        yPercent: 100,
         duration: cfg.duration,
-        ease: 'power3.out',
+        ease: 'expo.out',
         stagger: cfg.stagger,
         scrollTrigger: {
           trigger: heading,
-          start: 'top 72%', // later than the block reveal (top 80%) so it reads distinctly
+          start: 'top 75%', // after the block reveal (top 80%) so it reads distinctly
           once: true,
         },
       });
@@ -98,17 +97,18 @@ export async function init(container = document) {
 
       SplitText.create(heading, {
         type: typesToSplit.join(', '),
+        mask: type, // wrap each piece in an overflow-clip mask for the slide-up
         autoSplit: true,
         linesClass: 'line',
         wordsClass: 'word',
         charsClass: 'letter',
         onSplit(instance) {
-          const targets = instance[type] || instance.words || instance.lines;
-          return reveal(targets, config[type] || config.words);
+          const targets = instance[type] || instance.lines || instance.words;
+          return reveal(targets, config[type] || config.lines);
         },
       });
     } else {
-      // Fallback when SplitText is unavailable — animate the whole heading (still bold)
+      // Fallback when SplitText is unavailable — slide the whole heading up
       reveal(heading, config.lines);
     }
   });
