@@ -20,6 +20,19 @@
   border-radius: 0;
 }
 
+/* Mega menu dropdown — full-width to match the navbar (Webflow capped the
+   wrapper at max-width:80rem centered, leaving gaps at the edges).
+   Background goes edge-to-edge; columns inset to the navbar's 4em padding
+   so the content lines up with the bar above. */
+.mega-nav__dropdown-wrapper {
+  max-width: none;
+}
+
+.mega-nav__dropdown-inner {
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
 /* Hide-on-scroll — estado controlado por nav-scroll.js.
    Con top:0, translateY(-100%) lo oculta completo sin offset extra.
 
