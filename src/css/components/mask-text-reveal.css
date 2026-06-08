@@ -1,0 +1,14 @@
+/* ATOM Webflow — Masked Text Reveal
+   Hides headings until JS splits + reveals them, avoiding a flash of
+   unstyled (un-animated) content. The module clears this with autoAlpha.
+   Activation: [data-split="heading"] (+ optional [data-split-reveal]). */
+
+[data-split="heading"] {
+  visibility: hidden;
+}
+
+/* Keep text visible/editable inside the Designer and Editor */
+.wf-design-mode [data-split="heading"],
+.w-editor [data-split="heading"] {
+  visibility: visible !important;
+}
