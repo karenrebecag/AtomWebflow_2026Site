@@ -65,6 +65,12 @@ export async function init(container = document) {
   headings.forEach((heading) => {
     gsap.set(heading, { autoAlpha: 1 }); // clear the CSS FOUC hide
 
+    // Skip gradient text: SplitText wraps words in their own boxes, which
+    // breaks the parent's background-clip:text gradient. Just reveal it.
+    if (heading.matches('[class*="gradient"]') || heading.querySelector('[class*="gradient"]')) {
+      return;
+    }
+
     const type = heading.dataset.splitReveal || 'words';
 
     const reveal = (targets, cfg) =>
