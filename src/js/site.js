@@ -35,6 +35,7 @@ const autoDetect = {
   '[data-tabs-init]':             () => import('./modules/tabs.js'),
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
   '[data-css-marquee]':          () => import('./modules/marquee.js'),
+  '[data-tabs="wrapper"]':       () => import('./modules/tabs-osmo.js'),
   '[data-reveal-group]':         () => import('./modules/content-reveal.js'),
 };
 
