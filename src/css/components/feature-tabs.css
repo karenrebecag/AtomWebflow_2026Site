@@ -18,12 +18,14 @@
   padding-left: 0.5em;
 }
 
-.tab-content__wrap {
+/* Extra specificity resets the Webflow-compiled max-width/margin
+   (the Designer style tool can't remove those properties). */
+[data-tabs="wrapper"] .tab-content__wrap {
   width: 100%;
   height: 100%;
-  max-width: 36em;
+  max-width: none;
   margin-right: 0;
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .tab-content__inner {
@@ -206,10 +208,6 @@
 @media screen and (max-width: 991px) {
   .tab-layout__col {
     width: 100%;
-  }
-  .tab-content__wrap {
-    max-width: none;
-    margin-left: 0;
   }
   .tab-content__inner {
     padding: 0;
