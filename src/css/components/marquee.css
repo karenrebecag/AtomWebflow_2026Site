@@ -60,8 +60,9 @@
   padding: 0 2rem;
 }
 
-.badges-marquee_logo {
-  height: 2.5rem;
+/* +40% (2.5rem -> 3.5rem). Scoped to override the flat Webflow class. */
+.badges-marquee_item .badges-marquee_logo {
+  height: 3.5rem;
   width: auto;
   max-width: none;
   object-fit: contain;
