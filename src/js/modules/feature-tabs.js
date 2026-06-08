@@ -84,6 +84,21 @@ export async function init() {
       tl.fromTo(incomingVisual, { autoAlpha: 0, xPercent: 3 }, { autoAlpha: 1, xPercent: 0 }, 0.3)
         .fromTo(incomingContent.querySelector('[data-tabs="item-details"]'), { height: 0 }, { height: 'auto' }, 0)
         .set(incomingBar, { scaleX: 0, transformOrigin: 'left center' }, 0);
+
+      // Only the active step's video plays; the rest stay paused
+      playOnly(incomingVisual, outgoingVisual);
+    }
+
+    // Pause the outgoing video and (re)play the incoming one from the start.
+    // Each visual-item may carry its own <video>, so every step can have a distinct clip.
+    function playOnly(incoming, outgoing) {
+      const out = outgoing?.querySelector('video');
+      if (out) out.pause();
+      const vid = incoming?.querySelector('video');
+      if (!vid) return;
+      vid.muted = true;
+      vid.currentTime = 0;
+      vid.play().catch(() => {});
     }
 
     switchTab(0);
