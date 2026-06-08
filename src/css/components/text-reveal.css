@@ -1,6 +1,6 @@
-/* ATOM Webflow — Masked Text Reveal
-   Hides headings until JS splits + reveals them, avoiding a flash of
-   unstyled (un-animated) content. The module clears this with autoAlpha.
+/* ATOM Webflow — Text Reveal (bold heading scroll reveal)
+   Hides headings until JS reveals them, avoiding a flash of un-animated
+   content. The module clears this with autoAlpha.
    Activation: [data-split="heading"] (+ optional [data-split-reveal]). */
 
 [data-split="heading"] {

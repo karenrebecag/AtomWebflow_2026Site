@@ -36,7 +36,7 @@ const autoDetect = {
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
   '[data-css-marquee]':          () => import('./modules/marquee.js'),
   '[data-tabs="wrapper"]':       () => import('./modules/feature-tabs.js'),
-  '[data-split="heading"]':      () => import('./modules/mask-text-reveal.js'),
+  '[data-split="heading"]':      () => import('./modules/text-reveal.js'),
   '[data-reveal-group]':         () => import('./modules/content-reveal.js'),
 };
 
