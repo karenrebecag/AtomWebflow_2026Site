@@ -79,17 +79,17 @@
   --size-unit: 16;              /* body font-size del diseno (sin px) */
   --size-container-ideal: 1440; /* ancho del diseno de referencia (sin px) */
   --size-container-min: 992px;
-  --size-container-max: 1920px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
+  --size-container-max: 1440px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
   --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
   --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
 
   /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente. */
-  --scale-h1: 7.5;
-  --scale-h2: 5.5;
-  --scale-h3: 4.25;
-  --scale-h4: 2.75;
-  --scale-h5: 2;
-  --scale-h6: 1.375;
+  --scale-h1: 3.815;
+  --scale-h2: 3.052;
+  --scale-h3: 2.441;
+  --scale-h4: 1.953;
+  --scale-h5: 1.563;
+  --scale-h6: 1.25;
 
   /* Espaciado */
   --space-1:  0.25rem;
