@@ -32,7 +32,7 @@
 /* Logos — dimensionados por ALTURA (width auto) = peso visual uniforme.
    grayscale + opacity unifica logos multicolor; hover sube a color pleno. */
 .logo-marquee img {
-  height: 2.5em;
+  height: 1.75em;
   width: auto;
   max-width: none;
   object-fit: contain;
@@ -48,6 +48,6 @@
 }
 
 @media screen and (max-width: 767px) {
-  .logo-marquee img { height: 2em; }
+  .logo-marquee img { height: 1.4em; }
   .logo-marquee__list > * { margin-right: var(--gap-xl, 2em); }
 }
