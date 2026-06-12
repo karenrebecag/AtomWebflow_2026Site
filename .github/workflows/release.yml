@@ -50,4 +50,30 @@ jobs:
           git push origin "${{ steps.version.outputs.tag }}"
 
       - name: Purge jsDelivr loader cache
-        run: curl -s "https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/loader.js"
+        # Webflow Head referencia @latest/loader.js (resuelve al tag mas alto).
+        # jsDelivr cachea la resolucion de refs mutables (@main 12h via s-maxage) y
+        # purgar el archivo NO siempre re-resuelve el ref — por eso @main quedaba
+        # atascado en una version vieja. @latest (sobre tags) se refresca mejor; aun
+        # asi verificamos con reintentos hasta confirmar que sirve la version nueva.
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          REPO="karenrebecag/AtomWebflow_2026Site"
+          purge() { curl -s "https://purge.jsdelivr.net/gh/${REPO}@$1/loader.js" > /dev/null || true; }
+
+          # @latest = ref que usa Webflow; @main por compatibilidad
+          purge latest
+          purge main
+
+          ok=0
+          for i in $(seq 1 8); do
+            sleep 8
+            BODY="$(curl -s "https://cdn.jsdelivr.net/gh/${REPO}@latest/loader.js")"
+            if printf '%s' "$BODY" | grep -q "\"$V\""; then
+              echo "@latest/loader.js sirve v$V (intento $i)"; ok=1; break
+            fi
+            echo "intento $i: @latest aun no sirve v$V; re-purga"
+            purge latest
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::warning::@latest/loader.js no refresco a v$V tras reintentos; jsDelivr puede tardar hasta su TTL. El tag @v$V ya esta fresco e inmutable."
+          fi

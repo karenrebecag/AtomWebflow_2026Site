@@ -68,10 +68,17 @@ URL fija — nunca cambia entre deploys.
 
 **Head Code:**
 ```html
-<script data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/loader.js"></script>
+<script data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@latest/loader.js"></script>
 ```
 
 **Footer Code:** vacio. `loader.js` inyecta tanto el CSS como el JS apuntando al tag versionado correcto.
+
+> **Por que `@latest` y no `@main`:** jsDelivr cachea la resolucion de refs mutables.
+> Para un branch (`@main`) cachea `main -> commit` hasta 12h (`s-maxage=43200`) y el
+> purge del archivo NO re-resuelve el ref — `@main` quedaba sirviendo una version
+> vieja durante horas. `@latest` resuelve al **tag** SemVer mas alto; como el CI crea
+> un tag nuevo en cada deploy y los tags son una señal mas fuerte, jsDelivr lo
+> refresca mucho mejor. El CI ademas purga `@latest` con verificacion + reintentos.
 
 ### Deploy workflow
 
@@ -80,7 +87,9 @@ Solo se necesita `git push origin main`. El CI hace el resto automaticamente:
 1. Calcula el siguiente tag patch (`vX.Y.Z → vX.Y.(Z+1)`)
 2. Regenera `loader.js` con la nueva version
 3. Commit + push del loader y el tag
-4. Purga `loader.js` en jsDelivr
+4. Purga `loader.js` en `@latest` (y `@main`) y **verifica con reintentos** que
+   jsDelivr ya sirva la version nueva; si no, deja un warning (el tag inmutable
+   `@vX.Y.Z` siempre esta fresco como fallback)
 
 Los assets `site.css` y `site.js` quedan inmutables en el tag — no necesitan purge.
 
@@ -90,10 +99,11 @@ Para publicar en Webflow: manual via safe-publish skill o desde el Designer.
 
 | Referencia | Cuando usar |
 |---|---|
-| `@main` | Solo `loader.js` — URL fija en Webflow, purgada automaticamente por CI |
+| `@latest` | **Solo `loader.js`** — URL fija en Webflow. Resuelve al tag mas alto; CI lo purga+verifica. El loader es diminuto y apunta a tags inmutables, asi que la agresividad de cache de `@latest` no afecta a los assets. |
 | `@{commit-hash}` | Debug / rollback urgente — resuelve inmediato, sin cache |
-| `@v1.2.0` (tag) | Release pinneado — solo si jsDelivr ya lo indexo |
-| `@latest` | **NUNCA** — jsDelivr cachea agresivamente, rompe deploys |
+| `@v1.2.0` (tag) | Assets versionados (`site.css`/`site.js`) — inmutables, siempre frescos |
+| `@main` | **Evitar** — jsDelivr cachea la resolucion del branch hasta 12h y el purge no la refresca; el loader quedaba atascado en versiones viejas |
+| `@latest` para ASSETS | **NUNCA** — cachea el contenido del asset agresivamente. Solo el loader puede usar `@latest`. |
 
 ### Atributos requeridos en los script tags
 
