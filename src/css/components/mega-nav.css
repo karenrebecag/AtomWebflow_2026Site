@@ -7,15 +7,15 @@
 }
 
 /* Absolute top — overlay sobre el hero sin ocupar espacio en el layout.
-   Webflow pone position:fixed; lo sobreescribimos a absolute para que el nav
-   no reserve espacio y el primer section arranque desde y:0. */
+   left:50% + translate:-50% centra sin pisar el transform:translateY del hide-on-scroll
+   (translate y transform son propiedades CSS separadas en Transforms L2). */
 .mega-nav {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: 100%;
   max-width: var(--container-xl);
-  margin-inline: auto;
 }
 
 .mega-nav__bar {
