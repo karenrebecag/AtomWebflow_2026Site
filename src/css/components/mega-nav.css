@@ -6,9 +6,11 @@
   --nav-height: 4em;
 }
 
-/* Ancho contenido — quita el look flotante de Webflow (top/left/right:1.25em)
-   y restringe el nav al ancho del contenido, centrado. */
+/* Absolute top — overlay sobre el hero sin ocupar espacio en el layout.
+   Webflow pone position:fixed; lo sobreescribimos a absolute para que el nav
+   no reserve espacio y el primer section arranque desde y:0. */
 .mega-nav {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
