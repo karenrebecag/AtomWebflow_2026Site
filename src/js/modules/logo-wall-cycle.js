@@ -1,157 +1,80 @@
-// logo-wall-cycle.js — Logo rotation con GSAP timeline
-// Canonical ref: https://ui.dev/sections/logo-wall-cycle
-// GSAP + ScrollTrigger los provee Webflow nativamente (3.15.0).
-// Rocket Loader defiere GSAP, asi que esperamos a que exista en window.
+// logo-wall-cycle.js — Logo wall como marquee continuo (estilo Osmo trusted-by).
+// Reemplaza el cycle GSAP por scroll horizontal infinito:
+//  1. clona la lista una vez → loop sin costura
+//  2. duracion = ancho / PPS → velocidad constante sin importar cuantos logos
+//  3. pausa fuera de viewport (observer-hub) → no gasta frames oculto
+// Activado por [data-logo-wall-cycle-init]. Markup intacto.
 
-function waitForGSAP(timeout = 5000) {
-  return new Promise((resolve, reject) => {
-    if (window.gsap) return resolve(window.gsap);
-    const start = Date.now();
-    const check = setInterval(() => {
-      if (window.gsap) { clearInterval(check); resolve(window.gsap); }
-      else if (Date.now() - start > timeout) { clearInterval(check); reject(new Error('[atom] gsap not found — Webflow GSAP may be disabled')); }
-    }, 50);
-  });
+import { observeWith } from '../core/observer-hub.js';
+
+const PPS = 50; // pixeles por segundo (igual que Osmo)
+
+function waitForImages(scope) {
+  const imgs = [...scope.querySelectorAll('img')];
+  if (!imgs.length) return Promise.resolve();
+  return Promise.all(imgs.map(img => {
+    if (img.complete && img.naturalWidth) return Promise.resolve();
+    return new Promise(res => {
+      img.addEventListener('load', res, { once: true });
+      img.addEventListener('error', res, { once: true });
+    });
+  }));
 }
 
 export async function init(container = document) {
   const roots = container.querySelectorAll('[data-logo-wall-cycle-init]');
   if (!roots.length) return;
 
-  const gsap = await waitForGSAP();
-  const ScrollTrigger = window.ScrollTrigger;
-  if (!ScrollTrigger) return;
-  gsap.registerPlugin(ScrollTrigger);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const loopDelay = 1.5;
-  const duration = 0.9;
+  for (const root of roots) {
+    if (root.__marqueeInit) continue;
+    root.__marqueeInit = true;
 
-  roots.forEach(root => {
-    // Hydrate: crea <img> desde data-logo-src en cada target (Webflow no soporta Image dentro de DivBlock via API)
-    root.querySelectorAll('[data-logo-wall-target][data-logo-src]').forEach(t => {
-      if (t.querySelector('img')) return;
-      const img = document.createElement('img');
-      img.src = t.getAttribute('data-logo-src');
-      img.alt = t.getAttribute('data-logo-alt') || '';
-      img.loading = 'lazy';
-      t.appendChild(img);
-    });
+    const viewport = root.querySelector('.logo-wall__collection') || root;
+    const original = viewport.querySelector('[data-logo-wall-list]');
+    if (!original) continue;
 
-    const list = root.querySelector('[data-logo-wall-list]');
-    if (!list) return;
-    const items = Array.from(list.querySelectorAll('[data-logo-wall-item]'));
-    if (!items.length) return;
+    // Clona la lista para el loop sin costura
+    const clone = original.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    viewport.appendChild(clone);
 
-    const shuffleFront = root.getAttribute('data-logo-wall-shuffle') !== 'false';
-    const originalTargets = items
-      .map(item => item.querySelector('[data-logo-wall-target]'))
-      .filter(Boolean);
+    const lists = [...viewport.querySelectorAll('[data-logo-wall-list]')];
 
-    let visibleItems = [];
-    let visibleCount = 0;
-    let pool = [];
-    let pattern = [];
-    let patternIndex = 0;
-    let tl;
+    await waitForImages(viewport);
 
-    function isVisible(el) {
-      return window.getComputedStyle(el).display !== 'none';
-    }
-
-    function shuffleArray(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
-
-    function setup() {
-      if (tl) tl.kill();
-
-      visibleItems = items.filter(isVisible);
-      visibleCount = visibleItems.length;
-      pattern = shuffleArray(Array.from({ length: visibleCount }, (_, i) => i));
-      patternIndex = 0;
-
-      items.forEach(item => {
-        item.querySelectorAll('[data-logo-wall-target]').forEach(old => old.remove());
+    const setDurations = () => {
+      lists.forEach(l => {
+        const d = l.offsetWidth / PPS;
+        if (d > 0) l.style.animationDuration = d + 's';
       });
+    };
+    setDurations();
 
-      pool = originalTargets.map(n => n.cloneNode(true));
+    if (reduce) continue; // sin movimiento: la lista queda estatica (CSS animation:none)
 
-      let front, rest;
-      if (shuffleFront) {
-        const shuffled = shuffleArray(pool);
-        front = shuffled.slice(0, visibleCount);
-        rest = shuffleArray(shuffled.slice(visibleCount));
-      } else {
-        front = pool.slice(0, visibleCount);
-        rest = shuffleArray(pool.slice(visibleCount));
-      }
-      pool = front.concat(rest);
-
-      for (let i = 0; i < visibleCount; i++) {
-        const parent = visibleItems[i].querySelector('[data-logo-wall-target-parent]') || visibleItems[i];
-        parent.appendChild(pool.shift());
-      }
-
-      tl = gsap.timeline({ repeat: -1, repeatDelay: loopDelay });
-      tl.call(swapNext);
-      tl.play();
-    }
-
-    function swapNext() {
-      const nowCount = items.filter(isVisible).length;
-      if (nowCount !== visibleCount) { setup(); return; }
-      if (!pool.length) return;
-
-      const idx = pattern[patternIndex % visibleCount];
-      patternIndex++;
-
-      const itemEl = visibleItems[idx];
-      const parent =
-        itemEl.querySelector('[data-logo-wall-target-parent]') ||
-        itemEl.querySelector('*:has(> [data-logo-wall-target])') ||
-        itemEl;
-
-      if (parent.querySelectorAll('[data-logo-wall-target]').length > 1) return;
-
-      const current = parent.querySelector('[data-logo-wall-target]');
-      const incoming = pool.shift();
-
-      gsap.set(incoming, { yPercent: 50, autoAlpha: 0 });
-      parent.appendChild(incoming);
-
-      if (current) {
-        gsap.to(current, {
-          yPercent: -50, autoAlpha: 0, duration,
-          ease: 'expo.inOut',
-          onComplete: () => { current.remove(); pool.push(current); }
-        });
-      }
-
-      gsap.to(incoming, {
-        yPercent: 0, autoAlpha: 1, duration,
-        delay: 0.1, ease: 'expo.inOut'
+    // Pausa/reanuda segun viewport
+    observeWith(root, { threshold: 0 }, (entry) => {
+      lists.forEach(l => {
+        l.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
       });
-    }
-
-    setup();
-
-    ScrollTrigger.create({
-      trigger: root,
-      start: 'top bottom',
-      end: 'bottom top',
-      onEnter: () => tl.play(),
-      onLeave: () => tl.pause(),
-      onEnterBack: () => tl.play(),
-      onLeaveBack: () => tl.pause()
     });
+  }
 
-    document.addEventListener('visibilitychange', () =>
-      document.hidden ? tl.pause() : tl.play()
-    );
-  });
+  // Recalcula la duracion al cambiar el ancho (un solo listener global)
+  if (!window.__logoWallResize) {
+    window.__logoWallResize = true;
+    let t;
+    window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        document.querySelectorAll('[data-logo-wall-cycle-init] [data-logo-wall-list]')
+          .forEach(l => {
+            const d = l.offsetWidth / PPS;
+            if (d > 0) l.style.animationDuration = d + 's';
+          });
+      }, 200);
+    });
+  }
 }
