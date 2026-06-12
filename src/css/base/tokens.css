@@ -79,17 +79,17 @@
   --size-unit: 16;              /* body font-size del diseno (sin px) */
   --size-container-ideal: 1440; /* ancho del diseno de referencia (sin px) */
   --size-container-min: 992px;
-  --size-container-max: 1920px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
+  --size-container-max: 1200px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
   --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
   --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
 
-  /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente,
-     sin necesidad de overrides por breakpoint. */
-  --scale-h1: 7;
-  --scale-h2: 5;
-  --scale-h3: 3.875;
-  --scale-h4: 2.5;
-  --scale-h5: 1.875;
+  /* Multiplicadores de la escala (desktop). Se reducen por breakpoint para que
+     los headings no queden gigantes en tablet/mobile. */
+  --scale-h1: 3.815;
+  --scale-h2: 3.052;
+  --scale-h3: 2.441;
+  --scale-h4: 1.953;
+  --scale-h5: 1.563;
   --scale-h6: 1.25;
 
   /* Espaciado */
@@ -187,17 +187,29 @@
    en tablet, mobile landscape y mobile portrait. */
 @media screen and (max-width: 991px) {
   :root {
-    --size-container-ideal: 850;
+    --size-container-ideal: 834;
     --size-container-min: 768px;
-    --size-container-max: 991px;
+    --size-container-max: 834px;
+    --scale-h1: 2.6;
+    --scale-h2: 2.2;
+    --scale-h3: 1.8;
+    --scale-h4: 1.5;
+    --scale-h5: 1.3;
+    --scale-h6: 1.15;
   }
 }
 
 @media screen and (max-width: 767px) {
   :root {
-    --size-container-ideal: 390;
+    --size-container-ideal: 550;
     --size-container-min: 480px;
-    --size-container-max: 767px;
+    --size-container-max: 550px;
+    --scale-h1: 2.2;
+    --scale-h2: 1.9;
+    --scale-h3: 1.6;
+    --scale-h4: 1.4;
+    --scale-h5: 1.25;
+    --scale-h6: 1.1;
   }
 }
 
@@ -205,6 +217,12 @@
   :root {
     --size-container-ideal: 390;
     --size-container-min: 320px;
-    --size-container-max: 479px;
+    --size-container-max: 390px;
+    --scale-h1: 2.0;
+    --scale-h2: 1.75;
+    --scale-h3: 1.5;
+    --scale-h4: 1.35;
+    --scale-h5: 1.2;
+    --scale-h6: 1.1;
   }
 }
