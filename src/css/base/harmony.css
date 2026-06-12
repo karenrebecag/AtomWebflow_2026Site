@@ -68,7 +68,7 @@
 /* ---------- Ritmo de seccion ----------
    .u-section default = --pad-m. Modifiers para subir/bajar el aire vertical. */
 
-.nw .u-section     { padding-block: var(--pad-m); }
+.nw .u-section     { padding-block: var(--pad-s); }
 .nw .u-section.is--xl { padding-block: var(--pad-xl); }
 .nw .u-section.is--l  { padding-block: var(--pad-l); }
 .nw .u-section.is--s  { padding-block: var(--pad-s); }
