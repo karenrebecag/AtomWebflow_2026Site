@@ -63,44 +63,34 @@ cd ~/Desktop/SoftwareDevProjects/ATOMwebflowSite && claude
 
 ## Carga en Webflow
 
-Ambos tags van en **Site Settings > Custom Code** (global, no por pagina).
-Usan `@main` — apuntan siempre al ultimo commit de la rama principal.
+Un solo tag en **Site Settings > Custom Code > Head Code** (global, no por pagina).
+URL fija — nunca cambia entre deploys.
 
 **Head Code:**
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css">
+<script data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/loader.js"></script>
 ```
 
-**Footer Code:**
-```html
-<script type="module" data-cfasync="false" src="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/js/site.js"></script>
-```
+**Footer Code:** vacio. `loader.js` inyecta tanto el CSS como el JS apuntando al tag versionado correcto.
 
 ### Deploy workflow
 
-Despues de cada `git push origin main`, purgar el cache de jsDelivr y publicar en Webflow:
+Solo se necesita `git push origin main`. El CI hace el resto automaticamente:
 
-```bash
-# 1. Push
-git push origin main
+1. Calcula el siguiente tag patch (`vX.Y.Z → vX.Y.(Z+1)`)
+2. Regenera `loader.js` con la nueva version
+3. Commit + push del loader y el tag
+4. Purga `loader.js` en jsDelivr
 
-# 2. Purgar cache jsDelivr (obligatorio — sin esto sirve la version cacheada)
-curl -s https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css
-curl -s https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/js/site.js
+Los assets `site.css` y `site.js` quedan inmutables en el tag — no necesitan purge.
 
-# 3. Verificar que jsDelivr sirve el commit correcto
-curl -s "https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/src/css/site.css" | head -5
-
-# 4. Publicar en Webflow (manual o via safe-publish skill)
-```
-
-No cambiar las URLs de Custom Code entre deploys — `@main` es permanente.
+Para publicar en Webflow: manual via safe-publish skill o desde el Designer.
 
 ### Versionado en jsDelivr (referencia)
 
 | Referencia | Cuando usar |
 |---|---|
-| `@main` + purge | **Produccion** — URLs fijas, purgar cache despues de cada push |
+| `@main` | Solo `loader.js` — URL fija en Webflow, purgada automaticamente por CI |
 | `@{commit-hash}` | Debug / rollback urgente — resuelve inmediato, sin cache |
 | `@v1.2.0` (tag) | Release pinneado — solo si jsDelivr ya lo indexo |
 | `@latest` | **NUNCA** — jsDelivr cachea agresivamente, rompe deploys |
@@ -301,8 +291,10 @@ ATOMwebflowSite/
 │       ├── modules/         nav.js, animations.js, scroll-animations.js, faq.js
 │       ├── pages/           home.js
 │       └── site.js          entry point
+├── loader.js                # entry point CDN — auto-generado por CI, no editar a mano
 ├── .env                     # credenciales locales (no commitear)
 ├── .gitignore
+├── .github/workflows/       # CI: auto-tag + regenera loader.js en cada push a main
 ├── .mcp.json                # config Webflow MCP
 ├── .agents/skills/          # 34 skills (Webflow + GSAP + custom ATOM)
 │   ├── ORCHESTRATOR.md      # punto de entrada del agente
@@ -314,7 +306,12 @@ ATOMwebflowSite/
 
 ## Changelog
 
-### v1.2.1 — 2026-06-01 (current)
+### v1.3.0 — 2026-06-12 (current)
+- Loader pattern: `loader.js` en `@main` inyecta CSS/JS con tag versionado, cero desface de browser cache
+- GitHub Actions auto-tag patch en cada push a main — `release.yml`
+- Deploy = solo `git push origin main`, CI purga y tagea automaticamente
+
+### v1.2.1 — 2026-06-01
 - Auto-detect pattern para componentes Webflow con GSAP
 - GSAP usa window.gsap nativo de Webflow (3.15.0) + polling para Rocket Loader
 - SplitText carga via UMD dynamic import (no existe ESM en npm)

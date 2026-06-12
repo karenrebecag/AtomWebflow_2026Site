@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - loader.js
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Calculate new version
+        id: version
+        run: |
+          git fetch --tags
+          LATEST=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
+          if [ -z "$LATEST" ]; then LATEST="v0.0.0"; fi
+          VERSION="${LATEST#v}"
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+          PATCH=$(echo "$VERSION" | cut -d. -f3)
+          NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          echo "tag=v${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate loader.js
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          BASE="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site"
+          printf '(function(){var v="%s";var base="%s";var l=document.createElement("link");l.rel="stylesheet";l.href=base+"@"+v+"/src/css/site.css";document.head.appendChild(l);var s=document.createElement("script");s.type="module";s.setAttribute("data-cfasync","false");s.src=base+"@"+v+"/src/js/site.js";document.head.appendChild(s);})();\n' \
+            "$V" "$BASE" > loader.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add loader.js
+          git commit -m "chore(release): ${{ steps.version.outputs.tag }}"
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin main
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Purge jsDelivr loader cache
+        run: curl -s "https://purge.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@main/loader.js"
