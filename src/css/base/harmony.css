@@ -1,0 +1,162 @@
+/* ATOM Webflow — Harmony layer (port del sistema de composicion de Osmo)
+   Principio raiz: spacing, container y sizing en `em`, proporcionales a --size-font.
+   Dentro de .nw, font-size = --size-font (typography.css), asi que TODO escala junto
+   como un solo organismo proporcional (type + spacing + layout respiran a la vez).
+
+   Todo el layout esta scoped a .nw para no tocar paginas legacy.
+   Los tokens viven en :root (solo valores; se consumen dentro de .nw).
+   Sobrescribe las utilidades rem-based de utilities.css por mayor especificidad. */
+
+:root {
+  /* Ritmo vertical de seccion (grande). em → escala con --size-font. */
+  --pad-xl: 12.5em;
+  --pad-l:  10em;
+  --pad-m:  7.5em;
+  --pad-s:  5em;
+  --pad-xs: 3.75em;
+
+  /* Gaps internos (fino). Separan elementos hermanos, no secciones. */
+  --gap-xxl: 2.5em;
+  --gap-xl:  2em;
+  --gap-l:   1.875em;
+  --gap-m:   1.5em;
+  --gap-sm:  1.25em;
+  --gap-s:   1em;
+  --gap-xs:  0.75em;
+  --gap-xxs: 0.5em;
+
+  /* Gutter lateral del container */
+  --container-gutter: 1.875em;
+
+  /* Clearance del nav fijo para min-heights tipo hero */
+  --nav-h: 4.5em;
+}
+
+/* El em ya comprime el padding al bajar --size-font, pero la proporcion de
+   desktop es excesiva en mobile: reducimos el ritmo de seccion y el gutter.
+   (Mismo criterio que Osmo: solo se tocan paddings, los gaps se mantienen.) */
+@media screen and (max-width: 767px) {
+  :root {
+    --pad-xl: 8em;
+    --pad-l:  6.5em;
+    --pad-m:  5em;
+    --pad-s:  3.75em;
+    --pad-xs: 3em;
+    --container-gutter: 0.625em;
+  }
+}
+
+/* ---------- Container — un ancho base, reducciones multiplicativas ----------
+   --size-container (tokens.css) es el clamp de referencia del scaling system.
+   Cada modifier deriva por multiplicacion → anchos armonicos por construccion. */
+
+.nw .u-container {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+.nw .u-container.is--m  { max-width: calc(var(--size-container) * 0.825); } /* texto comodo */
+.nw .u-container.is--sm { max-width: calc(var(--size-container) * 0.65); }
+.nw .u-container.is--s  { max-width: calc(var(--size-container) * 0.5); }   /* bloque lectura */
+
+/* Suelta el gutter en mobile cuando se pide (full-bleed controlado) */
+@media screen and (max-width: 767px) {
+  .nw .u-container.is--flush-mobile { padding-inline: 0; }
+}
+
+/* ---------- Ritmo de seccion ----------
+   .u-section default = --pad-m. Modifiers para subir/bajar el aire vertical. */
+
+.nw .u-section     { padding-block: var(--pad-m); }
+.nw .u-section.is--xl { padding-block: var(--pad-xl); }
+.nw .u-section.is--l  { padding-block: var(--pad-l); }
+.nw .u-section.is--s  { padding-block: var(--pad-s); }
+.nw .u-section.is--xs { padding-block: var(--pad-xs); }
+
+/* Variantes asimetricas (patron Osmo: poco arriba, mucho abajo o viceversa) */
+.nw .u-section.is--flush-top    { padding-top: 0; }
+.nw .u-section.is--flush-bottom { padding-bottom: 0; }
+
+/* ---------- Stacks y gaps (proporcionales) ----------
+   Sobrescribe los .u-stack rem-based de utilities.css dentro de .nw. */
+
+.nw .u-stack       { gap: var(--gap-l); }
+.nw .u-stack-tight { gap: var(--gap-s); }
+.nw .u-stack-loose { gap: var(--gap-xl); }
+
+/* Gap utilities directas — aplican al contenedor flex/grid */
+.nw .u-gap-xxs { gap: var(--gap-xxs); }
+.nw .u-gap-xs  { gap: var(--gap-xs); }
+.nw .u-gap-s   { gap: var(--gap-s); }
+.nw .u-gap-sm  { gap: var(--gap-sm); }
+.nw .u-gap-m   { gap: var(--gap-m); }
+.nw .u-gap-l   { gap: var(--gap-l); }
+.nw .u-gap-xl  { gap: var(--gap-xl); }
+.nw .u-gap-xxl { gap: var(--gap-xxl); }
+
+/* ---------- Estrategia de capas (relative-first, absoluto solo para fondos) ----------
+   Patron Osmo: el contenedor crea contexto, el __bg va absoluto detras,
+   el contenido se eleva con .u-rel. Absoluto NUNCA para maquetar contenido. */
+
+.nw .u-rel {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fondo/decoracion que cubre el contenedor padre, detras del contenido */
+.nw .u-layer-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Contenedor de capas: aisla el stacking y ancla los hijos absolutos */
+.nw .u-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ---------- Min-heights de viewport ----------
+   svh/dvh (no vh) para no pelear con la barra dinamica de mobile.
+   El colchon se descuenta en em para que escale con el diseno. */
+
+.nw .u-min-screen      { min-height: 100svh; }
+.nw .u-min-screen-nav  { min-height: calc(100svh - var(--nav-h)); }
+.nw .u-min-screen-loose{ min-height: calc(100dvh - var(--nav-h) - 1px); }
+
+/* ---------- Aspect-ratio (cajas proporcionales) ---------- */
+
+.nw .u-ratio-square { aspect-ratio: 1 / 1; }
+.nw .u-ratio-video  { aspect-ratio: 16 / 9; }
+.nw .u-ratio-photo  { aspect-ratio: 4 / 3; }
+.nw .u-ratio-portrait { aspect-ratio: 3 / 4; }
+.nw .u-ratio-cover  { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Display headings (escala hero tipo Osmo, opcional) ----------
+   Para titulos protagonistas mas grandes que h1. No tocan la escala base. */
+
+.nw .u-display-xl {
+  font-size: calc(var(--size-font) * 5);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: var(--font-weight-bold);
+  text-wrap: balance;
+}
+.nw .u-display-xxl {
+  font-size: calc(var(--size-font) * 6.5);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  font-weight: var(--font-weight-bold);
+  text-wrap: balance;
+}
+
+@media screen and (max-width: 991px) {
+  .nw .u-display-xl  { font-size: calc(var(--size-font) * 3.5); }
+  .nw .u-display-xxl { font-size: calc(var(--size-font) * 4.25); }
+}
+@media screen and (max-width: 767px) {
+  .nw .u-display-xl  { font-size: calc(var(--size-font) * 2.75); }
+  .nw .u-display-xxl { font-size: calc(var(--size-font) * 3.25); }
+}

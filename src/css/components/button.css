@@ -1,0 +1,222 @@
+/* ATOM Webflow — Button system (port del rotate-button de Osmo)
+   Dos labels apilados en un grid rotan en hover (button.js calcula el eje --y).
+   Temas mapeados a tokens ATOM via [data-button-theme] en .button-bg.
+
+   Markup en Webflow:
+     <a class="button" data-button-rotate data-button-rotate-hover data-shape="round">
+       <div class="button-bg" data-button-theme="brand"></div>
+       <div class="button-label__wrap">
+         <div class="button-label"><span>Texto</span></div>
+         <div class="button-label" aria-hidden="true"><span>Texto</span></div>
+       </div>
+     </a>
+
+   --btn-height y --r se definen en tokens.css. font-size usa --size-font para
+   escalar con el scaling system (la var vive en :root, disponible globalmente). */
+
+.button {
+  --r: 20deg;
+  height: var(--btn-height);
+  gap: 0.625em;
+  color: var(--color-text-heading);
+  font-size: var(--size-font, 1rem);
+  white-space: nowrap;
+  border-radius: 0.125em;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.125em 0.0625em;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.button[data-shape="round"],
+.square-button[data-shape="round"] {
+  border-radius: 3em;
+}
+
+.button[data-size="full"] {
+  width: 100%;
+}
+
+/* En Designer el boton es estatico; restaura pointer-events para editarlo */
+div.button { pointer-events: none; }
+:is(.wf-design-mode, .wf-editor) div.button { pointer-events: auto; }
+
+/* Fondo — capa absoluta detras de los labels. El color lo da el tema. */
+.button-bg,
+.button {
+  transition: background-color var(--transition-base);
+}
+
+.button-bg {
+  z-index: 0;
+  background-color: var(--color-surface);
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+/* Labels apilados */
+.button-label__wrap {
+  z-index: 1;
+  place-items: center;
+  display: grid;
+  position: relative;
+}
+
+.button-label {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.02em;
+  font-size: 1.125em;
+  line-height: 1;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  position: relative;
+  /* Eje de rotacion lejano (button.js sobrescribe --y por largo de texto) */
+  transform-origin: 50% var(--y, 1100%);
+}
+
+/* El segundo+ label se apila absoluto sobre el primero */
+.button-label:not(:nth-of-type(1)),
+.square-button .button-icon:not(:nth-of-type(1)) {
+  position: absolute;
+}
+
+/* Pre-rotacion por paso --r: label 1 visible, label 2 esperando abajo */
+.button-label:nth-of-type(1),
+.square-button .button-icon:nth-of-type(1) {
+  transform: rotate(calc(var(--r) * 0));
+}
+.button-label:nth-of-type(2),
+.square-button .button-icon:nth-of-type(2) {
+  transform: rotate(calc(var(--r) * -1));
+}
+.button-label:nth-of-type(3),
+.square-button .button-icon:nth-of-type(3) {
+  transform: rotate(calc(var(--r) * -2));
+}
+
+:is(.wf-design-mode, .wf-editor) .button-label {
+  transform-origin: 50% 1800%;
+}
+
+/* Filas de botones */
+.button-row {
+  flex-flow: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.625em;
+  max-width: 100%;
+  display: flex;
+}
+.button-row.align--end {
+  justify-content: flex-end;
+}
+
+/* ---- Square button (iconos) ---- */
+
+.square-button {
+  --r: 10deg;
+  width: var(--btn-height);
+  height: var(--btn-height);
+  color: var(--color-text-heading);
+  font-size: var(--size-font, 1rem);
+  border-radius: 0.125em;
+  padding: 0.625em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.square-button[data-size="m"] {
+  width: 3em;
+  height: 3em;
+}
+.square-button[data-size="l"] {
+  --r: 15deg;
+  width: 3.875em;
+  height: 3.875em;
+  padding: 1.375em;
+}
+
+.button-icon__wrap {
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+.button-icon {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% var(--y, 1100%);
+}
+
+/* ---- Temas — bg en .button-bg, color de texto en el root via :has() ---- */
+
+.button-bg[data-button-theme="brand"]  { background-color: var(--color-brand); }
+.button-bg[data-button-theme="violet"] { background-color: var(--color-violet); }
+.button-bg[data-button-theme="dark"]   { background-color: var(--color-bg-dark); }
+.button-bg[data-button-theme="light"]  { background-color: var(--color-surface); }
+.button-bg[data-button-theme="outline-dark"],
+.button-bg[data-button-theme="outline-light"] { background-color: transparent; }
+
+.button:has(.button-bg[data-button-theme="brand"]),
+.button:has(.button-bg[data-button-theme="violet"]),
+.button:has(.button-bg[data-button-theme="dark"]),
+.button:has(.button-bg[data-button-theme="outline-light"]),
+.square-button:has(.button-bg[data-button-theme="brand"]),
+.square-button:has(.button-bg[data-button-theme="violet"]),
+.square-button:has(.button-bg[data-button-theme="dark"]),
+.square-button:has(.button-bg[data-button-theme="outline-light"]) {
+  color: var(--color-text-inverse);
+}
+
+.button:has(.button-bg[data-button-theme="light"]),
+.button:has(.button-bg[data-button-theme="outline-dark"]),
+.square-button:has(.button-bg[data-button-theme="light"]),
+.square-button:has(.button-bg[data-button-theme="outline-dark"]) {
+  color: var(--color-text-heading);
+}
+
+.button:has(.button-bg[data-button-theme="outline-dark"]),
+.button:has(.button-bg[data-button-theme="outline-light"]),
+.square-button:has(.button-bg[data-button-theme="outline-dark"]),
+.square-button:has(.button-bg[data-button-theme="outline-light"]) {
+  border: 0.0625em solid currentColor;
+}
+
+/* Hover: el naranja de marca se oscurece (resto de temas quedan estables) */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover .button-bg[data-button-theme="brand"],
+  .square-button:hover .button-bg[data-button-theme="brand"] {
+    background-color: var(--color-brand-hover);
+  }
+}
+
+/* Sin rotacion pre-aplicada si el usuario pidio menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .button-label:nth-of-type(2),
+  .button-label:nth-of-type(3),
+  .square-button .button-icon:nth-of-type(2),
+  .square-button .button-icon:nth-of-type(3) {
+    transform: none;
+  }
+}
+
+/* Responsive full-width opt-in */
+@media screen and (max-width: 991px) {
+  .button[data-responsive="tablet"] { width: 100%; }
+}
+@media screen and (max-width: 767px) {
+  .button[data-responsive="landscape"] { width: 100%; }
+}
+@media screen and (max-width: 479px) {
+  .button[data-responsive="mobile"] { width: 100%; }
+}

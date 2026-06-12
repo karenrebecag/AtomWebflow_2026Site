@@ -73,3 +73,8 @@
   padding: var(--space-4) var(--space-6);
   border-top: 1px solid var(--color-border-dark);
 }
+
+/* ---- Harmony (.nw): paddings/gaps proporcionales ---- */
+.nw .card_body   { gap: var(--gap-xs); padding: var(--gap-m); }
+.nw .card_footer { padding: var(--gap-s) var(--gap-m); }
+.nw .card_tag    { padding: var(--gap-xxs) var(--gap-xs); }

@@ -101,3 +101,40 @@
     max-width: 8rem;
   }
 }
+
+/* ============================================================================
+   Harmony override (.nw) — los componentes de layout adoptan la escala
+   proporcional de Osmo (em → escala con --size-font). Tokens en harmony.css.
+   Fuera de .nw, las reglas rem de arriba siguen vigentes (paginas legacy).
+   Mayor especificidad (.nw .layout_*) → gana dentro de .nw sin importar orden.
+   ========================================================================= */
+
+/* Container — ancho derivado de --size-container + reducciones multiplicativas */
+.nw .layout_container {
+  max-width: var(--size-container);
+  padding-inline: var(--container-gutter);
+}
+.nw .layout_container.is--m  { max-width: calc(var(--size-container) * 0.825); }
+.nw .layout_container.is--sm { max-width: calc(var(--size-container) * 0.65); }
+.nw .layout_container.is--s  { max-width: calc(var(--size-container) * 0.5); }
+
+/* Row / Col / Buttons — gaps proporcionales. El em ya comprime en mobile al
+   bajar --size-font, asi que no se necesitan overrides por breakpoint. */
+.nw .layout_row     { gap: var(--gap-m); }
+.nw .layout_col     { gap: var(--gap-m); }
+.nw .layout_buttons { gap: var(--gap-xs); }
+
+/* Logo — ancho proporcional al diseno en vez de rem fijo */
+.nw .layout_logo { max-width: 10em; }
+
+@media screen and (max-width: 479px) {
+  .nw .layout_buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .nw .layout_buttons > * {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}

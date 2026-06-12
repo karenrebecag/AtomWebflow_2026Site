@@ -93,3 +93,12 @@
     text-align: center;
   }
 }
+
+/* ---- Harmony (.nw): ritmo y anchos proporcionales ---- */
+.nw .footer_wrapper  { padding-block: var(--pad-s) var(--gap-xl); }
+.nw .footer_inner    { max-width: var(--size-container); padding-inline: var(--container-gutter); }
+.nw .footer_top      { gap: var(--pad-xs); padding-bottom: var(--gap-xxl); }
+.nw .footer_brand    { gap: var(--gap-s); }
+.nw .footer_nav      { gap: var(--gap-xl); }
+.nw .footer_nav-group{ gap: var(--gap-s); }
+.nw .footer_bottom   { padding-top: var(--gap-xl); }

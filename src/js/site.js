@@ -28,6 +28,7 @@ document.querySelectorAll('[data-module]').forEach(el => {
 // (Webflow no publica data-module en el root de componentes reutilizables)
 const autoDetect = {
   '[data-button-041]':           () => import('./modules/button-041.js'),
+  '[data-button-rotate]':        () => import('./modules/button.js'),
   '[data-logo-wall-cycle-init]': () => import('./modules/logo-wall-cycle.js'),
   '[data-menu-wrap]':            () => import('./modules/mega-nav.js'),
   '.mega-nav':                   () => import('./modules/nav-scroll.js'),
@@ -54,4 +55,11 @@ if (pageKey && pages[pageKey]) {
   pages[pageKey]()
     .then(m => m.init && m.init(document))
     .catch(err => console.error(`[atom] page "${pageKey}" failed:`, err));
+}
+
+// Smooth scroll (Lenis) — solo en paginas .nw, respeta prefers-reduced-motion
+if (document.querySelector('.nw')) {
+  import('./core/lenis.js')
+    .then(m => m.init())
+    .catch(err => console.error('[atom] lenis failed:', err));
 }

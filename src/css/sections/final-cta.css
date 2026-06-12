@@ -32,3 +32,10 @@
     height: 57px;
   }
 }
+
+/* ---- Harmony (.nw): gaps proporcionales ---- */
+.nw .final-cta_logos-row { gap: var(--gap-m); }
+
+@media screen and (max-width: 991px) {
+  .nw .final-cta_row { gap: var(--gap-xl); }
+}

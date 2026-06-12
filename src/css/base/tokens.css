@@ -64,6 +64,15 @@
   --text-sm:      0.875rem;  /* 14px */
   --text-xs:      0.75rem;   /* 12px */
 
+  /* Escala t-shirt — alias que las secciones (hero, cards, nav) ya consumian
+     pero no estaban definidos: sus font-size no aplicaban. --text-3xl es fluido
+     para que el heading del hero respire entre mobile y desktop. */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  clamp(2.5rem, 1.5rem + 4vw, 4rem); /* hero heading */
+
   /* Scaling system — el viewport define un --size-font proporcional al diseno.
      Scoped: se aplica en .nw (typography.css), NO en body, para no mover el sitio legacy.
      Desktop defaults aqui; overrides por breakpoint debajo del :root. */
@@ -151,12 +160,18 @@
     0 6px 12px rgb(var(--elevation-tint) / 0.07),
     0 16px 28px rgb(var(--elevation-tint) / 0.10);
 
-  /* Transiciones */
+  /* Transiciones
+     Las curvas --ease-out / --ease-in-out se espejan en GSAP como CustomEase
+     "atom" / "atom-in-out" (src/js/core/gsap-core.js) para coherencia CSS<->JS. */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
   --transition-fast:   120ms var(--ease-out);
   --transition-base:   180ms var(--ease-out);
   --transition-slow:   300ms var(--ease-out);
+
+  /* Boton — sistema rotate (port Osmo). --r = paso de rotacion por hover. */
+  --btn-height: 2.5em;
+  --r:          20deg;
 
   /* Z-index */
   --z-base:    0;

@@ -62,3 +62,11 @@
 @media screen and (max-width: 767px) {
   .hero_actions { flex-direction: column; }
 }
+
+/* ---- Harmony (.nw): spacing proporcional (em → escala con --size-font) ---- */
+.nw .hero_wrapper   { padding-top: var(--nav-h); }
+.nw .hero_content   { max-width: calc(var(--size-container) * 0.65); padding: var(--pad-s) var(--container-gutter); }
+.nw .hero_eyebrow   { gap: var(--gap-xxs); margin-bottom: var(--gap-m); }
+.nw .hero_heading   { margin-bottom: var(--gap-m); }
+.nw .hero_subheading{ max-width: 36em; margin-bottom: var(--gap-xl); }
+.nw .hero_actions   { gap: var(--gap-sm); }
