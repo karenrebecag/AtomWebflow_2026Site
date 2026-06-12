@@ -1,0 +1,53 @@
+/* ATOM Webflow — Logo Marquee (componente ATOM > LogoMarquee)
+   Marquee horizontal continuo de logos, estilo Osmo trusted-by.
+   Motor: data-css-marquee + marquee.js (clona la lista, duracion por ancho,
+   pausa fuera de viewport). marquee.css provee el viewport flex + overflow y la
+   animacion base del track; aqui van el fade de bordes y el dimensionado.
+   Estiliza por ESTRUCTURA desde la clase raiz .logo-marquee — clase nueva sin
+   estilo de Webflow compitiendo → la repo CSS gana siempre (a diferencia de
+   .logo-wall, donde Webflow tenia estilos horneados). */
+
+.logo-marquee {
+  position: relative;
+  width: 100%;
+  /* Fade en los bordes: los logos entran/salen suaves en vez de cortarse seco */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #fff 12%, #fff 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #fff 12%, #fff 88%, transparent 100%);
+}
+
+.logo-marquee__list {
+  align-items: center;
+  will-change: transform;
+}
+
+/* Items — cada logo box. flex:0 0 auto evita que se encojan; margin = separacion */
+.logo-marquee__list > * {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: calc(2 * var(--gap-xxl, 2.5em));
+}
+
+/* Logos — dimensionados por ALTURA (width auto) = peso visual uniforme.
+   grayscale + opacity unifica logos multicolor; hover sube a color pleno. */
+.logo-marquee img {
+  height: 2.5em;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  opacity: 0.6;
+  filter: grayscale(1);
+  transition: opacity var(--transition-base, 180ms ease),
+              filter var(--transition-base, 180ms ease);
+}
+
+.logo-marquee__list > *:hover img {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+@media screen and (max-width: 767px) {
+  .logo-marquee img { height: 2em; }
+  .logo-marquee__list > * { margin-right: var(--gap-xl, 2em); }
+}
