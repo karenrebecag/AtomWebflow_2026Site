@@ -6,13 +6,14 @@
   --nav-height: 4em;
 }
 
-/* Full-width pegado al top — quita el look "flotante" (pill centrado con gap).
-   .mega-nav iba con top/left/right:1.25em; el bar interno con border-radius y
-   max-width 80em centrado. Aqui lo llevamos a barra full-width flush al top. */
+/* Ancho contenido — quita el look flotante de Webflow (top/left/right:1.25em)
+   y restringe el nav al ancho del contenido, centrado. */
 .mega-nav {
   top: 0;
   left: 0;
   right: 0;
+  max-width: var(--container-xl);
+  margin-inline: auto;
 }
 
 .mega-nav__bar {
@@ -20,17 +21,14 @@
   border-radius: 0;
 }
 
-/* Mega menu dropdown — full-width to match the navbar (Webflow capped the
-   wrapper at max-width:80rem centered, leaving gaps at the edges).
-   Background goes edge-to-edge; columns inset to the navbar's 4em padding
-   so the content lines up with the bar above. */
+/* Dropdown alineado al nav — hereda el ancho del wrapper centrado. */
 .mega-nav__dropdown-wrapper {
   max-width: none;
 }
 
 .mega-nav__dropdown-inner {
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 /* Hide-on-scroll — estado controlado por nav-scroll.js.
