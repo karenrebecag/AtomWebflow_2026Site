@@ -14,16 +14,15 @@
 
 /* ---- Headings ---- */
 
-/* Escala major-third: cada nivel = --size-font * multiplicador (--scale-hN).
-   Los multiplicadores se reducen por breakpoint (tokens.css) para que los
-   headings no queden gigantes en tablet/mobile. calc (no em) evita compounding. */
+/* Escala fluida: cada nivel = --size-font * --scale-hN.
+   El fluid container por breakpoint (tokens.css) escala --size-font automaticamente. */
 
 .nw h1, .nw .nw-h1 {
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h1));
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-display);
-  letter-spacing: -0.04em;
+  line-height: 1;
+  letter-spacing: -0.06em;
   text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
@@ -32,8 +31,8 @@
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h2));
   font-weight: var(--font-weight-bold);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
@@ -42,8 +41,8 @@
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h3));
   font-weight: var(--font-weight-bold);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   color: var(--color-text-heading, #222020);
 }
@@ -52,8 +51,8 @@
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h4));
   font-weight: var(--font-weight-semi);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--color-text-heading, #222020);
 }
 
@@ -61,7 +60,8 @@
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h5));
   font-weight: var(--font-weight-semi);
-  line-height: var(--line-height-snug);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--color-text-heading, #222020);
 }
 
@@ -69,7 +69,8 @@
   font-family: var(--font-base);
   font-size: calc(var(--size-font) * var(--scale-h6));
   font-weight: var(--font-weight-semi);
-  line-height: var(--line-height-snug);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--color-text-heading, #222020);
 }
 

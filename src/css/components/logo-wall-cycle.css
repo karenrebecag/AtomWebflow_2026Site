@@ -1,112 +1,98 @@
-/* ATOM Webflow — Logo Wall (marquee continuo, estilo Osmo trusted-by)
-   Reemplaza la grilla con cycle por un scroll horizontal infinito.
-   Motor: logo-wall-cycle.js (clona la lista para loop sin costura, deriva la
-   duracion del ancho → velocidad constante, pausa fuera de viewport).
+/* ATOM Webflow — Logo Wall Cycle
+   Rotacion de logos con GSAP timeline (logo-wall-cycle.js).
+   El cycle hace slide vertical (yPercent) del target, por eso el slot necesita
+   altura fija + overflow hidden para clipear el swap.
+   Canonical ref: https://ui.dev/sections/logo-wall-cycle */
 
-   Claves del look Osmo:
-   - logos dimensionados por ALTURA (width auto) → peso visual uniforme
-   - mask-image con fade en los bordes → no se cortan seco (el detalle "lindo")
-   - grayscale + opacity para unificar logos multicolor; hover sube a color pleno
-   Markup intacto: usa los data-* / clases que ya emite Webflow. */
-
-@keyframes logo-marquee {
-  to { transform: translateX(-100%); }
-}
-
-/* ---- Strip padre: espaciado tipo trusted-by de Osmo ---- */
-.nw .section_logo-wall {
-  padding-block: var(--gap-xxl) var(--pad-l); /* poco arriba, generoso abajo */
-}
-
-.logo-wall_header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--gap-xl); /* separacion heading -> logos (= trustedby-wrap) */
-}
-
-.logo-wall_header .banner_heading,
-.logo-wall_header .nw-h4 {
+/* Header — jerarquia de soporte, debajo de los headings de seccion */
+.logo-wall_header .banner_heading {
+  font-size: var(--text-h4);
   letter-spacing: -0.01em;
 }
 
-/* ---- Root wrapper ---- */
-.logo-wall {
-  width: 100%;
+@media screen and (max-width: 767px) {
+  .logo-wall_header .banner_heading {
+    font-size: var(--text-h5);
+  }
 }
 
-/* ---- Viewport: overflow + mask fade en bordes ---- */
-.logo-wall__collection {
-  position: relative;
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #fff 12%, #fff 88%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0%, #fff 12%, #fff 88%, transparent 100%);
-}
-
-/* ---- Track: la lista que anima (flex:none evita colapso) ---- */
+/* ---- Layout: grid parejo (override del flex-wrap nativo que dejaba filas desparejas) ---- */
 .logo-wall__list {
-  display: flex;
-  flex: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-6) var(--space-6);
   align-items: center;
-  will-change: transform;
-  animation: logo-marquee 40s linear infinite;
-  animation-play-state: paused; /* el JS arranca al entrar en viewport */
+  justify-items: center;
 }
 
-/* ---- Item: separacion entre logos (= 2 * --gap-xxl de Osmo) ---- */
 .logo-wall__item {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: calc(2 * var(--gap-xxl));
+  width: 100%;
   padding: 0;
 }
 
-/* ---- Logo box: altura uniforme, ancho automatico ---- */
+/* Slot: altura fija uniforme + clip para el slide del cycle.
+   Reemplaza el aspect-ratio (66% x 40%) que renderizaba logos diminutos. */
+/* +30% sobre el slot (28->36px, 104->135px). Agranda el logo Y su padre,
+   asi no se recorta por el overflow:hidden del slot. */
 .logo-wall__logo {
-  position: relative;
-  height: 2.5em;
-  width: auto;
-  max-width: none;
-  overflow: visible;
+  width: 100%;
+  max-width: 135px;
+  height: 36px;
+  max-height: none;
+  overflow: hidden;
 }
 
-.logo-wall__logo-before { display: none; }
+.logo-wall__logo-before {
+  display: none;
+}
 
 .logo-wall__logo-target {
-  position: static;
-  inset: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  width: auto;
 }
 
-/* ---- Imagen: height-driven + grayscale (unifica), hover a color pleno ---- */
+/* Imagen: contain + grayscale = curaduria consciente, tamano consistente.
+   Quita el width:56px fijo que rompia el scaling. */
 .logo-wall__logo-target img,
 .logo-wall__logo-img {
+  width: 100%;
   height: 100%;
-  width: auto;
-  max-width: none;
   object-fit: contain;
-  opacity: 0.6;
+  opacity: 0.55;
   filter: grayscale(1);
-  transition: opacity var(--transition-base), filter var(--transition-base);
 }
 
-.logo-wall__item:hover .logo-wall__logo-img {
-  opacity: 1;
-  filter: grayscale(0);
+/* ---- Cantidad visible = filas completas (evita huecos) ----
+   Las reglas re-muestran explicitamente para no arrastrar el ocultamiento del
+   breakpoint anterior (la base oculta el item 6, tablet lo vuelve a mostrar). */
+
+/* Desktop: 5 (1 fila de 5) */
+[data-logo-wall-list] [data-logo-wall-item]:nth-child(n+6) { display: none; }
+
+@media screen and (max-width: 991px) {
+  .logo-wall__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4) var(--space-4);
+  }
+  /* tablet: 6 (3 x 2) — re-mostrar item 6 y ocultar 7+ */
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(6) { display: block; }
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+7) { display: none; }
+  .logo-wall__logo { height: 29px; max-width: 114px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .logo-wall__list { animation: none; }
-}
-
-/* ---- Mobile: logos un poco mas chicos, menos separacion ---- */
 @media screen and (max-width: 767px) {
-  .logo-wall__logo { height: 2em; }
-  .logo-wall__item { margin-right: var(--gap-xl); }
+  .logo-wall_header { margin-bottom: var(--space-8); }
+  .section_logo-wall { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+}
+
+@media screen and (max-width: 479px) {
+  .logo-wall__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-4);
+  }
+  /* mobile: 4 (2 x 2) — ocultar 5+ (gana sobre el re-show de tablet por orden) */
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+5) { display: none; }
+  .logo-wall__logo { height: 26px; max-width: 104px; }
 }
