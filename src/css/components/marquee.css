@@ -52,6 +52,17 @@
   padding: 1em 1em 1em 0;
 }
 
+/* Reviews marquee — cards de altura uniforme (crecen al alto del item mas alto).
+   Scoped a .reviews_marquees para no afectar el marquee de badges/logos.
+   La especificidad de 2 clases gana sobre la base align-items:center. */
+.reviews_marquees .marquee-css__list,
+.reviews_marquees .marquee-css__item {
+  align-items: stretch;
+}
+.reviews_marquees .review-card {
+  height: 100%;
+}
+
 /* BadgesMarquee — logo items */
 .badges-marquee_item {
   display: flex;
