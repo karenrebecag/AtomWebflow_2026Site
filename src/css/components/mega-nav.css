@@ -6,16 +6,20 @@
   --nav-height: 4em;
 }
 
-/* Absolute top — overlay sobre el hero sin ocupar espacio en el layout.
-   left:50% + translate:-50% centra sin pisar el transform:translateY del hide-on-scroll
-   (translate y transform son propiedades CSS separadas en Transforms L2). */
+/* Fixed overlay — fuera de flujo (no reserva espacio: el hero arranca en y:0)
+   y anclado al viewport, que es lo que permite el hide-on-scroll. Un nav
+   position:absolute solo existe arriba del documento: al hacer scroll se va con
+   la pagina y deja de haber nav que mostrar/ocultar ni sobre el cual hacer hover.
+   Centrado con margin-inline:auto (NO translate: un transform/translate estatico
+   aqui crearia un containing block; el unico transform permitido es el translateY
+   transitorio de .is-nav-hidden, sin dropdown abierto). */
 .mega-nav {
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 50%;
-  translate: -50% 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   max-width: var(--container-xl);
+  margin-inline: auto;
 }
 
 .mega-nav__bar {
