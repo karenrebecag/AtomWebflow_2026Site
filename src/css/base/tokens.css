@@ -79,9 +79,16 @@
   --size-unit: 16;              /* body font-size del diseno (sin px) */
   --size-container-ideal: 1440; /* ancho del diseno de referencia (sin px) */
   --size-container-min: 992px;
-  --size-container-max: 1250px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
+  --size-container-max: 1300px; /* limite: la escala se congela a este ancho (no crece en monitores grandes) */
   --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
   --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+
+  /* Body text — desacoplado de la escala de headings. Solo afecta parrafos/caption.
+     Desktop el container se congela en 1300 (< ideal 1440), asi que --size-font queda
+     en ~14.4px; este boost lo sube a ~16px sin tocar headings ni el spacing em-based.
+     Subir --text-body-scale = body mas grande. En mobile se resetea a 1 (ya esta en 16px). */
+  --text-body-scale: 1.11;
+  --size-font-body: calc(var(--size-font) * var(--text-body-scale));
 
   /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente. */
   --scale-h1: 3.815;
@@ -189,6 +196,7 @@
     --size-container-ideal: 834;
     --size-container-min: 768px;
     --size-container-max: 834px;
+    --text-body-scale: 1;
     --scale-h1: 2.6;
     --scale-h2: 2.2;
     --scale-h3: 1.8;
@@ -203,6 +211,7 @@
     --size-container-ideal: 550;
     --size-container-min: 480px;
     --size-container-max: 550px;
+    --text-body-scale: 1;
     --scale-h1: 2.2;
     --scale-h2: 1.9;
     --scale-h3: 1.6;
@@ -217,6 +226,7 @@
     --size-container-ideal: 390;
     --size-container-min: 320px;
     --size-container-max: 390px;
+    --text-body-scale: 1;
     --scale-h1: 2.0;
     --scale-h2: 1.75;
     --scale-h3: 1.5;

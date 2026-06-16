@@ -78,18 +78,18 @@
 
 .nw p, .nw .nw-p1 {
   font-family: var(--font-base);
-  font-size: var(--size-font);
+  font-size: var(--size-font-body);
   font-weight: var(--font-weight-regular);
   line-height: 1.7;
   color: var(--color-text-muted, #71717A);
 }
 
 .nw .nw-p2 {
-  font-size: calc(var(--size-font) * 0.875);
+  font-size: calc(var(--size-font-body) * 0.875);
 }
 
 .nw .nw-p3 {
-  font-size: calc(var(--size-font) * 0.75);
+  font-size: calc(var(--size-font-body) * 0.75);
 }
 
 /* ---- Labels / Captions ---- */
@@ -105,7 +105,7 @@
 
 .nw .nw-caption {
   font-family: var(--font-base);
-  font-size: calc(var(--size-font) * 0.875);
+  font-size: calc(var(--size-font-body) * 0.875);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
   color: var(--color-text-muted, #71717A);
