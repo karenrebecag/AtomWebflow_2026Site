@@ -98,11 +98,17 @@
 
      Se usa --size-font-body y NO --size-font a proposito: en desktop el
      container se congela por debajo del ideal, asi que --size-font pelado da
-     ~14.4px y encogeria todo el DS ~10%. La variante _body ya lleva el boost
-     de 1.11 -> 16.03/16 = 1.002: los tamanos de desktop quedan intactos y solo
-     se activa el escalado hacia abajo en tablet y movil, que es justo lo que
-     faltaba. */
-  --u: calc(var(--size-font-body) / 16);
+     ~14.4px. La variante _body ya lleva el boost de 1.11 y aterriza en ~16px,
+     que es la referencia neutra del DS (--u = 1). Sobre esa base actua la
+     perilla de abajo. */
+  /* Perilla global de la escala del DS. Como TODOS sus tokens se emiten como
+     calc(N * var(--u)) — font-size, spacing y radius — mover este numero baja o
+     sube el sistema entero conservando cada relacion exacta. Es el unico sitio
+     donde ajustar "los textos se ven grandes/chicos": tocar tamanos sueltos
+     rompe la escala.
+     0.9 = -10% (2026-08-05, ajuste de Karen sobre la home). */
+  --ds-scale: 0.9;
+  --u: calc(var(--size-font-body) / 16 * var(--ds-scale));
 
   /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente. */
   --scale-h1: 3.815;
