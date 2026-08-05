@@ -21,17 +21,17 @@
 }
 
 /* Mega menu dropdown — full-width to match the navbar (Webflow capped the
-   wrapper at max-width:80rem centered, leaving gaps at the edges).
-   Background goes edge-to-edge; columns inset to the navbar's 4em padding
-   so the content lines up with the bar above. */
+   wrapper at max-width:80rem centered, leaving gaps at the edges). */
 .mega-nav__dropdown-wrapper {
   max-width: none;
 }
 
-.mega-nav__dropdown-inner {
-  padding-left: 4em;
-  padding-right: 4em;
-}
+/* El inset de 4em vivia aqui para alinear las columnas con el padding de la
+   barra cuando el dropdown era full-bleed. Desde que el panel es AUTO-CONTENIDO
+   (se mide por su contenido y se posiciona bajo su trigger) ese padding es aire
+   muerto: entra en el max-content del panel, asi que la caja se dibuja 8em mas
+   ancha que su contenido y el texto queda flotando. La alineacion con la barra
+   ya no depende de este padding sino de la x medida del trigger. */
 
 /* Hide-on-scroll — estado controlado por nav-scroll.js.
    Con top:0, translateY(-100%) lo oculta completo sin offset extra.

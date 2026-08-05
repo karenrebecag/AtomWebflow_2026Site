@@ -30,8 +30,14 @@ const autoDetect = {
   '[data-button-041]':           () => import('./modules/button-041.js'),
   '[data-button-rotate]':        () => import('./modules/button.js'),
   '[data-logo-wall-cycle-init]': () => import('./modules/logo-wall-cycle.js'),
-  '[data-menu-wrap]':            () => import('./modules/mega-nav.js'),
-  '.mega-nav':                   () => import('./modules/nav-scroll.js'),
+  // Los navs del DS (MegaNav_DS) los maneja AtomMotion desde /v1/animations.js:
+  // initMegaNav para el dropdown auto-contenido e initNavAutohide para el
+  // hide-on-scroll. Sin el :not() ambos motores se enganchan a los MISMOS
+  // [data-dropdown-toggle] y animan el MISMO contenedor con criterios distintos
+  // (este solo altura full-bleed; el del DS altura + ancho + x). El selector
+  // acotado deja intactos los navs legacy que aun dependan de estos modulos.
+  '[data-menu-wrap]:not([data-nav-autohide])': () => import('./modules/mega-nav.js'),
+  '.mega-nav:not([data-nav-autohide])':        () => import('./modules/nav-scroll.js'),
   '[data-accordion-css-init]':   () => import('./modules/accordion.js'),
   '[data-tabs-init]':             () => import('./modules/tabs.js'),
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
