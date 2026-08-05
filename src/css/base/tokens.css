@@ -90,6 +90,20 @@
   --text-body-scale: 1.11;
   --size-font-body: calc(var(--size-font) * var(--text-body-scale));
 
+  /* Puente al Design System — la unidad fluida que consumen SUS tokens.
+     El DS emite todo como calc(N * var(--u, 1px)): font-size, spacing, radius.
+     Sin --u definida, ese fallback deja el sistema entero en pixeles FIJOS y
+     el ritmo deja de escalar. La curva ya existe aqui arriba (patron OSMO,
+     congelada en 1300px), asi que --u solo la deriva; no duplica nada.
+
+     Se usa --size-font-body y NO --size-font a proposito: en desktop el
+     container se congela por debajo del ideal, asi que --size-font pelado da
+     ~14.4px y encogeria todo el DS ~10%. La variante _body ya lleva el boost
+     de 1.11 -> 16.03/16 = 1.002: los tamanos de desktop quedan intactos y solo
+     se activa el escalado hacia abajo en tablet y movil, que es justo lo que
+     faltaba. */
+  --u: calc(var(--size-font-body) / 16);
+
   /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente. */
   --scale-h1: 3.815;
   --scale-h2: 3.052;
