@@ -43,7 +43,11 @@ const autoDetect = {
   '[data-gsap-slider-init]':     () => import('./modules/gsap-slider.js'),
   '[data-css-marquee]':          () => import('./modules/marquee.js'),
   '[data-tabs="wrapper"]':       () => import('./modules/feature-tabs.js'),
-  '[data-split="heading"]':      () => import('./modules/text-reveal.js'),
+  // El text-reveal vive en el DS (AtomMotion.initTextReveal desde /v1/animations.js).
+  // Los dos motores escuchaban [data-split="heading"] y ganaba el que cargara
+  // primero, asi que poner el hook para pedirle motion al DS lo capturaba este.
+  // El modulo local nunca llego a correr — data-split daba 0 en las 78 paginas
+  // del sitemap — asi que se retira en vez de acotarse con un :not().
   '[data-reveal-group]':         () => import('./modules/content-reveal.js'),
 };
 
