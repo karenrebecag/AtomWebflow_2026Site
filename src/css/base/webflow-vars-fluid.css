@@ -1,0 +1,70 @@
+/* Variables de Webflow "Atom DS v1" en su valor fluido (ADR 013 de atom-uikit-ds).
+
+   Por qué aquí y no en Webflow: el plan de sync-webflow.mjs las emite como
+   calc(N * var(--u)), pero el MCP de Webflow rechaza custom_value en
+   update_size_variable (error interno, 2026-09-18; solo acepta px fijos). En
+   Webflow quedan con su valor de 1440, que es lo que muestra el canvas; en el
+   sitio publicado este bloque, que carga después, las vuelve fluidas sobre la
+   misma --u que usan los componentes ds-*.
+
+   HACK: copia generada a mano del plan. Cuando el MCP acepte custom_value,
+   aplicar el plan en Webflow y borrar este archivo.
+
+   [class][class]: el modo dark de la coleccion vuelve a declarar TODAS sus
+   variables (tambien las de tamano, en px) en cada clase que lo aplica
+   (.lp-section-dark, .heading-style-h3-4.is-on-dark...). No hay forma de
+   apuntar solo a esas: el selector cubre cualquier elemento con clase, a
+   proposito, y pisa tambien cualquier otra redeclaracion de estas 46 variables.
+   HACK: con 0,2,0 y cargando despues gana hasta a combos de dos clases; un modo
+   aplicado a un combo de tres volveria a px fijos. Si aparece, subir a
+   [class][class][class]. */
+
+:root,
+[class][class] {
+  --_atom-ds-v1---type--font-size-xs: calc(10.24 * var(--u));
+  --_atom-ds-v1---type--font-size-sm: calc(12.8 * var(--u));
+  --_atom-ds-v1---type--font-size-base: calc(16 * var(--u));
+  --_atom-ds-v1---type--font-size-lg: calc(20 * var(--u));
+  --_atom-ds-v1---type--font-size-xl: calc(25 * var(--u));
+  --_atom-ds-v1---type--font-size-2xl: calc(31.25 * var(--u));
+  --_atom-ds-v1---type--font-size-3xl: calc(39.06 * var(--u));
+  --_atom-ds-v1---type--font-size-4xl: calc(48.83 * var(--u));
+  --_atom-ds-v1---type--font-size-5xl: calc(61.04 * var(--u));
+  --_atom-ds-v1---type--font-size-6xl: calc(76.29 * var(--u));
+  --_atom-ds-v1---space--section-padding-xxl: calc(195.31 * var(--u));
+  --_atom-ds-v1---space--section-padding-xl: calc(156.25 * var(--u));
+  --_atom-ds-v1---space--section-padding-l: calc(125 * var(--u));
+  --_atom-ds-v1---space--section-padding-m: calc(100 * var(--u));
+  --_atom-ds-v1---space--section-padding-s: calc(80 * var(--u));
+  --_atom-ds-v1---space--section-padding-xs: calc(64 * var(--u));
+  --_atom-ds-v1---space--gap-xl: calc(56 * var(--u));
+  --_atom-ds-v1---space--gap-l: calc(40 * var(--u));
+  --_atom-ds-v1---space--gap-m: calc(24 * var(--u));
+  --_atom-ds-v1---space--gap-s: calc(16 * var(--u));
+  --_atom-ds-v1---space--gap-xs: calc(12 * var(--u));
+  --_atom-ds-v1---space--spacing-0: calc(0 * var(--u));
+  --_atom-ds-v1---space--spacing-1: calc(4 * var(--u));
+  --_atom-ds-v1---space--spacing-2: calc(8 * var(--u));
+  --_atom-ds-v1---space--spacing-3: calc(12 * var(--u));
+  --_atom-ds-v1---space--spacing-4: calc(16 * var(--u));
+  --_atom-ds-v1---space--spacing-5: calc(20 * var(--u));
+  --_atom-ds-v1---space--spacing-6: calc(24 * var(--u));
+  --_atom-ds-v1---space--spacing-8: calc(32 * var(--u));
+  --_atom-ds-v1---space--spacing-10: calc(40 * var(--u));
+  --_atom-ds-v1---space--spacing-12: calc(48 * var(--u));
+  --_atom-ds-v1---space--spacing-14: calc(56 * var(--u));
+  --_atom-ds-v1---space--spacing-16: calc(64 * var(--u));
+  --_atom-ds-v1---space--spacing-20: calc(80 * var(--u));
+  --_atom-ds-v1---space--spacing-24: calc(96 * var(--u));
+  --_atom-ds-v1---space--spacing-30: calc(120 * var(--u));
+  --_atom-ds-v1---space--spacing-32: calc(128 * var(--u));
+  --_atom-ds-v1---space--spacing-40: calc(160 * var(--u));
+  --_atom-ds-v1---space--spacing-50: calc(200 * var(--u));
+  --_atom-ds-v1---radius--none: calc(0 * var(--u));
+  --_atom-ds-v1---radius--sm: calc(4 * var(--u));
+  --_atom-ds-v1---radius--md: calc(8 * var(--u));
+  --_atom-ds-v1---radius--lg: calc(12 * var(--u));
+  --_atom-ds-v1---radius--xl: calc(16 * var(--u));
+  --_atom-ds-v1---radius--2xl: calc(24 * var(--u));
+  --_atom-ds-v1---radius--full: calc(9999 * var(--u));
+}
