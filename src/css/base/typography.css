@@ -119,10 +119,11 @@
 }
 
 
-/* ---- Override: forzar Inter sobre fonts de Webflow (Poppins, DM Sans, Space Grotesk) ---- */
+/* ---- Override: forzar Inter sobre fonts de Webflow (Poppins, DM Sans, Space Grotesk) ----
+   banner_heading y banner_subheading ya no van aqui: en Webflow toman la
+   familia de su rol del DS (display para el H2, sans para la entradilla), y el
+   !important la pisaba con sans en los 26 encabezados de seccion. */
 
-.banner_heading,
-.banner_subheading,
 .stats-strip_title,
 .stats-strip_body,
 .stats-strip_number-violet,
