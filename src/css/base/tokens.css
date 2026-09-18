@@ -36,12 +36,9 @@
   --color-border:        #E4E4E7;
   --color-border-dark:   #3F3F46;
 
-  /* Tipografia — las familias salen del DS (atom-uikit-ds, ADR 001: Inter Tight
-     sans / Grift display). Redefinirlas aqui como "Inter" pintaba las secciones
-     .nw (FAQ, CTA final) con otra fuente que el resto de la pagina. El fallback
-     cubre el caso de que el head de Webflow pierda el link a /v1/tokens.css. */
-  --font-base:     var(--font-family-sans, "Inter Tight", sans-serif);
-  --font-display:  var(--font-family-display, "Grift", sans-serif);
+  /* Tipografia — Inter es la unica font autorizada (guia de marca ATOM) */
+  --font-base:     "Inter", sans-serif;
+  --font-display:  "Inter", sans-serif;
   --font-mono:     'JetBrains Mono', monospace;
 
   --font-weight-regular: 400;
@@ -93,17 +90,25 @@
   --text-body-scale: 1.11;
   --size-font-body: calc(var(--size-font) * var(--text-body-scale));
 
-  /* Puente al Design System — la unidad fluida que consumen SUS tokens
-     (calc(N * var(--u))). Es una copia literal de la curva de
-     atom-uikit-ds/packages/css/src/foundation/scaling.css (--u = container /
-     ideal), que el canal /v1/tokens.css no trae. Va separada de --size-font a
-     proposito: la curva de .nw se congela en 1300 y lleva boost de body, y
-     derivar --u de ella dejaba el texto del DS en ~11px a 1024 mientras los
-     titulos (variables de Webflow en px) seguian en 61px. Ajustes de escala se
-     deciden en el DS, no aqui (2026-09-18: se retira la perilla --ds-scale). */
-  --u-container: clamp(992px, 100vw, 1920px);
-  --u-container-ideal: 1440;
-  --u: calc(var(--u-container) / var(--u-container-ideal));
+  /* Puente al Design System — la unidad fluida que consumen SUS tokens.
+     El DS emite todo como calc(N * var(--u, 1px)): font-size, spacing, radius.
+     Sin --u definida, ese fallback deja el sistema entero en pixeles FIJOS y
+     el ritmo deja de escalar. La curva ya existe aqui arriba (patron OSMO,
+     congelada en 1300px), asi que --u solo la deriva; no duplica nada.
+
+     Se usa --size-font-body y NO --size-font a proposito: en desktop el
+     container se congela por debajo del ideal, asi que --size-font pelado da
+     ~14.4px. La variante _body ya lleva el boost de 1.11 y aterriza en ~16px,
+     que es la referencia neutra del DS (--u = 1). Sobre esa base actua la
+     perilla de abajo. */
+  /* Perilla global de la escala del DS. Como TODOS sus tokens se emiten como
+     calc(N * var(--u)) — font-size, spacing y radius — mover este numero baja o
+     sube el sistema entero conservando cada relacion exacta. Es el unico sitio
+     donde ajustar "los textos se ven grandes/chicos": tocar tamanos sueltos
+     rompe la escala.
+     0.9 = -10% (2026-08-05, ajuste de Karen sobre la home). */
+  --ds-scale: 0.9;
+  --u: calc(var(--size-font-body) / 16 * var(--ds-scale));
 
   /* Multiplicadores de escala — el fluid container por breakpoint escala automaticamente. */
   --scale-h1: 3.815;
@@ -211,8 +216,6 @@
     --size-container-ideal: 834;
     --size-container-min: 768px;
     --size-container-max: 834px;
-    --u-container: clamp(768px, 100vw, 991px);
-    --u-container-ideal: 834;
     --text-body-scale: 1;
     --scale-h1: 2.6;
     --scale-h2: 2.2;
@@ -228,8 +231,6 @@
     --size-container-ideal: 550;
     --size-container-min: 480px;
     --size-container-max: 550px;
-    --u-container: clamp(480px, 100vw, 767px);
-    --u-container-ideal: 550;
     --text-body-scale: 1;
     --scale-h1: 2.2;
     --scale-h2: 1.9;
@@ -245,8 +246,6 @@
     --size-container-ideal: 390;
     --size-container-min: 320px;
     --size-container-max: 390px;
-    --u-container: clamp(320px, 100vw, 479px);
-    --u-container-ideal: 390;
     --text-body-scale: 1;
     --scale-h1: 2.0;
     --scale-h2: 1.75;
