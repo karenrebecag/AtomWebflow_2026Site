@@ -3,7 +3,6 @@
    En Webflow Head: <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/karenrebecag/AtomWebflow_2026Site@{VERSION}/src/css/site.css"> */
 
 @import './base/tokens.css';
-@import './base/webflow-vars-fluid.css';
 @import './base/typography.css';
 @import './base/reset.css';
 @import './base/utilities.css';
